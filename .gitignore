@@ -1,5 +1,4 @@
 .env
 *.db
-*.ini
-/__pycache__
-.venv*
+**/__pycache__/
+.venv*/
