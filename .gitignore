@@ -1,0 +1,5 @@
+.env
+*.db
+*.ini
+/__pycache__
+.venv*

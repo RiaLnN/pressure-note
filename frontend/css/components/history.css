@@ -1,0 +1,121 @@
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* History Group */
+.history-group__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--tg-hint-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0 var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.history-group__items {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+/* History Item */
+.history-item {
+    display: flex;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+}
+
+.history-item:hover {
+    background: var(--card-hover);
+    transform: translateX(4px);
+}
+
+.history-item__time {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+}
+
+.history-item__hour {
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--tg-text-color);
+    font-variant-numeric: tabular-nums;
+}
+
+.history-item__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.history-item__pressure {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.history-item__value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--tg-text-color);
+    font-variant-numeric: tabular-nums;
+}
+.history-item__value--low {
+    color: var(--status-low);
+}
+.history-item__value--normal {
+    color: var(--status-normal);
+}
+
+.history-item__value--elevated {
+    color: var(--status-elevated);
+}
+
+.history-item__value--high {
+    color: var(--status-high);
+}
+
+.history-item__pulse {
+    font-size: var(--font-size-sm);
+    color: var(--tg-hint-color);
+}
+
+.history-item__note {
+    font-size: var(--font-size-sm);
+    color: var(--tg-text-color);
+    opacity: 0.8;
+    line-height: 1.4;
+}
+
+.history-item__menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    color: var(--tg-hint-color);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.history-item__menu:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--tg-text-color);
+}
+
+.history-item__menu:active {
+    transform: scale(0.95);
+}

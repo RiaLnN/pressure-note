@@ -1,0 +1,227 @@
+.modal {
+    border: none;
+    border-radius: var(--radius-xl);
+    padding: 0;
+    max-width: 90%;
+    width: 400px;
+    background: var(--card-bg);
+    box-shadow: var(--shadow-lg);
+    color: var(--tg-text-color);
+    /* Центрирование через margin auto работает с dialog */
+    margin: auto;
+}
+
+/* Backdrop */
+.modal::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* Анимация появления backdrop */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Анимация появления модалки */
+.modal[open] {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Modal Container */
+.modal__container {
+    padding: var(--spacing-2xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* Modal Title */
+.modal__title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--tg-text-color);
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Modal Text */
+.modal__text {
+    font-size: var(--font-size-base);
+    color: var(--tg-hint-color);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Modal Inputs Container */
+.modal__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* Input Group */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.input-group label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--tg-text-color);
+    padding-left: var(--spacing-xs);
+}
+
+.input-group input {
+    width: 100%;
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    color: var(--tg-text-color);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.input-group input::placeholder {
+    color: var(--tg-hint-color);
+    opacity: 0.4;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(94, 181, 115, 0.1);
+}
+
+.input-group input:hover:not(:focus) {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Стили для валидации */
+.input-group input:invalid:not(:placeholder-shown) {
+    border-color: var(--status-high);
+}
+
+.input-group input:valid:not(:placeholder-shown) {
+    border-color: var(--status-good);
+}
+
+/* Modal Actions */
+.modal__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+.modal__close {
+    position: absolute;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--tg-hint-color);
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.modal__close:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--tg-text-color);
+}
+
+.modal__close svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Если нужна модалка с крестиком, добавить padding-top */
+.modal__container--with-close {
+    padding-top: calc(var(--spacing-2xl) + 32px);
+}
+
+/* Alert Modal Variant (для подтверждений) */
+.modal--alert .modal__container {
+    text-align: center;
+}
+
+.modal--alert .modal__title {
+    color: var(--status-high);
+}
+
+.modal--alert .modal__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-lg);
+    color: var(--status-high);
+}
+
+/* Success Modal Variant */
+.modal--success .modal__title {
+    color: var(--status-good);
+}
+
+.modal--success .modal__icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--spacing-lg);
+    color: var(--status-good);
+}
+
+/* Loading State в модалке */
+.modal__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-2xl);
+}
+
+.modal__spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-top-color: var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Dark Overlay для стека модалок (если нужно несколько) */
+.modal[open] ~ .modal[open] {
+    z-index: calc(var(--z-modal) + 1);
+}

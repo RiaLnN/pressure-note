@@ -1,0 +1,63 @@
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.card__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: var(--spacing-lg);
+    color: var(--tg-text-color);
+}
+
+/* Status Card */
+.card--status {
+    background: linear-gradient(135deg, rgba(94, 181, 115, 0.12) 0%, rgba(94, 181, 115, 0.04) 100%);
+    border-color: rgba(94, 181, 115, 0.2);
+}
+
+/* Actions Card */
+.card--actions {
+    padding: var(--spacing-lg);
+}
+
+/* FAB Card - minimal styling */
+.card--fab {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    backdrop-filter: none;
+    padding: 0;
+}
+
+/* Calendar Card */
+.card--calendar {
+    min-height: 200px;
+}
+
+.calendar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--card-border);
+}
+
+.calendar-placeholder__text {
+    color: var(--tg-hint-color);
+    font-size: var(--font-size-sm);
+}
+
+/* Hover effect for interactive cards */
+.card:has(button):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}

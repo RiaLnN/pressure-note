@@ -1,0 +1,100 @@
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.quick-actions__btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-lg);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    color: var(--tg-text-color);
+    transition: all var(--transition-base);
+    min-height: 72px;
+}
+
+.quick-actions__btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.quick-actions__btn:active {
+    transform: scale(0.96);
+}
+
+.quick-actions__value {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    line-height: 1;
+}
+
+.quick-actions__hint {
+    font-size: var(--font-size-xs);
+    color: var(--tg-hint-color);
+    font-weight: var(--font-weight-medium);
+}
+
+/* FAB Button */
+.fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    width: 100%;
+    padding: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-hover) 100%);
+    color: white;
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    box-shadow: var(--shadow-md), var(--shadow-glow);
+    transition: all var(--transition-base);
+}
+
+.fab:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.fab:active {
+    transform: scale(0.98);
+}
+
+.fab__icon {
+    stroke-width: 2.5;
+}
+
+.fab__label {
+    font-size: var(--font-size-lg);
+}
+
+/* Responsive */
+@media (max-width: 375px) {
+    .quick-actions {
+        gap: var(--spacing-sm);
+    }
+    
+    .quick-actions__btn {
+        min-height: 64px;
+        padding: var(--spacing-md);
+    }
+    
+    .quick-actions__value {
+        font-size: var(--font-size-lg);
+    }
+}
+.status__detail-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+}

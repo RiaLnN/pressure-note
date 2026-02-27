@@ -1,0 +1,102 @@
+:root {
+    /* Telegram Theme Variables (fallbacks for standalone) */
+    --tg-bg-color: var(--tg-theme-bg-color, #1a1b23);
+    --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #232430);
+    --tg-text-color: var(--tg-theme-text-color, #ffffff);
+    --tg-hint-color: var(--tg-theme-hint-color, #8e8e93);
+    --tg-link-color: var(--tg-theme-link-color, #3390ec);
+    --tg-button-color: var(--tg-theme-button-color, #3390ec);
+    --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
+    --tg-section-bg: var(--tg-theme-section-bg-color, #1c1c1e);
+    --tg-header-bg: var(--tg-theme-header-bg-color, rgba(28, 28, 30, 0.95));
+
+    /* Custom App Colors */
+    --gradient-start: #2c5f4a;
+    --gradient-end: #1a3829;
+    --bg-gradient: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+    
+    --card-bg: rgba(255, 255, 255, 0.08);
+    --card-border: rgba(255, 255, 255, 0.12);
+    --card-hover: rgba(255, 255, 255, 0.12);
+    
+    /* Status Colors */
+    --status-none: #8e8e93; 
+    --status-none-bg: rgba(142, 142, 143, 0.12);
+    --status-low: #5ac8fa;
+    --status-low-bg: rgba(90, 200, 250, 0.15);
+    --status-normal: #34c759;
+    --status-normal-bg: rgba(52, 199, 89, 0.15);
+    --status-elevated: #ff9500;
+    --status-elevated-bg: rgba(255, 149, 0, 0.15);
+    --status-high: #ff3b30;
+    --status-high-bg: rgba(255, 59, 48, 0.15);
+    
+    /* Accent Colors */
+    --accent-primary: #5eb573;
+    --accent-primary-hover: #6cc47f;
+    --accent-secondary: rgba(94, 181, 115, 0.15);
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.18);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.24);
+    --shadow-glow: 0 0 24px rgba(94, 181, 115, 0.3);
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 24px;
+    --spacing-2xl: 32px;
+    
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    --radius-full: 9999px;
+    
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
+    
+    /* Typography */
+    --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-size-xs: 11px;
+    --font-size-sm: 13px;
+    --font-size-base: 15px;
+    --font-size-lg: 17px;
+    --font-size-xl: 20px;
+    --font-size-2xl: 28px;
+    --font-size-3xl: 34px;
+    
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Backdrop Blur */
+    --blur-sm: 10px;
+    --blur-md: 20px;
+    --blur-lg: 30px;
+    
+    /* Z-index */
+    --z-base: 1;
+    --z-dropdown: 10;
+    --z-sticky: 20;
+    --z-fixed: 30;
+    --z-modal: 40;
+    --z-popover: 50;
+}
+
+/* Dark mode adjustments (if Telegram doesn't provide theme) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --tg-bg-color: #1a1b23;
+        --tg-secondary-bg: #232430;
+        --tg-text-color: #ffffff;
+        --tg-hint-color: #8e8e93;
+    }
+}
