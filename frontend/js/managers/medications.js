@@ -16,7 +16,30 @@ export const MedicationManager = {
             return true;
         } catch (error) {
             console.error(error);
-            tg.showAlert("Save failed")
+            tg.showAlert("Save failed");
+            return false;
+        }
+    },
+    async deleteMedication(id){
+        try {
+            await MedicationApi.delete(id);
+            tg.HapticFeedback.notificationOccurred('success');
+            return true;
+        } catch (error) {
+            console.error(error);
+            tg.showAlert("Deleting failed");
+            return false;
+        }
+    },
+    async updateMedication(id, data){
+        try {
+            await MedicationApi.update(id, data);
+            tg.HapticFeedback.notificationOccurred('success');
+            return true;
+        } catch (error) {
+            console.error(error);
+            tg.showAlert("Updating failed");
+            return false;
         }
     },
     async getData(){

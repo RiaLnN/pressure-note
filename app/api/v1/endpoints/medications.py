@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.schemas.medications import MedicationRead, MedicationCreate, MedicationUpdate
@@ -24,6 +24,9 @@ async def update_medication(medication_id: int, medication_update: MedicationUpd
         raise HTTPException(status_code=404, detail="Medication not found")
     return await medication_service.update_medication(db, medication, medication_update, user_id)
 
-@router.delete('/{medication_id}', response_model = MedicationRead)
+@router.delete('/{medication_id}', status_code=204)
 async def delete_medication(medication_id: int, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
-    return await medication_service.delete_medication(db, medication_id, user_id)
+    success = await medication_service.delete_medication(db, medication_id, user_id)
+    if not success:
+        return HTTPException(status_code=404, detail="Medication not found")
+    return Response(status_code=204)

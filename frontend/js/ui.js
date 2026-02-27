@@ -109,13 +109,6 @@ export const UIManager = {
                                 </div>
                                 ${m.note ? `<p class="history-item__note">${m.note}</p>` : ''}
                             </div>
-                            <button class="history-item__menu" data-action="menu" aria-label="Options">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                    <circle cx="12" cy="5" r="2" fill="currentColor"/>
-                                    <circle cx="12" cy="12" r="2" fill="currentColor"/>
-                                    <circle cx="12" cy="19" r="2" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </article>
                         `;
                     }).join('')}
@@ -292,9 +285,11 @@ export const UIManager = {
     loadMedication(medications) {
         const listContainer = document.getElementById("medications-list");
         const emptyState = document.getElementById("medications-empty");
+        const statusContainer = document.getElementById("next-dose-status");
         this.globalNextDose = { time: '25:00', name: null };
         if (!medications || medications.length === 0) {
             if (listContainer) listContainer.innerHTML = "";
+            if (statusContainer) statusContainer.innerHTML = "";
             emptyState.style.display = "flex";
             return;
         }
@@ -317,8 +312,7 @@ export const UIManager = {
             }
         });
 
-        const statusContainer = document.getElementById("next-dose-status");
-        if (this.globalNextDose) {
+        if (this.globalNextDose.name != null && this.globalNextDose.time != "25:00") {
             statusContainer.innerHTML = `
                 <div class="status-banner__icon">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -475,17 +469,12 @@ export const ActionHandler = {
             UIManager.openMedMenu(id, name);
         },
         "close-menu": () => { UIManager.closeMedMenu();},
-        "take-dose": (event) => {
-            const sheet = document.getElementById("med-menu-sheet");
-            const medId = sheet.dataset.currentId;
-            console.log("Marking as taken ID:", medId);
-            UIManager.closeMedMenu();
-        },
-
-        "delete-med": (event) => {
+        "delete-med": async (event) => {
             const sheet = document.getElementById("med-menu-sheet");
             const medId = sheet.dataset.currentId;
             if (confirm("Delete this medication?")) {
+                await MedicationManager.deleteMedication(medId);
+                await MedicationManager.fetchAndRefresh();
                 UIManager.closeMedMenu();
             }
         },

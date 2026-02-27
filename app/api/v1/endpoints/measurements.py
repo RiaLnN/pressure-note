@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Body
+from fastapi import APIRouter, Depends, HTTPException, Body, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
 from app.schemas.measurements import PressureRead, PressureCreate, PressureUpdate, PressureGroup
@@ -45,7 +45,7 @@ async def update_pressure_info(
     
     return await measurement_service.update_measurement(db, current_pressure, pressure_update)
 
-@router.delete('/{pressure_id}', response_model = PressureRead)
+@router.delete('/{pressure_id}', status_code=204)
 async def delete_pressure(
     pressure_id: int,
     user_id: int = Depends(get_current_user), 
@@ -55,5 +55,6 @@ async def delete_pressure(
     if not current_pressure:
         raise HTTPException(status_code=404, detail="Measurement not found")
     
-    return await measurement_service.delete_measurement(db, user_id, pressure_id)
+    await measurement_service.delete_measurement(db, user_id, pressure_id)
+    return Response(status_code=204)
     

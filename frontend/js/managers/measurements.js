@@ -10,8 +10,8 @@ export const MeasurementsManager = {
             UIManager.updateDashboard(null);
             return;
         }
-        const lastMeasurement = PRESSURE.getAveragePressure(data[data.length - 1].measurements);
-        UIManager.updateDashboard(lastMeasurement, data[data.length - 1].measurements.length);
+        const lastMeasurement = PRESSURE.getAveragePressure(data[0].measurements);
+        UIManager.updateDashboard(lastMeasurement, data[0].measurements.length);
     },
     async saveMeasurement(sys, dia) {
         try {
