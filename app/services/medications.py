@@ -35,7 +35,7 @@ async def update_medication(session: AsyncSession, medication: Medication, medic
         setattr(medication, key, value)
 
     await session.commit()
-    await session.refresh()
+    await session.refresh(medication)
     return medication
 
 async def delete_medication(session: AsyncSession, medication_id: int, user_id: int) -> bool:

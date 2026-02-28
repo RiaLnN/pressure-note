@@ -62,6 +62,7 @@ export const MedicationApi = {
             body: JSON.stringify(data)
         }),
     get: () => request(`/medications`),
+    getById: (id) => request(`/medications/${id}`),
     update: (id, data) => request(`/medications/${id}`, {
         method: "PATCH",
         body: JSON.stringify(data)

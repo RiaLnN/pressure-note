@@ -17,6 +17,10 @@ async def read_medication(user_id: int = Depends(get_current_user), db: AsyncSes
     medications = await medication_service.get_medication(db, user_id)
     return medications
 
+@router.get('/{medication_id}', response_model = MedicationRead)
+async def read_medication_by_id(medication_id: int, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+    return await medication_service.get_medication_by_id(db, medication_id, user_id)
+
 @router.patch('/{medication_id}', response_model = MedicationRead)
 async def update_medication(medication_id: int, medication_update: MedicationUpdate, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     medication = await medication_service.get_medication_by_id(db, medication_id, user_id)

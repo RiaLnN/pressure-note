@@ -16,4 +16,4 @@ class MedicationCreate(MedicationBase):
 
 class MedicationUpdate(BaseModel):
     item_name: Optional[str] = Field(default=None)
-    reminders: Optional[datetime] = Field(default=None)
+    reminders: Optional[List[str]] = Field(default=None)

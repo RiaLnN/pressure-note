@@ -7,6 +7,7 @@ import { CONFIG } from "./config.js";
 import { SettingsManager } from "./managers/settings.js";
 import { MedicationManager } from "./managers/medications.js";
 
+
 export const UIManager = {
     screens: document.querySelectorAll(".screen"),
     navButtons: document.querySelectorAll(".nav__item"),
@@ -302,7 +303,6 @@ export const UIManager = {
         medications.forEach(med => {
             const nextTime = med.reminders.sort().find(t => t >= currentTime);
             if (nextTime) {
-                console.log(`${nextTime} < ${this.globalNextDose.time}`);
                 if (nextTime < this.globalNextDose.time){
                     this.globalNextDose = {
                         time: nextTime,
@@ -416,6 +416,26 @@ export const UIManager = {
         const sheet = document.getElementById("med-menu-sheet");
         sheet.classList.remove("menu-sheet--active");
         document.body.style.overflow = "";
+    },
+    loadEditScreen(data){
+        const mainTitle = document.getElementById("med-add-title");
+        const itemName = document.getElementById("medication-input");
+        const btn = document.getElementById("btn-med");
+        btn.dataset.action = "edit-med-btn";
+        itemName.value = data.item_name;
+        mainTitle.textContent = 'Edit Medication';
+        this.renderChips(data.reminders);
+    },
+    loadAddScreen(){
+        const mainTitle = document.getElementById("med-add-title");
+        const itemName = document.getElementById("medication-input");
+        const btn = document.getElementById("btn-med");
+        const reminders = document.getElementById("reminders-chips");
+        reminders.innerHTML = "";
+        btn.dataset.action = "save-med";
+        itemName.value = '';
+        mainTitle.textContent = 'Add Medication';
+
     }
 }
 
@@ -447,10 +467,13 @@ export const ActionHandler = {
         "target-pressure": () => { UIManager.showTargetModal();},
         "close-modal": () => { UIManager.closeTargetModal();},
         "save-target": async () => { await SettingsManager.targetPressure();},
-        "add-med": () => { UIManager.switchView('medication-add-screen')},
+        "add-med": () => {
+            UIManager.loadAddScreen(); 
+            UIManager.switchView('medication-add-screen');
+        },
         "save-med": async (event) => { 
             event.preventDefault(); 
-            await MedicationManager.getData();
+            await MedicationManager.getData(false);
         },
         "cancel-med": () => { UIManager.switchView("medications-screen")},
         "back-med": () => { UIManager.switchView("medications-screen")},
@@ -478,11 +501,18 @@ export const ActionHandler = {
                 UIManager.closeMedMenu();
             }
         },
-
-        "edit-med": (event) => {
+        "edit-med": async (event) => {
             const sheet = document.getElementById("med-menu-sheet");
             const medId = sheet.dataset.currentId;
+            UIManager.switchView('medication-add-screen');
+            await MedicationManager.getItemData(medId);
             UIManager.closeMedMenu();
+        },
+        "edit-med-btn": async (event) => {
+            event.preventDefault(); 
+            const sheet = document.getElementById("med-menu-sheet");
+            const medId = sheet.dataset.currentId;
+            await MedicationManager.getData(medId);
         }
     },
     init() {

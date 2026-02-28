@@ -42,7 +42,12 @@ export const MedicationManager = {
             return false;
         }
     },
-    async getData(){
+    async getItemData(id){
+        const data = await MedicationApi.getById(id);
+        data.reminders.forEach((reminder) => this.currentReminders.push(reminder));
+        UIManager.loadEditScreen(data);
+    },
+    async getData(medId=null){
         const itemContainter = document.getElementById("medication-input");
         const itemName = itemContainter.value;
         if (!itemName || this.currentReminders.length === 0) {
@@ -53,7 +58,12 @@ export const MedicationManager = {
             item_name: itemName,
             reminders: this.currentReminders
         };
-        const success = await this.saveMedication(payload);
+        let success;
+        if (!medId) {
+            success = await this.saveMedication(payload);
+        } else {
+            success = await this.updateMedication(medId, payload);
+        }
         if (success) {
             itemContainter.value = "";
             this.currentReminders = [];
