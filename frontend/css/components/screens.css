@@ -38,7 +38,12 @@
     padding-bottom: calc(70px + env(safe-area-inset-bottom)); /* Footer + safe area */
     gap: var(--spacing-lg);
 }
-
+.screen.medications-screen, .screen.history-screen, 
+.screen.settings-screen, .screen.stats-screen, 
+.screen.calendar-screen
+{
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+}
 .screen.main-screen.active {
     display: block !important;
 }

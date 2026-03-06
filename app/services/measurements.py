@@ -10,6 +10,7 @@ from app.core.logging import logger
 import calendar
 
 async def create_measurement(session: AsyncSession, pressure_in: PressureCreate, user_id: int) -> PressureMeasurement:
+    logger.info("PRESSURE IN: %s", pressure_in)
     pressure = PressureMeasurement(**pressure_in.model_dump(), user_id=user_id)
     session.add(pressure)
     await session.commit()

@@ -5,10 +5,11 @@ from typing import List, Optional
 class PressureBase(BaseModel):
     sys: int
     dia: int
+    created_at: datetime
+    description: Optional[str] = None
 
 class PressureRead(PressureBase):
     id: int
-    created_at: datetime
     model_config = ConfigDict(from_attributes=True)
 
 class PressureCreate(PressureBase):
@@ -17,6 +18,7 @@ class PressureCreate(PressureBase):
 class PressureUpdate(BaseModel):
     sys: int | None = Field(default=None)
     dia: int | None = Field(default=None)
+    description: Optional[str] = None
 
 class PressureGroup(BaseModel):
     date: date

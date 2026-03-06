@@ -1,14 +1,14 @@
 :root {
     /* Telegram Theme Variables (fallbacks for standalone) */
-    --tg-bg-color: var(--tg-theme-bg-color, #1a1b23);
-    --tg-secondary-bg: var(--tg-theme-secondary-bg-color, #232430);
-    --tg-text-color: var(--tg-theme-text-color, #ffffff);
-    --tg-hint-color: var(--tg-theme-hint-color, #8e8e93);
-    --tg-link-color: var(--tg-theme-link-color, #3390ec);
-    --tg-button-color: var(--tg-theme-button-color, #3390ec);
-    --tg-button-text: var(--tg-theme-button-text-color, #ffffff);
-    --tg-section-bg: var(--tg-theme-section-bg-color, #1c1c1e);
-    --tg-header-bg: var(--tg-theme-header-bg-color, rgba(28, 28, 30, 0.95));
+    --tg-bg-color:  #1a1b23;
+    --tg-secondary-bg: #232430;
+    --tg-text-color: #ffffff;
+    --tg-hint-color:  #8e8e93;
+    --tg-link-color: #3390ec;
+    --tg-button-color: #3390ec;
+    --tg-button-text: #ffffff;
+    --tg-section-bg: #1c1c1e;
+    --tg-header-bg:  rgba(28, 28, 30, 0.95);
 
     /* Custom App Colors */
     --gradient-start: #2c5f4a;
@@ -35,6 +35,13 @@
     --calendar-day-hover: rgba(255, 255, 255, 0.08);
     --calendar-selected-shadow: 0 0 0 3px rgba(94, 181, 115, 0.3);
 
+    --history-note-bg: rgba(255, 255, 255, 0.03); /* Фон для заметок */
+    --history-note-border: rgba(255, 255, 255, 0.06); /* Граница заметок */
+    --history-time-bg: rgba(255, 255, 255, 0.05); /* Фон времени */
+
+    --status-dot-size: 8px;
+    --status-dot-shadow: 0 0 8px currentColor;
+    
     /* Badge Colors по статусам */
     --badge-none-bg: rgba(142, 142, 143, 0.2);
     --badge-none-text: #8e8e93;
@@ -48,7 +55,7 @@
     --badge-high-text: #ff3b30;
 
 /* Divider */
---divider-color: rgba(255, 255, 255, 0.08);
+    --divider-color: rgba(255, 255, 255, 0.08);
     /* Accent Colors */
     --accent-primary: #5eb573;
     --accent-primary-hover: #6cc47f;
@@ -67,7 +74,7 @@
     --spacing-lg: 16px;
     --spacing-xl: 24px;
     --spacing-2xl: 32px;
-    
+    --history-accent-width: 4px;
     /* Border Radius */
     --radius-sm: 8px;
     --radius-md: 12px;
@@ -107,14 +114,4 @@
     --z-fixed: 30;
     --z-modal: 40;
     --z-popover: 50;
-}
-
-/* Dark mode adjustments (if Telegram doesn't provide theme) */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --tg-bg-color: #1a1b23;
-        --tg-secondary-bg: #232430;
-        --tg-text-color: #ffffff;
-        --tg-hint-color: #8e8e93;
-    }
 }

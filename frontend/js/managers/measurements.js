@@ -1,5 +1,6 @@
 import { measurementsApi } from "../api.js";
 import { tg } from "../config.js";
+import { AppState } from "../state.js";
 import { UIManager } from "../ui.js";
 
 export const MeasurementsManager = {
@@ -23,9 +24,9 @@ export const MeasurementsManager = {
         this.currentDate.setDate(this.currentDate.getDate() - 1);
         await this.fetchAndRefresh();
     },
-    async saveMeasurement(sys, dia) {
+    async saveMeasurement(sys, dia, description = null) {
         try {
-            const success = await measurementsApi.create({ sys, dia });
+            const success = await measurementsApi.create({ sys, dia, created_at: this.currentDate, description });
             if (success) {
                 await this.fetchAndRefresh();
                 tg.HapticFeedback.notificationOccurred('success');
@@ -44,12 +45,15 @@ export const MeasurementsManager = {
 
             const sys = btn.dataset.sys;
             const dia = btn.dataset.dia;
+            AppState.quickButtons = false;
             await this.saveMeasurement(Number(sys), Number(dia));
         });
     },
     async inputAdd(){
         const input = document.getElementById("pressure-input").value.trim();
+        const noteInput = document.getElementById("note-input").value.trim();
         const [sys, dia] = input.split('/');
-        await this.saveMeasurement(Number(sys), Number(dia));
+        if (noteInput) await this.saveMeasurement(Number(sys), Number(dia), noteInput);
+        else await this.saveMeasurement(Number(sys), Number(dia));
     },
 };

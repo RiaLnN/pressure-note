@@ -24,9 +24,12 @@
 
 /* Actions Card */
 .card--actions {
+    display: none;
     padding: var(--spacing-lg);
 }
-
+.card--actions.active {
+    display: block;
+}
 /* FAB Card - minimal styling */
 .card--fab {
     background: transparent;

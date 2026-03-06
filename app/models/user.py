@@ -16,7 +16,8 @@ class User(Base):
     settings: Mapped[Dict[str, Any]] = mapped_column(MutableDict.as_mutable(JSON), default=lambda: {
         "theme": "light",
         "target_pressure": {"sys": 120, "dia": 80},
-        "notifications": True
+        "notifications": True,
+        "pressure_reminders": ["09:00", "21:00"]
     })
 
     measurements: Mapped[List["PressureMeasurement"]] = relationship(back_populates="user", cascade="all, delete-orphan")

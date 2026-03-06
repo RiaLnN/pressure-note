@@ -7,6 +7,7 @@ import { CONFIG } from "./config.js";
 import { SettingsManager } from "./managers/settings.js";
 import { MedicationManager } from "./managers/medications.js";
 import { CalendarManager } from "./managers/calendar.js";
+import { AppState } from "./state.js";
 
 
 
@@ -55,9 +56,10 @@ export const UIManager = {
         const statusCircle = document.querySelector(".status__circle");
         const statusDetail = document.querySelector(".status__detail-value");
         const count = data.measurements.length;
-
+        const quickBtns = document.getElementById("quick-btns");
         const mainTitle = document.getElementById("current-date");
-
+        if (!AppState.quickButtons) quickBtns.classList.remove("active");
+        else quickBtns.classList.add("active");
         statusLabel.classList.remove('status__label--none', 'status__label--normal', 'status__label--high', 'status__label--low', 'status__label--elevated');
         statusCircle.classList.remove('status__circle--none', 'status__circle--normal', 'status__circle--high', 'status__circle--low', 'status__circle--elevated');
         statusDetail.classList.remove('status__detail-value--none','status__detail-value--normal', 'status__detail-value--high', 'status__detail-value--low', 'status__detail-value--elevated');
@@ -91,11 +93,13 @@ export const UIManager = {
     renderHistory(groupedData) {
         const listContainer = document.getElementById("history-list");
         const emptyState = document.getElementById("history-empty");
+        
         if (!groupedData || groupedData.length === 0) {
             listContainer.innerHTML = "";
             emptyState.style.display = "flex";
             return;
         }
+        
         emptyState.style.display = "none";
         
         const html = groupedData.map(group => `
@@ -107,18 +111,25 @@ export const UIManager = {
                         const statusClass = status.name.toLowerCase();
                         
                         return `
-                        <article class="history-item" data-id="${m.id}">
-                            <div class="history-item__time">
-                                <span class="history-item__hour">${TimeConvert.formatTime(m.created_at)}</span>
-                            </div>
-                            <div class="history-item__content">
-                                <div class="history-item__pressure">
-                                    <span class="history-item__value history-item__value--${statusClass}">
-                                        ${m.sys}/${m.dia}
-                                    </span>
+                        <article class="history-item-section" data-id="${m.id}" data-status="${statusClass}">
+                            <div class="history-item">
+                                <div class="history-item__time">
+                                    <span class="history-item__hour">${TimeConvert.formatTime(m.created_at)}</span>
+                                    <span class="history-item__status-dot"></span>
                                 </div>
-                                ${m.note ? `<p class="history-item__note">${m.note}</p>` : ''}
+                                <div class="history-item__content">
+                                    <div class="history-item__pressure">
+                                        <span class="history-item__value history-item__value--${statusClass}">
+                                            ${m.sys}/${m.dia}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
+                            ${m.description ? `
+                                <div class="history-item__note">
+                                    ${m.description}
+                                </div>
+                            ` : ''}
                         </article>
                         `;
                     }).join('')}
@@ -525,10 +536,21 @@ export const UIManager = {
                             <span class="day-details__item-time">${TimeConvert.formatTime(m.created_at)}</span>
                             <span class="day-details__item-val">${m.sys}/${m.dia}</span>
                         </li>
+                        
                     `).join('')}
                 </ul>
             </div>
         `;
+    },
+    loadSettingsScreen(){
+        const targetPressure = document.getElementById("target-pressure-settings");
+        const reminderTime = document.getElementById("reminder-time");
+        const notification = document.getElementById("toggle-reminders");
+        const {sys, dia} = AppState.user.settings.target_pressure;
+        targetPressure.textContent = [sys, dia].join("/");
+        notification.checked = AppState.user.settings.notification;
+        reminderTime.textContent = `${AppState.user.settings.pressure_reminders[0]}`;
+
     }
 }
 
@@ -538,12 +560,13 @@ export const ActionHandler = {
         "stats-screen": () => StatisticsManager.loadStats(),
         "medications-screen": () => MedicationManager.fetchAndRefresh(),
         "history-screen": () => HistoryManager.loadHistory(),
-        "calendar-screen": () => CalendarManager.init()
+        "calendar-screen": () => CalendarManager.init(),
+        "settings-screen": () => UIManager.loadSettingsScreen()
     },
     btnAction: {
         "manual-add": () => { UIManager.switchView("add-screen") },
-        "prev-day": () => { MeasurementsManager.prevDay(); },
-        "next-day": () => { MeasurementsManager.nextDay(); },
+        "prev-day": () => { AppState.quickButtons = true; MeasurementsManager.prevDay(); },
+        "next-day": () => { AppState.quickButtons = true; MeasurementsManager.nextDay(); },
         "history": () => { 
             HistoryManager.loadHistory();
             UIManager.switchView("history-screen"); 
@@ -617,7 +640,8 @@ export const ActionHandler = {
             document.querySelectorAll('.calendar__day').forEach(d => d.classList.remove('calendar__day--selected'));
             btn.classList.add('calendar__day--selected');
             UIManager.updateDayInfo(dateData);
-        }
+        },
+
     },
     init() {
         document.addEventListener("click", (event) => {
@@ -641,5 +665,22 @@ export const ActionHandler = {
                 UIManager.updatePeriodButtons(targetPeriod.dataset.period); 
             }
         });
+        const pressureInput = document.getElementById('pressure-input');
+        pressureInput.addEventListener("input", (event) => {
+            let value = event.target.value.replace(/\D/g, '');
+            if (value.length > 3){
+                value = value.slice(0, 3) + '/' + value.slice(3, 6);
+            }
+            event.target.value = value;
+        });
+        pressureInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Backspace' && pressureInput.value.endsWith('/')) {
+                pressureInput.value = pressureInput.value.slice(0, -1);
+            }
+        });
+        const notificationToggle = document.getElementById('toggle-reminders');
+        notificationToggle.addEventListener('click', (event) => {
+            SettingsManager.updateNotification();
+        })
     }
 }

@@ -1,57 +1,160 @@
+/* frontend/css/components/history.css */
+
+/* ============================================
+   HISTORY LIST CONTAINER
+   ============================================ */
+
 .history-list {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-2xl);
 }
 
-/* History Group */
+/* ============================================
+   HISTORY GROUP (по датам)
+   ============================================ */
+
+.history-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
 .history-group__title {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-sticky);
+    
     font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-bold);
     color: var(--tg-hint-color);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0 var(--spacing-xs);
-    margin-bottom: var(--spacing-md);
+    letter-spacing: 0.8px;
+    
+    padding: var(--spacing-sm) var(--spacing-lg);
+    margin: 0 calc(var(--spacing-lg) * -1);
+    margin-bottom: var(--spacing-sm);
+    
+    background: var(--tg-header-bg);
+    backdrop-filter: blur(var(--blur-md));
+    -webkit-backdrop-filter: blur(var(--blur-md));
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .history-group__items {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
 }
 
-/* History Item */
-.history-item {
-    display: flex;
-    gap: var(--spacing-lg);
+/* ============================================
+   HISTORY ITEM CARD
+   ============================================ */
+
+.history-item-section {
+    position: relative;
     padding: var(--spacing-lg);
+    
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
+    
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    
     transition: all var(--transition-base);
+    
+    /* Цветная полоска слева (устанавливается через data-атрибут или модификатор) */
+    overflow: hidden;
 }
 
-.history-item:hover {
+.history-item-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--history-accent-width);
+    background: currentColor;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+/* Hover эффект */
+.history-item-section:hover {
     background: var(--card-hover);
     transform: translateX(4px);
+    box-shadow: var(--shadow-md);
 }
 
+.history-item-section:hover::before {
+    opacity: 1;
+}
+
+.history-item-section:active {
+    transform: translateX(2px) scale(0.99);
+}
+
+/* Статусные варианты для цветной полоски */
+.history-item-section[data-status="low"] {
+    color: var(--status-low);
+}
+
+.history-item-section[data-status="normal"] {
+    color: var(--status-normal);
+}
+
+.history-item-section[data-status="elevated"] {
+    color: var(--status-elevated);
+}
+
+.history-item-section[data-status="high"] {
+    color: var(--status-high);
+}
+
+/* ============================================
+   HISTORY ITEM CONTENT
+   ============================================ */
+
+.history-item {
+    display: flex;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+}
+
+/* Time Section */
 .history-item__time {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-width: 60px;
+    gap: var(--spacing-xs);
+    min-width: 70px;
+    
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--history-time-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
 }
 
 .history-item__hour {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
     color: var(--tg-text-color);
     font-variant-numeric: tabular-nums;
+    line-height: 1;
 }
 
+/* Status Indicator Dot */
+.history-item__status-dot {
+    width: var(--status-dot-size);
+    height: var(--status-dot-size);
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: var(--status-dot-shadow);
+}
+
+/* Content Section */
 .history-item__content {
     flex: 1;
     display: flex;
@@ -65,15 +168,20 @@
     gap: var(--spacing-md);
 }
 
+/* Pressure Value */
 .history-item__value {
-    font-size: var(--font-size-2xl);
+    font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     color: var(--tg-text-color);
     font-variant-numeric: tabular-nums;
+    line-height: 1;
+    letter-spacing: -0.5px;
 }
+
 .history-item__value--low {
     color: var(--status-low);
 }
+
 .history-item__value--normal {
     color: var(--status-normal);
 }
@@ -86,36 +194,157 @@
     color: var(--status-high);
 }
 
-.history-item__pulse {
-    font-size: var(--font-size-sm);
-    color: var(--tg-hint-color);
-}
+/* ============================================
+   HISTORY ITEM NOTE
+   ============================================ */
 
 .history-item__note {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    
+    background: var(--history-note-bg);
+    border: 1px solid var(--history-note-border);
+    border-left: 3px solid var(--accent-primary);
+    border-radius: var(--radius-sm);
+    
     font-size: var(--font-size-sm);
     color: var(--tg-text-color);
-    opacity: 0.8;
-    line-height: 1.4;
+    line-height: 1.5;
+    
+    position: relative;
 }
 
-.history-item__menu {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
+.history-item__note:empty {
+    display: none;
+}
+
+/* Note icon */
+.history-item__note::before {
+    position: absolute;
+    top: var(--spacing-md);
+    left: calc(var(--spacing-md) * -1.5);
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+/* Note label (если нужен) */
+.history-item__note-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
     color: var(--tg-hint-color);
-    background: transparent;
-    border-radius: var(--radius-sm);
-    transition: all var(--transition-fast);
-    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-xs);
 }
 
-.history-item__menu:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: var(--tg-text-color);
+/* ============================================
+   ANIMATIONS & STATES
+   ============================================ */
+
+/* Плавное появление элементов */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.history-item__menu:active {
-    transform: scale(0.95);
+.history-item-section {
+    animation: fadeInUp 0.3s ease-out backwards;
+}
+
+/* Задержка анимации для каждого элемента */
+.history-group__items .history-item-section:nth-child(1) { animation-delay: 0.05s; }
+.history-group__items .history-item-section:nth-child(2) { animation-delay: 0.1s; }
+.history-group__items .history-item-section:nth-child(3) { animation-delay: 0.15s; }
+.history-group__items .history-item-section:nth-child(4) { animation-delay: 0.2s; }
+.history-group__items .history-item-section:nth-child(5) { animation-delay: 0.25s; }
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 375px) {
+    .history-list {
+        gap: var(--spacing-xl);
+    }
+    
+    .history-group__title {
+        font-size: 11px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        margin: 0 calc(var(--spacing-md) * -1);
+    }
+    
+    .history-item-section {
+        padding: var(--spacing-md);
+    }
+    
+    .history-item {
+        gap: var(--spacing-md);
+    }
+    
+    .history-item__time {
+        min-width: 60px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .history-item__hour {
+        font-size: var(--font-size-base);
+    }
+    
+    .history-item__value {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .history-item__badge {
+        font-size: 9px;
+        padding: 3px 6px;
+    }
+    
+    .history-item__note {
+        margin-top: var(--spacing-sm);
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-xs);
+    }
+    
+    .history-item__note::before {
+        font-size: 14px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 320px) {
+    .history-item {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .history-item__time {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    
+    .history-item__value {
+        font-size: var(--font-size-xl);
+    }
+}
+
+/* ============================================
+   SCROLL PERFORMANCE
+   ============================================ */
+
+.history-list {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.history-item-section {
+    will-change: transform, box-shadow;
+    transform: translateZ(0);
 }

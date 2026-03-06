@@ -1,11 +1,13 @@
 export const AppState = {
     _token: localStorage.getItem('token') || null,
+    quickButtons: true,
     user: {
         username: null,
         settings: {
             theme: 'light',
             target_pressure: {sys: 120, dia: 80},
-            notification: true
+            notification: true,
+            pressure_reminders: ["09:00", "21:00"]
         }
     },
     get token() {

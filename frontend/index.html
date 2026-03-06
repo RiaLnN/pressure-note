@@ -53,7 +53,7 @@
                 </div>
             </section>
             <!-- Quick Add Presets -->
-            <section class="card card--actions" aria-labelledby="quick-add-title">
+            <section class="card card--actions active" aria-labelledby="quick-add-title" id="quick-btns">
                 <h2 class="card__title" id="quick-add-title">Quick Add</h2>
                 <div class="quick-actions">
                     <button class="quick-actions__btn" data-sys="100" data-dia="60" aria-label="Add pressure 110/70">
@@ -129,7 +129,7 @@
                             <label class="form-group__label" for="pressure-input">Blood Pressure</label>
                             <input 
                                 class="form-group__input" 
-                                type="text" 
+                                type="tel" 
                                 id="pressure-input" 
                                 name="pressure" 
                                 placeholder="120/80" 
@@ -305,7 +305,7 @@
 
                 <div class="screen__content">
                     <div class="settings-section">
-                        <h2 class="settings-section__title">Profile</h2>
+                        <h2 class="settings-section__title">General</h2>
                         <div class="settings-list">
                             <button class="settings-list__item" data-action="target-pressure">
                                 <div class="settings-list__icon">
@@ -315,7 +315,7 @@
                                     </svg>
                                 </div>
                                 <span class="settings-list__label">Target Pressure</span>
-                                <span class="settings-list__value">--/--</span>
+                                <span class="settings-list__value" id="target-pressure-settings">--/--</span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
@@ -347,7 +347,7 @@
                                     </svg>
                                 </div>
                                 <span class="settings-list__label">Reminder Time</span>
-                                <span class="settings-list__value">9:00 AM</span>
+                                <span class="settings-list__value" id="reminder-time"></span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
@@ -407,12 +407,6 @@
                         </svg>
                     </button>
                     <h1 class="screen__title">History</h1>
-                    <button type="button" class="screen__action-btn" data-action="search" aria-label="Search history">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
-                            <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                    </button>
                 </header>
 
                 <div class="screen__content">
@@ -597,7 +591,7 @@
                 </svg>
                 <span class="nav__label">Medications</span>
             </a>
-            <a href="#settings" class="nav__item" data-page="settings-screenDISABLED">
+            <a href="#settings" class="nav__item" data-page="settings-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
