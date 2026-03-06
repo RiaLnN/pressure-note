@@ -6,7 +6,7 @@
     <title>Pressure Tracker</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/frontend/css/style.css">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=1.1.3">
     
 </head>
 <body>
@@ -19,7 +19,7 @@
                         <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
-                <h1 class="header__title" id="current-date">11 February</h1>
+                <h1 class="header__title" id="current-date"></h1>
                 <button type="button" class="header__nav-btn header__nav-btn--next" aria-label="Next day" data-action="next-day">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -187,7 +187,7 @@
                                 <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         </button>
-                        <h2 class="calendar-nav__title" id="calendar-month">February 2026</h2>
+                        <h2 class="calendar-nav__title" id="calendar-month"></h2>
                         <button type="button" class="calendar-nav__btn" data-action="next-month" aria-label="Next month">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                 <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -207,19 +207,11 @@
                             <span class="calendar__weekday">Sun</span>
                         </div>
                         <div class="calendar__days" id="calendar-days">
-                            <!-- Генерируется JS -->
-                            <button class="calendar__day" data-date="2026-02-01">
-                                <span class="calendar__day-number">1</span>
-                                <span class="calendar__day-indicator calendar__day-indicator--good"></span>
-                            </button>
-                            <!-- ... остальные дни ... -->
                         </div>
                     </div>
 
                     <!-- Selected Day Info -->
                     <div class="calendar-info" id="calendar-info">
-                        <h3 class="calendar-info__title">No measurements for this day</h3>
-                        <p class="calendar-info__empty">Tap a day with indicator to see details</p>
                     </div>
                 </div>
             </div>
@@ -312,23 +304,9 @@
                 </header>
 
                 <div class="screen__content">
-                    <!-- Profile Section -->
                     <div class="settings-section">
                         <h2 class="settings-section__title">Profile</h2>
                         <div class="settings-list">
-                            <button class="settings-list__item" data-action="edit-profile">
-                                <div class="settings-list__icon">
-                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="2"/>
-                                        <path d="M5 20C5 16.6863 7.68629 14 11 14H13C16.3137 14 19 16.6863 19 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                    </svg>
-                                </div>
-                                <span class="settings-list__label">Personal Info</span>
-                                <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                    <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                                </svg>
-                            </button>
-
                             <button class="settings-list__item" data-action="target-pressure">
                                 <div class="settings-list__icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -337,7 +315,7 @@
                                     </svg>
                                 </div>
                                 <span class="settings-list__label">Target Pressure</span>
-                                <span class="settings-list__value">120/80</span>
+                                <span class="settings-list__value">--/--</span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
@@ -619,7 +597,7 @@
                 </svg>
                 <span class="nav__label">Medications</span>
             </a>
-            <a href="#settings" class="nav__item" data-page="settings-screen">
+            <a href="#settings" class="nav__item" data-page="settings-screenDISABLED">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -628,6 +606,6 @@
             </a>
         </nav>
     </footer>
-    <script type="module" src="/frontend/js/app.js?v=1.1.4"></script>
+    <script type="module" src="/frontend/js/app.js?v=1.1.7"></script>
 </body>
 </html>

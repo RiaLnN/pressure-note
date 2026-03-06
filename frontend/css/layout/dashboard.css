@@ -1,9 +1,16 @@
+/* frontend/css/layout/dashboard.css */
+
+/* КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Главный контейнер */
 .dashboard {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
-    padding: 0, var(--spacing-lg), 90px, var(--spacing-lg);
+    width: 100%;
     min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport для мобильных */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    /* Убираем padding-bottom, он будет в main-screen */
 }
 
 /* Secondary Actions Grid */
@@ -50,9 +57,7 @@
 
 /* Responsive */
 @media (max-width: 375px) {
-    .dashboard {
-        padding: var(--spacing-md);
-        gap: var(--spacing-md);
+    .secondary-actions {
+        gap: var(--spacing-sm);
     }
 }
-

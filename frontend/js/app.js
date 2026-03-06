@@ -12,9 +12,29 @@ async function init() {
         const responseData = await UserData.create(user.id.toString());
         AppState.token = responseData.access_token;
     } catch (e) {console.error(e.message)};
+    tg.expand();
+    tg.enableClosingConfirmation();
+    
+    // Set header color
+    tg.setHeaderColor('#1a3829');
+    
+    // Set background color
+    tg.setBackgroundColor('#1a1b23');
+    
+    // Add class to body
+    document.body.classList.add('tg-viewport');
+    
+    // Apply theme colors to CSS variables
+    if (tg.themeParams) {
+        const root = document.documentElement;
+        Object.entries(tg.themeParams).forEach(([key, value]) => {
+            root.style.setProperty(`--tg-theme-${key.replace(/_/g, '-')}`, value);
+        });
+    }
     MeasurementsManager.init();
     ActionHandler.init();
     MeasurementsManager.fetchAndRefresh();
     SettingsManager.fetchAndRefresh();
+    document.body.style.overscrollBehavior = 'none';
 }
 init();

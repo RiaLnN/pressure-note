@@ -6,6 +6,8 @@ import { StatisticsManager } from "./managers/stats.js";
 import { CONFIG } from "./config.js";
 import { SettingsManager } from "./managers/settings.js";
 import { MedicationManager } from "./managers/medications.js";
+import { CalendarManager } from "./managers/calendar.js";
+
 
 
 export const UIManager = {
@@ -46,32 +48,39 @@ export const UIManager = {
         this.closeTargetModal();
         MeasurementsManager.fetchAndRefresh();
     },
-    updateDashboard (data, count) {
+    updateDashboard (data) {
         const pressureEl = document.getElementById("current-pressure");
         const countHintEl = document.getElementById("measurement-count");
-        if (!data) {
-            pressureEl.textContent = "--/--";
-            countHintEl.style.display = "none";
-            return;
-        }
-
-        const {sys, dia} = data;
-        const status = PRESSURE.getPressureStatus(sys, dia);
-
         const statusLabel = document.getElementById("status-text");
         const statusCircle = document.querySelector(".status__circle");
         const statusDetail = document.querySelector(".status__detail-value");
+        const count = data.measurements.length;
 
-        pressureEl.textContent = `${sys}/${dia}`;
-        statusLabel.textContent = status.name;
+        const mainTitle = document.getElementById("current-date");
+
         statusLabel.classList.remove('status__label--none', 'status__label--normal', 'status__label--high', 'status__label--low', 'status__label--elevated');
         statusCircle.classList.remove('status__circle--none', 'status__circle--normal', 'status__circle--high', 'status__circle--low', 'status__circle--elevated');
         statusDetail.classList.remove('status__detail-value--none','status__detail-value--normal', 'status__detail-value--high', 'status__detail-value--low', 'status__detail-value--elevated');
 
+        mainTitle.textContent = `${TimeConvert.formatMonthDate(data.date)}`;
+
+        if (!data.average) {
+            pressureEl.textContent = "--/--";
+            countHintEl.classList.remove("active");
+            statusLabel.classList.add(`status__label--none`);
+            statusCircle.classList.add(`status__circle--none`);
+            statusDetail.classList.add(`status__detail-value--none`);
+            return;
+        }
+        const {sys, dia} = data.average;
+        const status = PRESSURE.getPressureStatus(sys, dia);
+
+        pressureEl.textContent = `${sys}/${dia}`;
+        statusLabel.textContent = status.name;
+
         statusLabel.classList.add(`status__label--${status.name.toLowerCase()}`);
         statusCircle.classList.add(`status__circle--${status.name.toLowerCase()}`);
         statusDetail.classList.add(`status__detail-value--${status.name.toLowerCase()}`);
-
         if (count > 0) {
             countHintEl.textContent = `Based on ${count} ${count === 1 ? 'measurement' : 'measurements'} today`;
             countHintEl.classList.add("active");
@@ -140,15 +149,15 @@ export const UIManager = {
         emptyState.style.display = "none";
         const avgEl = document.getElementById('avg-pressure');
         avgEl.textContent = `${stats.avg.sys}/${stats.avg.dia}`;
-        avgEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.avg.sys, stats.avg.dia).name.toLowerCase()}`;
+        // avgEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.avg.sys, stats.avg.dia).name.toLowerCase()}`;
         const maxEl = document.getElementById('max-pressure');
         maxEl.textContent = `${stats.max.sys}/${stats.max.dia}`;
-        maxEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.max.sys, stats.max.dia).name.toLowerCase()}`;
+        // maxEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.max.sys, stats.max.dia).name.toLowerCase()}`;
         document.getElementById('max-date').textContent = TimeConvert.formatTime(stats.max.date); 
         
         const minEl = document.getElementById('min-pressure');
         minEl.textContent = `${stats.min.sys}/${stats.min.dia}`;
-        minEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.min.sys, stats.min.dia).name.toLowerCase()}`;
+        // minEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.min.sys, stats.min.dia).name.toLowerCase()}`;
         document.getElementById('min-date').textContent = TimeConvert.formatTime(stats.min.date);
 
         document.getElementById('total-measurements').textContent = stats.total;
@@ -176,6 +185,10 @@ export const UIManager = {
         const ctx = ctxEl.getContext('2d');
         if (this.chartInstance) this.chartInstance.destroy();
 
+        // ИСПРАВЛЕНИЕ: Адаптивные размеры для Telegram
+        const isMobile = window.innerWidth <= 375;
+        const isSmallMobile = window.innerWidth <= 320;
+        
         const dailyScores = data.map(day => {
             if (day.measurements.length === 0) return null;
             const avg = PRESSURE.getAveragePressure(day.measurements);
@@ -188,21 +201,23 @@ export const UIManager = {
         gradient.addColorStop(0.5, CONFIG.colors.green); 
         gradient.addColorStop(0.8, CONFIG.colors.blue); 
         gradient.addColorStop(1, CONFIG.colors.darkBlue);
+        
         this.chartInstance = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: data.length === 12 ? data.map(d => TimeConvert.formatMonth(d.date)) : data.map(d => TimeConvert.formatGroupDate(d.date)),
+                labels: data.length === 12 
+                    ? data.map(d => TimeConvert.formatMonth(d.date)) 
+                    : data.map(d => TimeConvert.formatGroupDate(d.date)),
                 datasets: [{
                     label: 'Pressure Range',
                     data: dailyScores, 
                     borderColor: gradient,
-                    borderWidth: 4,
-                    pointRadius: 4,
+                    borderWidth: isMobile ? 3 : 4,
+                    pointRadius: isMobile ? 3 : 4,
                     pointBorderColor: 'rgba(26, 56, 41, 1)',
                     pointBorderWidth: 2,
                     spanGaps: true,
                     fill: true,
-                    backgroundColor: 'rgba(52, 199, 89, 0.05)',
                     tension: 0.4,
                     backgroundColor: (context) => {
                         const bg = context.chart.ctx.createLinearGradient(0, 0, 0, context.chart.height);
@@ -213,12 +228,14 @@ export const UIManager = {
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 layout: {
                     padding: {
-                        top: 30,
-                        bottom: 10,
-                        left: 10,
-                        right: 10
+                        top: isMobile ? 20 : 30,
+                        bottom: isMobile ? 5 : 10,
+                        left: isMobile ? 5 : 10,
+                        right: isMobile ? 5 : 10
                     }
                 },
                 scales: {
@@ -228,19 +245,24 @@ export const UIManager = {
                         border: { display: false },
                         grid: {
                             color: CONFIG.colors.gridLines,
-                            drawTicks: false
+                            drawTicks: false,
+                            lineWidth: isMobile ? 0.5 : 1
                         },
                         ticks: {
                             stepSize: 25,
-                            padding: 15,
+                            padding: isMobile ? 8 : 15,
                             color: CONFIG.colors.lightGreen,
-                            font: { size: 11, weight: '600', family: 'Inter' },
+                            font: { 
+                                size: isSmallMobile ? 9 : isMobile ? 10 : 11,
+                                weight: '600',
+                                family: 'Inter'
+                            },
                             callback: (val) => {
                                 let label = '';
                                 if (val === 50) label = 'IDEAL';
                                 if (val === 100) label = 'HIGH';
                                 if (val === 0) label = 'LOW';
-                                return label ? label + '    ' : '';
+                                return label ? label + (isMobile ? '' : '    ') : '';
                             }
                         }
                     },
@@ -253,23 +275,34 @@ export const UIManager = {
                             display: false
                         },
                         ticks: {
-                            ticks: {
-                                color: CONFIG.colors.lightGreen,
-                                padding: 10,
-                                font: { size: 10, weight: '500' }
-                            }
+                            color: CONFIG.colors.lightGreen,
+                            padding: isMobile ? 5 : 10,
+                            font: { 
+                                size: isSmallMobile ? 8 : isMobile ? 9 : 10,
+                                weight: '500'
+                            },
+                            maxRotation: 0,
+                            autoSkip: true,
+                            autoSkipPadding: isMobile ? 15 : 10
                         }
                     }
                 },
                 plugins: {
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(26, 56, 41, 0.9)',
+                        enabled: true,
+                        backgroundColor: 'rgba(26, 56, 41, 0.95)',
                         titleColor: CONFIG.colors.lightGreen,
                         bodyColor: '#fff',
                         displayColors: false,
-                        padding: 12,
-                        cornerRadius: 10,
+                        padding: isMobile ? 8 : 12,
+                        cornerRadius: 8,
+                        titleFont: {
+                            size: isMobile ? 11 : 13
+                        },
+                        bodyFont: {
+                            size: isMobile ? 12 : 14
+                        },
                         callbacks: {
                             label: (context) => {
                                 const dayData = data[context.dataIndex];
@@ -279,10 +312,15 @@ export const UIManager = {
                             }
                         }
                     }
+                },
+                interaction: {
+                    mode: 'index',
+                    intersect: false
                 }
             }
         });
     },
+
     loadMedication(medications) {
         const listContainer = document.getElementById("medications-list");
         const emptyState = document.getElementById("medications-empty");
@@ -436,6 +474,61 @@ export const UIManager = {
         itemName.value = '';
         mainTitle.textContent = 'Add Medication';
 
+    },
+    loadCalendar(data){
+        const mainTitle = document.getElementById("calendar-month");
+        mainTitle.textContent = `${TimeConvert.formatMonthFull(data.month)}  ${data.year}`;
+        const listContainer = document.getElementById("calendar-days");
+
+        listContainer.innerHTML = data.days.map((day, index) => {
+            const status = day.average 
+                ? PRESSURE.getPressureStatus(day.average.sys, day.average.dia)
+                : null;
+            return `
+                <button class="calendar__day" data-action="select-day" data-index="${index}">
+                    <span class="calendar__day-number">${new Date(day.date).getDate()}</span>
+                    ${status ? `<span class="calendar__day-indicator calendar__day-indicator--${status.name.toLowerCase()}"></span>` : ''}
+                </button>
+            `;
+        }).join("");
+        document.getElementById("calendar-info").innerHTML = `<p class="calendar-info__empty">No day selected</p>`;
+        
+    },
+    updateDayInfo(dayData){
+        const infoContainer = document.getElementById("calendar-info");
+        console.log(dayData);
+        if (!dayData.average){
+            infoContainer.innerHTML = `<p class="calendar-info__empty">No data for this day</p>`;
+            return;
+        }
+        const statusObj = PRESSURE.getPressureStatus(dayData.average.sys, dayData.average.dia);
+        const status = statusObj.name;
+        infoContainer.innerHTML = `
+            <div class="day-details">
+                <div class="day-details__header">
+                    <span class="day-details__date">${TimeConvert.formatDateFull(dayData.date)}</span>
+                    <span class="day-details__badge day-details__badge--${status}">${status.toUpperCase()}</span>
+                </div>
+                <div class="day-details__main">
+                    <div class="day-details__avg">
+                        <span class="day-details__label">Daily Avg</span>
+                        <span class="day-details__value">${Math.round(dayData.average.sys)}/${Math.round(dayData.average.dia)}</span>
+                    </div>
+                    <div class="day-details__count">
+                        <span class="day-details__label">Measurements</span>
+                        <span class="day-details__value">${dayData.measurements.length}</span>
+                    </div>
+                </div>
+                <ul class="day-details__list">
+                    ${dayData.measurements.map(m => `
+                        <li class="day-details__item">
+                            <span class="day-details__item-time">${TimeConvert.formatTime(m.created_at)}</span>
+                            <span class="day-details__item-val">${m.sys}/${m.dia}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </div>
+        `;
     }
 }
 
@@ -445,11 +538,12 @@ export const ActionHandler = {
         "stats-screen": () => StatisticsManager.loadStats(),
         "medications-screen": () => MedicationManager.fetchAndRefresh(),
         "history-screen": () => HistoryManager.loadHistory(),
+        "calendar-screen": () => CalendarManager.init()
     },
     btnAction: {
         "manual-add": () => { UIManager.switchView("add-screen") },
-        "prev-day": () => { console.log("Change date prev") },
-        "next-day": () => { console.log("Change date next") },
+        "prev-day": () => { MeasurementsManager.prevDay(); },
+        "next-day": () => { MeasurementsManager.nextDay(); },
         "history": () => { 
             HistoryManager.loadHistory();
             UIManager.switchView("history-screen"); 
@@ -513,6 +607,16 @@ export const ActionHandler = {
             const sheet = document.getElementById("med-menu-sheet");
             const medId = sheet.dataset.currentId;
             await MedicationManager.getData(medId);
+        },
+        "prev-month": (event) => { CalendarManager.prevMonth(); },
+        "next-month": (event) => { CalendarManager.nextMonth(); },
+        "select-day": (event) => {
+            const btn = event.target.closest('.calendar__day');
+            const index = btn.dataset.index;
+            const dateData = CalendarManager.monthlyData[index];
+            document.querySelectorAll('.calendar__day').forEach(d => d.classList.remove('calendar__day--selected'));
+            btn.classList.add('calendar__day--selected');
+            UIManager.updateDayInfo(dateData);
         }
     },
     init() {

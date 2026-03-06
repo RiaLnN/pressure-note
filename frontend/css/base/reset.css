@@ -5,7 +5,11 @@
     margin: 0;
     padding: 0;
 }
-
+html, body {
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
 html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -13,10 +17,17 @@ html {
 }
 
 body {
-    min-height: 100vh;
-    line-height: 1.5;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
 }
-
+body.tg-viewport {
+    position: fixed;
+    overflow: hidden;
+}
+body.tg-viewport .dashboard {
+    height: 100vh;
+    height: 100dvh;
+}
 img,
 picture,
 video,

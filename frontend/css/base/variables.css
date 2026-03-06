@@ -31,6 +31,24 @@
     --status-high: #ff3b30;
     --status-high-bg: rgba(255, 59, 48, 0.15);
     
+    --calendar-day-bg: rgba(255, 255, 255, 0.04);
+    --calendar-day-hover: rgba(255, 255, 255, 0.08);
+    --calendar-selected-shadow: 0 0 0 3px rgba(94, 181, 115, 0.3);
+
+    /* Badge Colors по статусам */
+    --badge-none-bg: rgba(142, 142, 143, 0.2);
+    --badge-none-text: #8e8e93;
+    --badge-low-bg: rgba(90, 200, 250, 0.2);
+    --badge-low-text: #5ac8fa;
+    --badge-normal-bg: rgba(52, 199, 89, 0.2);
+    --badge-normal-text: #34c759;
+    --badge-elevated-bg: rgba(255, 149, 0, 0.2);
+    --badge-elevated-text: #ff9500;
+    --badge-high-bg: rgba(255, 59, 48, 0.2);
+    --badge-high-text: #ff3b30;
+
+/* Divider */
+--divider-color: rgba(255, 255, 255, 0.08);
     /* Accent Colors */
     --accent-primary: #5eb573;
     --accent-primary-hover: #6cc47f;

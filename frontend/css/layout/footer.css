@@ -8,13 +8,15 @@
     -webkit-backdrop-filter: blur(var(--blur-md));
     border-top: 1px solid var(--card-border);
     padding: var(--spacing-sm) 0;
+    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
     z-index: var(--z-popover);
     box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
 }
 
-/* Safe area support for iOS */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
+/* Responsive */
+@media (max-width: 375px) {
     .footer {
-        padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+        padding: 6px 0;
+        padding-bottom: calc(6px + env(safe-area-inset-bottom));
     }
 }

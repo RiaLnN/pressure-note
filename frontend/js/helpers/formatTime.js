@@ -13,5 +13,24 @@ export const TimeConvert = {
     formatMonth(dateStr){
         const d = new Date(dateStr);
         return d.toLocaleDateString('en-US', { month: 'short' });
+    },
+    formatMonthFull(dateStr){
+        const d = new Date();
+        d.setMonth(dateStr-1);
+        
+        return d.toLocaleDateString('en-US', {month: 'long'});
+    },
+    getDay(dateStr){
+        const d = new Date(dateStr);
+        return d.getDate();
+    },
+    formatDateFull(dateStr){
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', {year: 'numeric',month: '2-digit', day: '2-digit'});
+    },
+    formatMonthDate(dateStr){
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('en-US', { day: 'numeric', month: 'long'})
     }
+
 }

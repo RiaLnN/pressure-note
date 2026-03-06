@@ -31,6 +31,14 @@ export const measurementsApi = {
     getData: () => request(`/measurements`),
     getHistory: () => request(`/measurements/history`),
     getStats: (period) => request(`/stats?period=${period}`),
+    getByMonth: (date) => {
+        const yearMonth = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
+        return request(`/measurements/month/${yearMonth}`);
+    },
+    getByDate: (date) => {
+        const yearMonthDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+        return request(`/measurements/day/${yearMonthDate}`);
+    },
     delete: (id) => request(`/measurements/${id}`, {
         method: "DELETE"
     }),

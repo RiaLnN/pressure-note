@@ -1,3 +1,6 @@
+/* frontend/css/components/screens.css */
+
+/* ВТОРИЧНЫЕ ЭКРАНЫ (модальные) */
 .screen {
     display: none;
     position: fixed;
@@ -13,6 +16,7 @@
 .screen.active {
     display: flex;
 }
+
 .screen__container {
     display: flex;
     flex-direction: column;
@@ -20,20 +24,49 @@
     height: 100%;
     overflow: hidden;
 }
+
+/* КРИТИЧЕСКОЕ ИСПРАВЛЕНИЕ: Главный экран */
 .screen.main-screen {
+    /* Убираем fixed positioning полностью */
+    position: static !important;
+    display: block !important;
     z-index: auto;
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-xl);
-    padding: var(--spacing-lg);
-    padding-top: 0;
+    overflow: visible;
     
+    /* Структура главного экрана */
+    padding: 0 var(--spacing-lg);
+    padding-bottom: calc(70px + env(safe-area-inset-bottom)); /* Footer + safe area */
+    gap: var(--spacing-lg);
 }
+
+.screen.main-screen.active {
+    display: block !important;
+}
+
+/* Header внутри main-screen */
 .screen.main-screen .header {
-    margin: 0 calc(var(--spacing-lg) * -1); 
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0 calc(var(--spacing-lg) * -1);
+    margin-bottom: var(--spacing-lg);
+    z-index: var(--z-sticky);
+    border-radius: 0;
+}
+
+/* Все карточки в main-screen */
+.screen.main-screen > .card,
+.screen.main-screen > .secondary-actions,
+.screen.main-screen > section {
     margin-bottom: var(--spacing-lg);
 }
-/* Screen Header */
+
+.screen.main-screen > *:last-child {
+    margin-bottom: 0;
+}
+
+/* Screen Header (для вторичных экранов) */
 .screen__header {
     display: flex;
     align-items: center;
@@ -83,13 +116,13 @@
     width: 40px;
 }
 
-/* Screen Content */
+/* Screen Content (для вторичных экранов) */
 .screen__content {
     flex: 1;
     overflow-y: auto;
     overflow-x: hidden;
     padding: var(--spacing-lg);
-    padding-bottom: 90px;
+    padding-bottom: calc(var(--spacing-2xl) + env(safe-area-inset-bottom));
     -webkit-overflow-scrolling: touch;
 }
 
@@ -120,4 +153,28 @@
 .empty-state__text {
     font-size: var(--font-size-base);
     color: var(--tg-hint-color);
+}
+
+/* Responsive */
+@media (max-width: 375px) {
+    .screen.main-screen {
+        padding: 0 var(--spacing-md);
+        padding-bottom: calc(70px + env(safe-area-inset-bottom));
+        gap: var(--spacing-md);
+    }
+    
+    .screen.main-screen .header {
+        margin: 0 calc(var(--spacing-md) * -1);
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .screen.main-screen > .card,
+    .screen.main-screen > .secondary-actions,
+    .screen.main-screen > section {
+        margin-bottom: var(--spacing-md);
+    }
+    
+    .screen__content {
+        padding: var(--spacing-md);
+    }
 }

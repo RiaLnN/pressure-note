@@ -108,9 +108,54 @@
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
-    padding: var(--spacing-xl);
+    padding: var(--spacing-lg);
     margin-bottom: var(--spacing-xl);
-    min-height: 250px;
+    position: relative;
+    /* ИСПРАВЛЕНИЕ: правильная высота для Telegram */
+    height: 300px;
+    max-height: 40vh; /* Не больше 40% экрана */
+}
+
+/* Canvas */
+#statsChart {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 260px;
+}
+
+/* Chart Title (если нужен) */
+.chart-container__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--tg-hint-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: var(--spacing-md);
+}
+
+/* Responsive для графика */
+@media (max-width: 375px) {
+    .chart-container {
+        padding: var(--spacing-md);
+        height: 250px;
+        max-height: 35vh;
+    }
+    
+    #statsChart {
+        max-height: 210px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 320px) {
+    .chart-container {
+        height: 220px;
+        padding: var(--spacing-sm);
+    }
+    
+    #statsChart {
+        max-height: 190px;
+    }
 }
 
 .chart-placeholder {
