@@ -43,6 +43,24 @@ export const UIManager = {
         modal.showModal();
     },
     closeTargetModal: () => document.getElementById('modal-target-pressure').close(),
+    showRemindersModal() {
+        const modal = document.getElementById('modal-reminders');
+        const reminders = AppState.user.settings.pressure_reminders || [];
+        const listContainer = document.getElementById('pressure-reminders-chips');
+
+        if (reminders.length === 0) {
+            listContainer.innerHTML = `<p class="empty-hint">No reminders set</p>`;
+        } else {
+            listContainer.innerHTML = reminders.map(r => `
+                <div class="time-chip">
+                    <span class="time-chip__text">${r}</span>
+                    <span class="time-chip__remove" data-action="delete-reminder">&times;</span>
+                </div>
+            `).join('');
+        }
+        modal.showModal();
+    },
+    closeRemindersModal: () => document.getElementById('modal-reminders').close(),
     loadSettings(settings) {
         const targetPressure = settings.target_pressure;
         document.getElementById('target-pressure-value').textContent = `${targetPressure.sys}/${targetPressure.dia}`;
@@ -196,7 +214,6 @@ export const UIManager = {
         const ctx = ctxEl.getContext('2d');
         if (this.chartInstance) this.chartInstance.destroy();
 
-        // ИСПРАВЛЕНИЕ: Адаптивные размеры для Telegram
         const isMobile = window.innerWidth <= 375;
         const isSmallMobile = window.innerWidth <= 320;
         
@@ -543,15 +560,31 @@ export const UIManager = {
         `;
     },
     loadSettingsScreen(){
-        const targetPressure = document.getElementById("target-pressure-settings");
-        const reminderTime = document.getElementById("reminder-time");
-        const notification = document.getElementById("toggle-reminders");
-        const {sys, dia} = AppState.user.settings.target_pressure;
-        targetPressure.textContent = [sys, dia].join("/");
-        notification.checked = AppState.user.settings.notification;
-        reminderTime.textContent = `${AppState.user.settings.pressure_reminders[0]}`;
+        const targetPressureEl = document.getElementById("target-pressure-settings");
+        const target = AppState.user.settings.target_pressure;
+        if (target && target.sys && target.dia) {
+            targetPressureEl.textContent = `${target.sys}/${target.dia}`;
+        } else {
+            targetPressureEl.textContent = "120/80";
+        }
+        const notificationToggle = document.getElementById("toggle-reminders");
+        const isNotifEnabled = AppState.user.settings.notifications === true;
+        notificationToggle.checked = isNotifEnabled;
 
-    }
+        const reminderTimeEl = document.getElementById("reminder-time");
+        const reminders = AppState.user.settings.pressure_reminders;
+        reminderTimeEl.textContent = (reminders && reminders.length > 0) ? reminders[0] : "Not set";
+        
+        const reminderTimeBtn = reminderTimeEl.closest('.settings-list__item');
+        if (isNotifEnabled){
+            reminderTimeBtn.style.display = 'flex';
+            reminderTimeBtn.style.opacity = '1';
+        } else {
+            reminderTimeBtn.style.display = 'none';
+        }
+
+    },
+    
 }
 
 export const ActionHandler = {
@@ -641,7 +674,23 @@ export const ActionHandler = {
             btn.classList.add('calendar__day--selected');
             UIManager.updateDayInfo(dateData);
         },
-
+        "reminder-time": (event) => { UIManager.showRemindersModal(); },
+        "close-reminder-modal": (event) => { UIManager.closeRemindersModal(); },
+        "add-reminder-time": () => {
+            const timeInput = document.getElementById('pressure-time-picker');
+            if (timeInput.value) {
+                SettingsManager.addPressureReminder(timeInput.value);
+                timeInput.value = "";
+            }
+        },
+        "delete-reminder": (event) => {
+            const chip = event.target.closest('.time-chip');
+            const time = chip.querySelector('.time-chip__text').textContent;
+            SettingsManager.deletePressureReminder(time);
+        },
+        "clear-data": (event) => { SettingsManager.clearData(); },
+        "export": (event) => { tg.showAlert("Export feature coming soon!"); },
+        "toggle-notifications": (event) => { SettingsManager.updateNotification(event.target.checked); },
     },
     init() {
         document.addEventListener("click", (event) => {
@@ -678,9 +727,6 @@ export const ActionHandler = {
                 pressureInput.value = pressureInput.value.slice(0, -1);
             }
         });
-        const notificationToggle = document.getElementById('toggle-reminders');
-        notificationToggle.addEventListener('click', (event) => {
-            SettingsManager.updateNotification();
-        })
+
     }
 }

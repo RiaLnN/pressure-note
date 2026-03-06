@@ -6,8 +6,9 @@ export const AppState = {
         settings: {
             theme: 'light',
             target_pressure: {sys: 120, dia: 80},
-            notification: true,
-            pressure_reminders: ["09:00", "21:00"]
+            notifications: true,
+            pressure_reminders: ["09:00", "21:00"],
+            language_code: "en"
         }
     },
     get token() {

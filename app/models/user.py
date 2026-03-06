@@ -17,7 +17,8 @@ class User(Base):
         "theme": "light",
         "target_pressure": {"sys": 120, "dia": 80},
         "notifications": True,
-        "pressure_reminders": ["09:00", "21:00"]
+        "pressure_reminders": ["09:00", "21:00"],
+        "language_code": "en"
     })
 
     measurements: Mapped[List["PressureMeasurement"]] = relationship(back_populates="user", cascade="all, delete-orphan")

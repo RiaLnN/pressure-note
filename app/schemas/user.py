@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict, Field
-from typing import Optional, Dict
+from typing import Optional, Dict, List
 
 class UserBase(BaseModel):
     username: Optional[str] = None
@@ -8,6 +8,7 @@ class UserSettings(BaseModel):
     theme: str = "light"
     target_pressure: Dict[str, int] = {"sys": 120, "dia": 80}
     notifications: bool = True
+    pressure_reminders: List[str] = ['09:00', '21:00']
 
 class UserRead(UserBase):
     id: int

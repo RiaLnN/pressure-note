@@ -23,7 +23,7 @@ async def read_pressure(
     db: AsyncSession = Depends(get_db)
     ):
     measurements = await measurement_service.get_measurements(db, user_id)
-    return measurements
+    return measurements or []
 
 @router.get('/history', response_model = List[PressureGroup])
 async def read_history(
@@ -31,7 +31,7 @@ async def read_history(
     db: AsyncSession = Depends(get_db)
     ):
     measurements = await measurement_service.get_history(db, user_id)
-    return measurements
+    return measurements or []
 
 @router.patch('/{pressure_id}', response_model = PressureRead)
 async def update_pressure_info(
@@ -62,9 +62,9 @@ async def delete_pressure(
 @router.get('/month/{month}', response_model=PressureGroupMonthly)
 async def read_month_pressure(month: str, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     target_date = datetime.strptime(month, "%Y-%m")
-    return await measurement_service.get_measurements_monthly(db, user_id, target_date)
+    return await measurement_service.get_measurements_monthly(db, user_id, target_date) or []
 
 @router.get('/day/{date}', response_model=DayStats)
 async def read_date_pressure(date: str, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     target_date = datetime.strptime(date, "%Y-%m-%d")
-    return await measurement_service.get_measurements_daily(db, user_id, target_date)
+    return await measurement_service.get_measurements_daily(db, user_id, target_date) or []

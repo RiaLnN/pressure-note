@@ -17,11 +17,21 @@ async def cmd_start(message: types.Message):
         )
         if not user:
             await message.answer(
-                f"Ласкаво просимо в {settings.PROJECT_NAME}!",
+                f"""Welcome to {settings.PROJECT_NAME}! 🩺
+
+                I’m here to help you keep your blood pressure under control and make sure you never miss your medications.
+
+                With this bot, you can:
+                — ✍️ Log your blood pressure.
+                — 📊 Track your health trends with visual charts.
+                — 💊 Manage your medication schedule.
+                — 🔔 Receive timely reminders for checks and pills.
+
+                Tap the button below to start your journey to a healthier heart!""",
                 reply_markup=get_main_menu_keyboard()
             )
         else:
             await message.answer(
-                f"З поверненням, {user.username}!",
+                f"Welcome back, {user.username}!",
                 reply_markup=get_main_menu_keyboard()
             )

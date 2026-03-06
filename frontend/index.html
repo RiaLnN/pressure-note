@@ -335,7 +335,7 @@
                                     </svg>
                                 </div>
                                 <span class="settings-list__label">Reminders</span>
-                                <input type="checkbox" class="toggle" id="toggle-reminders" checked>
+                                <input type="checkbox" class="toggle" id="toggle-reminders" data-action="toggle-notifications" checked>
                                 <label for="toggle-reminders" class="toggle__slider"></label>
                             </label>
 
@@ -552,6 +552,24 @@
                 <div class="modal__actions">
                     <button class="btn btn-secondary" data-action="close-modal">Cancel</button>
                     <button class="btn btn-primary" data-action="save-target">Save</button>
+                </div>
+            </div>
+        </dialog>
+        <dialog id="modal-reminders" class="modal">
+            <div class="modal__container">
+                
+                <h3 class="modal__title">Pressure Reminders</h3>
+     
+                <div class="modal__inputs">
+                    <div id="pressure-reminders-chips" class="chips-container"></div>
+                    
+                    <div class="add-time-row">
+                        <input type="time" id="pressure-time-picker" class="form-group__input">
+                    </div>
+                    <div class="modal__actions">
+                        <button class="btn btn-secondary" data-action="close-reminder-modal">Cancel</button>
+                        <button class="btn btn-primary" data-action="add-reminder-time">Add</button>
+                    </div>
                 </div>
             </div>
         </dialog>

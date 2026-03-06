@@ -32,7 +32,12 @@ async def update_user(
     update_data = user_update.model_dump(exclude_unset=True)
 
     for key, value in update_data.items():
-        setattr(user, key, value)
+        if key == "settings" and isinstance(value, dict):
+            current_settings = user.settings or {}
+            current_settings.update(value)
+            user.settings = current_settings
+        else:
+            setattr(user, key, value)
     
     await session.commit()
     await session.refresh(user)
