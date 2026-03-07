@@ -8,7 +8,8 @@ export const AppState = {
             target_pressure: {sys: 120, dia: 80},
             notifications: true,
             pressure_reminders: ["09:00", "21:00"],
-            language_code: "en"
+            language_code: "en",
+            timezone: "Europe/Kyiv"
         }
     },
     get token() {

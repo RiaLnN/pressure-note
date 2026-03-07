@@ -39,7 +39,14 @@ export const measurementsApi = {
         const yearMonthDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
         return request(`/measurements/day/${yearMonthDate}`);
     },
-    delete: (id) => request(`/measurements/${id}`, {
+    getWeek: (date) => {
+        const yearMonthDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+        return request(`/measurements/week/${yearMonthDate}`);
+    },
+    delete: (id) => request(`/measurements/id/${id}`, {
+        method: "DELETE"
+    }),
+    deleteAll: () => request(`/measurements/all`, {
         method: "DELETE"
     }),
     update: (id, data) =>

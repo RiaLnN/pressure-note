@@ -2,15 +2,17 @@ import { UserData } from "../api.js";
 import { tg } from "../config.js";
 import { AppState } from "../state.js";
 import { UIManager } from "../ui.js";
+import { I18nManager } from "./i18n.js";
+import { measurementsApi } from "../api.js";
 
 export const SettingsManager = {
-    async fetchAndRefresh() {
+    async fetchAndRefresh(settings=true) {
         try {
             const user =  await UserData.getUser();
             const userSettings = user.settings;
-            AppState.user.settings = userSettings;
-            UIManager.loadSettings(userSettings);
-            UIManager.loadSettingsScreen();
+            if (!settings) UIManager.loadSettings(userSettings);
+            else UIManager.loadSettingsScreen();
+
         } catch(error) {
             console.error(error);
         }
@@ -19,7 +21,7 @@ export const SettingsManager = {
         try {
             await UserData.update({ settings: newSettings });
             
-            AppState.user.settings = { ...AppState.settings, ...newSettings };
+            AppState.user.settings = { ...AppState.user.settings, ...newSettings };
             
             if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
             return true;
@@ -33,13 +35,13 @@ export const SettingsManager = {
         const sys = document.getElementById("target-sys").value;
         const dia = document.getElementById("target-dia").value;
         const success =  await this.saveSettings({target_pressure: {sys, dia} });
-        if (success) this.fetchAndRefresh();
+        if (success) this.fetchAndRefresh(false);
         else console.error("Load failed");
     },
     async updateNotification(isChecked) {
         const success = await this.saveSettings({ notifications: isChecked });
         if (success) {
-            await this.fetchAndRefresh();
+            await this.fetchAndRefresh(true);
         }
     },
     async addPressureReminder(time) {
@@ -75,15 +77,28 @@ export const SettingsManager = {
         }
     },
     async clearData() {
+        await measurementsApi.deleteAll(); 
         tg.showConfirm("Are you sure you want to delete ALL your measurements? This cannot be undone.", async (confirmed) => {
             if (confirmed) {
                 try {
-                    // await MeasurementsData.deleteAll(); 
+                    await measurementsApi.deleteAll(); 
                     tg.showAlert("Data cleared successfully");
                 } catch (e) {
                     tg.showAlert("Failed to clear data");
                 }
             }
         });
+    },
+    async changeLanguage(lang) {
+        const success = await this.saveSettings({ language_code: lang });
+        
+        if (success) {
+            AppState.user.settings.language_code = lang;
+            await I18nManager.init();
+            
+            UIManager.loadSettingsScreen();
+            
+            if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
+        }
     }
 }

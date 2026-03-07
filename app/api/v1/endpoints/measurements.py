@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Body, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.db.session import get_db
-from app.schemas.measurements import PressureRead, PressureCreate, PressureUpdate, PressureGroup, PressureGroupMonthly, DayStats
+from app.schemas.measurements import PressureRead, PressureCreate, PressureUpdate, PressureGroup, PressureGroupMonthly, DayStats, PressureGroupWeekly
 from app.services import measurements as measurement_service
 from typing import List
 from app.core.security import get_current_user
@@ -46,7 +46,7 @@ async def update_pressure_info(
     
     return await measurement_service.update_measurement(db, current_pressure, pressure_update)
 
-@router.delete('/{pressure_id}', status_code=204)
+@router.delete('/id/{pressure_id}', status_code=204)
 async def delete_pressure(
     pressure_id: int,
     user_id: int = Depends(get_current_user), 
@@ -58,7 +58,15 @@ async def delete_pressure(
     
     await measurement_service.delete_measurement(db, user_id, pressure_id)
     return Response(status_code=204)
-    
+
+@router.delete('/all', status_code=204)
+async def delete_all(
+    user_id: int = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db)
+):
+    await measurement_service.delete_all_measurements(db, user_id)
+    return Response(status_code=204)
+
 @router.get('/month/{month}', response_model=PressureGroupMonthly)
 async def read_month_pressure(month: str, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     target_date = datetime.strptime(month, "%Y-%m")
@@ -68,3 +76,8 @@ async def read_month_pressure(month: str, user_id: int = Depends(get_current_use
 async def read_date_pressure(date: str, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     target_date = datetime.strptime(date, "%Y-%m-%d")
     return await measurement_service.get_measurements_daily(db, user_id, target_date) or []
+
+@router.get('/week/{date}', response_model=PressureGroupWeekly)
+async def read_week_pressure(date: str, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+    target_date = datetime.strptime(date, "%Y-%m-%d")
+    return await measurement_service.get_measurements_weekly(db, user_id, target_date) or []

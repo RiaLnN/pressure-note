@@ -28,9 +28,16 @@ class DayStats(BaseModel):
     date: date
     measurements: List[PressureRead]
     average: Optional[dict] = None
+    is_current_month: Optional[bool] = True
 
 class PressureGroupMonthly(BaseModel):
     year: int
     month: int
     month_average: Optional[dict] = None
+    days: List[DayStats]
+
+class PressureGroupWeekly(BaseModel):
+    year: int
+    month: int
+    week_average: Optional[dict] = None
     days: List[DayStats]

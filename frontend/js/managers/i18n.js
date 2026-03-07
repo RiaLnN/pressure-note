@@ -6,11 +6,11 @@ export const I18nManager = {
 
     async init() {
         try {
-            const response = await fetch(`.locales/${AppState.user.settings.language_code}.json`);
+            const response = await fetch(`frontend/js/locales/${AppState.user.settings.language_code}.json`);
             if (!response.ok) throw new Error("Locale not found");
             this.locale = await response.json();
         } catch (e) {
-            const response = await fetch(`./locales/en.json`);
+            const response = await fetch(`frontend/js/locales/en.json`);
             this.locale = await response.json();
         }
         this.translatePage();

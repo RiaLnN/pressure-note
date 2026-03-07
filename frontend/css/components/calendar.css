@@ -80,7 +80,38 @@
     grid-template-columns: repeat(7, 1fr);
     gap: var(--spacing-xs);
 }
+.calendar__day-not-current-month {
+    opacity: 0.5; 
+    background-color: transparent !important; 
+    border-color: transparent !important;
+    cursor: default;
+    filter: grayscale(0.5); 
+}
 
+/* Скрываем или приглушаем индикаторы (точки) у таких дней */
+.calendar__day-not-current-month .calendar__day-indicator {
+    transform: scale(0.7);
+    opacity: 0.6;
+    filter: saturate(0.5);
+}
+
+/* Номер дня делаем тоньше */
+.calendar__day-not-current-month .calendar__day-number {
+    font-weight: var(--font-weight-normal);
+    color: var(--tg-hint-color);
+}
+
+.calendar__day-not-current-month:hover {
+    transform: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+
+.calendar__day-not-current-month.calendar__day--selected {
+    border: 1px dashed var(--accent-primary);
+    opacity: 0.7;
+}
 /* Individual Day Cell */
 .calendar__day {
     position: relative;

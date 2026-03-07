@@ -109,47 +109,71 @@ async def delete_measurement(session: AsyncSession, user_id: int, pressure_id: i
     await session.commit()
     return result.rowcount > 0
 
+async def delete_all_measurements(session: AsyncSession, user_id: int) -> bool:
+    query = (
+        delete(PressureMeasurement)
+        .where(PressureMeasurement.user_id == user_id)
+    )
+    result = await session.execute(query)
+    await session.commit()
+    return result.rowcount > 0
+
 async def get_measurements_monthly(session: AsyncSession, user_id: int, target_date: datetime):
     year = target_date.year
     month = target_date.month
-    _, last_day = calendar.monthrange(year, month)
-    start_date = date(year, month, 1)
-    end_date = date(year, month, last_day)
+    
+    first_day_of_month = date(year, month, 1)
+    _, last_day_num = calendar.monthrange(year, month)
+    last_day_of_month = date(year, month, last_day_num)
+
+    days_to_subtract = first_day_of_month.weekday() 
+    grid_start = first_day_of_month - timedelta(days=days_to_subtract)
+
+    days_to_add = 6 - last_day_of_month.weekday()
+    grid_end = last_day_of_month + timedelta(days=days_to_add)
 
     result = await session.execute(
         select(PressureMeasurement)
         .where(PressureMeasurement.user_id == user_id)
-        .where(PressureMeasurement.created_at >= start_date)
-        .where(PressureMeasurement.created_at <= end_date)
+        .where(PressureMeasurement.created_at >= grid_start)
+        .where(PressureMeasurement.created_at < grid_end + timedelta(days=1))
         .order_by(PressureMeasurement.created_at.asc())
     )
+    
     all_measurements = result.scalars().all()
     data_by_day = defaultdict(list)
-    total_sys = 0
-    total_dia = 0
-    count_total = 0
-    for m in all_measurements:
-        day_key = m.created_at.date()
-        data_by_day[day_key].append(m)
-        total_sys += m.sys
-        total_dia += m.dia
-        count_total += 1
     
+    total_sys, total_dia, count_total = 0, 0, 0
+
+    for m in all_measurements:
+        m_date = m.created_at.date()
+        data_by_day[m_date].append(m)
+        
+        if m_date.month == month and m_date.year == year:
+            total_sys += m.sys
+            total_dia += m.dia
+            count_total += 1
+
     full_stats = []
-    for day in range(1, last_day + 1):
-        current_date = date(year, month, day)
-        day_measurements = data_by_day.get(current_date, [])
+    current_cursor = grid_start
+    
+    while current_cursor <= grid_end:
+        day_measurements = data_by_day.get(current_cursor, [])
         day_avg = None
+        
         if day_measurements:
             d_sys = sum(m.sys for m in day_measurements) / len(day_measurements)
             d_dia = sum(m.dia for m in day_measurements) / len(day_measurements)
             day_avg = {"sys": round(d_sys, 1), "dia": round(d_dia, 1)}
         
         full_stats.append({
-            "date": current_date.isoformat(),
+            "date": current_cursor.isoformat(),
+            "is_current_month": current_cursor.month == month,
             "measurements": day_measurements,
             "average": day_avg
         })
+        current_cursor += timedelta(days=1)
+
     month_avg = None
     if count_total > 0:
         month_avg = {
@@ -183,4 +207,63 @@ async def get_measurements_daily(session: AsyncSession, user_id: int, target_dat
         "date": target_date.isoformat(),
         "average": avg,
         "measurements": all_measurements
+    }
+
+async def get_measurements_weekly(session: AsyncSession, user_id: int, target_date: datetime):
+    year = target_date.year
+    month = target_date.month
+    start_date = (target_date - timedelta(days=3)).date()
+    end_date = (target_date + timedelta(days=3)).date()
+    result = await session.execute(
+        select(PressureMeasurement)
+        .where(PressureMeasurement.user_id == user_id)
+        .where(PressureMeasurement.created_at >= start_date)
+        .where(PressureMeasurement.created_at < end_date + timedelta(days=1))
+        .order_by(PressureMeasurement.created_at.asc())
+    )
+    all_measurements = result.scalars().all()
+    data_by_day = defaultdict(list)
+    for m in all_measurements:
+        data_by_day[m.created_at.date()].append(m)
+
+    full_stats = []
+    total_sys = 0
+    total_dia = 0
+    count_total = 0
+
+    current_day = start_date
+    while current_day <= end_date:
+        day_measurements = data_by_day.get(current_day, [])
+        day_avg = None
+        
+        if day_measurements:
+            d_sys = sum(m.sys for m in day_measurements) / len(day_measurements)
+            d_dia = sum(m.dia for m in day_measurements) / len(day_measurements)
+            day_avg = {"sys": round(d_sys, 1), "dia": round(d_dia, 1)}
+            
+            total_sys += sum(m.sys for m in day_measurements)
+            total_dia += sum(m.dia for m in day_measurements)
+            count_total += len(day_measurements)
+        
+        full_stats.append({
+            "date": current_day.isoformat(),
+            "measurements": day_measurements,
+            "average": day_avg
+        })
+        
+        current_day += timedelta(days=1)
+
+    # 4. Итоговое среднее
+    week_avg = None
+    if count_total > 0:
+        week_avg = {
+            "sys": round(total_sys / count_total, 1),
+            "dia": round(total_dia / count_total, 1)
+        }
+    
+    return {
+        "year": target_date.year,
+        "month": target_date.month,
+        "week_average": week_avg,
+        "days": full_stats
     }

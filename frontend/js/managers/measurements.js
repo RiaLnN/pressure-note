@@ -2,6 +2,7 @@ import { measurementsApi } from "../api.js";
 import { tg } from "../config.js";
 import { AppState } from "../state.js";
 import { UIManager } from "../ui.js";
+import { CalendarManager } from "./calendar.js";
 
 export const MeasurementsManager = {
     currentDate: new Date(),
@@ -29,6 +30,7 @@ export const MeasurementsManager = {
             const success = await measurementsApi.create({ sys, dia, created_at: this.currentDate, description });
             if (success) {
                 await this.fetchAndRefresh();
+                await CalendarManager.initPreview();
                 tg.HapticFeedback.notificationOccurred('success');
                 return true;
             }
@@ -47,6 +49,7 @@ export const MeasurementsManager = {
             const dia = btn.dataset.dia;
             AppState.quickButtons = false;
             await this.saveMeasurement(Number(sys), Number(dia));
+            
         });
     },
     async inputAdd(){

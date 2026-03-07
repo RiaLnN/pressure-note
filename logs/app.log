@@ -654,3 +654,135 @@
 2026-03-06 23:19:00 | INFO     | app:check_and_send_reminders:17 - Send reminder to [<app.models.user.User object at 0x7ea4c2d311f0>]
 2026-03-06 23:19:00 | INFO     | app:check_and_send_reminders:20 - User info: 1297964385, None, {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00', '22:41']}
 2026-03-06 23:19:00 | INFO     | app:check_and_send_reminders:21 - notifications: True
+2026-03-06 23:36:24 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 6, 22, 35, 56, 640000, tzinfo=TzInfo(0)) description=None
+2026-03-06 23:42:51 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 22, 42, 46, 260000, tzinfo=TzInfo(0)) description=None
+2026-03-06 23:43:40 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 5, 22, 42, 46, 260000, tzinfo=TzInfo(0)) description=None
+2026-03-06 23:44:58 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 4, 22, 44, 52, 192000, tzinfo=TzInfo(0)) description=None
+2026-03-06 23:45:50 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=323 dia=23 created_at=datetime.datetime(2026, 3, 6, 22, 45, 42, 718000, tzinfo=TzInfo(0)) description='dsadas'
+2026-03-07 00:10:55 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 10, 50, 103000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:21:49 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 21, 48, 154000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:22:00 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 6, 23, 21, 48, 154000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:22:03 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 21, 48, 154000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:22:06 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 21, 48, 154000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:26:06 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 26, 5, 51000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:26:09 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 5, 23, 26, 5, 51000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:26:29 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 5, 23, 26, 24, 327000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:28:43 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 5, 23, 28, 39, 910000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:29:54 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 5, 23, 29, 50, 270000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:30:52 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 5, 23, 30, 48, 459000, tzinfo=TzInfo(0)) description=None
+2026-03-07 00:33:27 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 6, 23, 33, 17, 656000, tzinfo=TzInfo(0)) description=None
+2026-03-07 01:07:02 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 0, 6, 40, 498000, tzinfo=TzInfo(0)) description=None
+2026-03-07 02:46:41 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 02:46:51 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=130 dia=85 created_at=datetime.datetime(2026, 3, 6, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 02:46:59 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=130 dia=85 created_at=datetime.datetime(2026, 3, 5, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 02:47:02 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=130 dia=85 created_at=datetime.datetime(2026, 3, 6, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 02:47:05 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 11:53:50 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 11:55:04 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 11:55:04 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:09:39 | INFO     | app:_load_translations:17 - JSON TO LOAD {'bot': {'start_message': 'Welcome to {settings.PROJECT_NAME}! 🩺\nI’m here to help you keep your blood pressure under control and make sure you never miss your medications.\n\nWith this bot, you can:\n— ✍️ Log your blood pressure.\n— 📊 Track your health trends with visual charts.\n— 💊 Manage your medication schedule.\n— 🔔 Receive timely reminders for checks and pills.\n\nTap the button below to start your journey to a healthier heart!', 'welcome_back': 'Welcome back, {username}!', 'pressure_reminders': ['Time for your scheduled blood pressure check. It only takes a minute! ⌚', "How's your heart feeling? Let's take a quick measurement. 🩺", "Don't forget to log your blood pressure. Consistency is key! 📈", 'Ready for your daily check-up? Open the app to save your results. ✨', 'Health Check Time! Please measure your pressure and log it in HealthFlow. 🩸'], 'medication_reminders': ['Time to take your medication: {item_name}. Stay on track! 💊', "Don't forget your dose of {item_name}. Your health comes first! ✅", 'Quick reminder! Please take {item_name} now. 💊', 'Time for your medicine: {item_name}. Have you taken it yet? 🤔']}}
+2026-03-07 12:11:34 | INFO     | app:_load_translations:17 - JSON TO LOAD {'bot': {'start_message': 'Welcome to {settings.PROJECT_NAME}! 🩺\nI’m here to help you keep your blood pressure under control and make sure you never miss your medications.\n\nWith this bot, you can:\n— ✍️ Log your blood pressure.\n— 📊 Track your health trends with visual charts.\n— 💊 Manage your medication schedule.\n— 🔔 Receive timely reminders for checks and pills.\n\nTap the button below to start your journey to a healthier heart!', 'welcome_back': 'Welcome back, {username}!', 'pressure_reminders': ['Time for your scheduled blood pressure check. It only takes a minute! ⌚', "How's your heart feeling? Let's take a quick measurement. 🩺", "Don't forget to log your blood pressure. Consistency is key! 📈", 'Ready for your daily check-up? Open the app to save your results. ✨', 'Health Check Time! Please measure your pressure and log it in HealthFlow. 🩸'], 'medication_reminders': ['Time to take your medication: {item_name}. Stay on track! 💊', "Don't forget your dose of {item_name}. Your health comes first! ✅", 'Quick reminder! Please take {item_name} now. 💊', 'Time for your medicine: {item_name}. Have you taken it yet? 🤔']}}
+2026-03-07 12:17:13 | INFO     | app:_load_translations:18 - NEW DICT VALUE {'bot': {'start_message': 'Welcome to {settings.PROJECT_NAME}! 🩺\nI’m here to help you keep your blood pressure under control and make sure you never miss your medications.\n\nWith this bot, you can:\n— ✍️ Log your blood pressure.\n— 📊 Track your health trends with visual charts.\n— 💊 Manage your medication schedule.\n— 🔔 Receive timely reminders for checks and pills.\n\nTap the button below to start your journey to a healthier heart!', 'welcome_back': 'Welcome back, {username}!', 'pressure_reminders': ['Time for your scheduled blood pressure check. It only takes a minute! ⌚', "How's your heart feeling? Let's take a quick measurement. 🩺", "Don't forget to log your blood pressure. Consistency is key! 📈", 'Ready for your daily check-up? Open the app to save your results. ✨', 'Health Check Time! Please measure your pressure and log it in HealthFlow. 🩸'], 'medication_reminders': ['Time to take your medication: {item_name}. Stay on track! 💊', "Don't forget your dose of {item_name}. Your health comes first! ✅", 'Quick reminder! Please take {item_name} now. 💊', 'Time for your medicine: {item_name}. Have you taken it yet? 🤔']}}
+2026-03-07 12:17:13 | INFO     | app:_load_translations:19 - SAVE NEW VALUE IN MAIN DICT WITH KAY en
+2026-03-07 12:17:13 | INFO     | app:_load_translations:21 - NEW DICT {'bot': {'start_message': 'Welcome to {settings.PROJECT_NAME}! 🩺\nI’m here to help you keep your blood pressure under control and make sure you never miss your medications.\n\nWith this bot, you can:\n— ✍️ Log your blood pressure.\n— 📊 Track your health trends with visual charts.\n— 💊 Manage your medication schedule.\n— 🔔 Receive timely reminders for checks and pills.\n\nTap the button below to start your journey to a healthier heart!', 'welcome_back': 'Welcome back, {username}!', 'pressure_reminders': ['Time for your scheduled blood pressure check. It only takes a minute! ⌚', "How's your heart feeling? Let's take a quick measurement. 🩺", "Don't forget to log your blood pressure. Consistency is key! 📈", 'Ready for your daily check-up? Open the app to save your results. ✨', 'Health Check Time! Please measure your pressure and log it in HealthFlow. 🩸'], 'medication_reminders': ['Time to take your medication: {item_name}. Stay on track! 💊', "Don't forget your dose of {item_name}. Your health comes first! ✅", 'Quick reminder! Please take {item_name} now. 💊', 'Time for your medicine: {item_name}. Have you taken it yet? 🤔']}}
+2026-03-07 12:17:13 | INFO     | app:_load_translations:18 - NEW DICT VALUE {'bot': {'welcome_new': "Вітаємо у {project_name}! 🩺\n\nЯ тут, щоб допомогти вам контролювати тиск та не забувати про прийом ліків.\n\nЗ цим ботом ви зможете:\n— ✍️ Реєструвати показники тиску.\n— 📊 Відстежувати динаміку здоров'я за допомогою графіків.\n— 💊 Керувати графіком прийому ліків.\n— 🔔 Отримувати вчасні нагадування про перевірки та таблетки.\n\nНатисніть кнопку нижче, щоб почати шлях до здорового серця!", 'welcome_back': 'З поверненням, {username}!', 'pressure_reminders': ['Час планової перевірки тиску. Це займе лише хвилину! ⌚', 'Як ваше серце? Давайте зробимо швидкий замір. 🩺', "Не забудьте записати тиск. Регулярність — запорука здоров'я! 📈", 'Готові до щоденної перевірки? Відкрийте додаток, щоб зберегти результати. ✨', "Час перевірки здоров'я! Будь ласка, виміряйте тиск і запишіть його в HealthFlow. 🩸"], 'medication_reminders': ['Час прийняти ліки: {item_name}. Будьте здорові! 💊', "Не забудьте прийняти дозу {item_name}. Ваше здоров'я — понад усе! ✅", 'Швидке нагадування! Будь ласка, прийміть {item_name} зараз. 💊', 'Час для ліків: {item_name}. Ви вже їх прийняли? 🤔']}}
+2026-03-07 12:17:13 | INFO     | app:_load_translations:19 - SAVE NEW VALUE IN MAIN DICT WITH KAY ru
+2026-03-07 12:17:13 | INFO     | app:_load_translations:21 - NEW DICT {'bot': {'welcome_new': "Вітаємо у {project_name}! 🩺\n\nЯ тут, щоб допомогти вам контролювати тиск та не забувати про прийом ліків.\n\nЗ цим ботом ви зможете:\n— ✍️ Реєструвати показники тиску.\n— 📊 Відстежувати динаміку здоров'я за допомогою графіків.\n— 💊 Керувати графіком прийому ліків.\n— 🔔 Отримувати вчасні нагадування про перевірки та таблетки.\n\nНатисніть кнопку нижче, щоб почати шлях до здорового серця!", 'welcome_back': 'З поверненням, {username}!', 'pressure_reminders': ['Час планової перевірки тиску. Це займе лише хвилину! ⌚', 'Як ваше серце? Давайте зробимо швидкий замір. 🩺', "Не забудьте записати тиск. Регулярність — запорука здоров'я! 📈", 'Готові до щоденної перевірки? Відкрийте додаток, щоб зберегти результати. ✨', "Час перевірки здоров'я! Будь ласка, виміряйте тиск і запишіть його в HealthFlow. 🩸"], 'medication_reminders': ['Час прийняти ліки: {item_name}. Будьте здорові! 💊', "Не забудьте прийняти дозу {item_name}. Ваше здоров'я — понад усе! ✅", 'Швидке нагадування! Будь ласка, прийміть {item_name} зараз. 💊', 'Час для ліків: {item_name}. Ви вже їх прийняли? 🤔']}}
+2026-03-07 12:21:39 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:21:39 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:22:42 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:22:42 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:22:55 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:22:55 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:24:09 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:24:09 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:25:43 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:25:43 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:29:32 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:29:32 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:31:41 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:31:41 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:32:36 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:32:36 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:34:10 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ru'}
+2026-03-07 12:34:10 | INFO     | app:cmd_start:27 - USER LANGUAGE ru
+2026-03-07 12:34:24 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua'}
+2026-03-07 12:34:24 | INFO     | app:cmd_start:27 - USER LANGUAGE ua
+2026-03-07 12:34:30 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:34:30 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:34:34 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ru'}
+2026-03-07 12:34:34 | INFO     | app:cmd_start:27 - USER LANGUAGE ru
+2026-03-07 12:35:26 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en'}
+2026-03-07 12:35:26 | INFO     | app:cmd_start:27 - USER LANGUAGE en
+2026-03-07 12:35:30 | INFO     | app:cmd_start:26 - USER SETTINGS {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ru'}
+2026-03-07 12:35:30 | INFO     | app:cmd_start:27 - USER LANGUAGE ru
+2026-03-07 12:48:51 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 11, 47, 6, 460000, tzinfo=TzInfo(0)) description=None
+2026-03-07 13:36:01 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 12, 33, 44, 704000, tzinfo=TzInfo(0)) description=None
+2026-03-07 14:00:45 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=110 dia=90 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 14:16:55 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=140 dia=90 created_at=datetime.datetime(2026, 3, 6, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 14:17:43 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=145 dia=100 created_at=datetime.datetime(2026, 3, 5, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:02:02 | INFO     | app:check_and_send_reminders:26 - Send text: ⏰ Time for your blood pressure check!
+
+Take a moment to measure and log your results. Consistency helps you stay in control! 🩺
+2026-03-07 15:02:02 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'en', 'timezone': 'Europe/Kyiv'}
+2026-03-07 15:02:22 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 14, 2, 11, 221000, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:03:00 | INFO     | app:check_and_send_reminders:26 - Send text: 📊 Продовжимо вашу серію!
+
+Час виміряти тиск за розкладом. Регулярні вимірювання = краще розуміння! 💪
+2026-03-07 15:03:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:04:00 | INFO     | app:check_and_send_reminders:26 - Send text: 💙 Ваше здоров'я важливе!
+
+Час виміряти артеріальний тиск. Не забудьте додати примітки про самопочуття. ✍️
+2026-03-07 15:04:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:05:00 | INFO     | app:check_and_send_reminders:26 - Send text: 🔔 М'яке нагадування: перевірка тиску
+
+Глибоко вдихніть, розслабтеся та виміряйте. Ваше майбутнє "я" скаже дякую! 🙏
+2026-03-07 15:05:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:05:23 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:05:30 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=140 dia=90 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:06:00 | INFO     | app:check_and_send_reminders:26 - Send text: 📊 Продовжимо вашу серію!
+
+Час виміряти тиск за розкладом. Регулярні вимірювання = краще розуміння! 💪
+2026-03-07 15:06:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:06:48 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=120 dia=80 created_at=datetime.datetime(2026, 3, 7, 14, 6, 47, 286000, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:07:00 | INFO     | app:check_and_send_reminders:26 - Send text: 🩸 Нагадування про щоденну перевірку
+
+Як почувається ваше серце сьогодні? Відкрийте додаток, щоб записати тиск. Це займе лише 30 секунд! ⚡
+2026-03-07 15:07:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:08:00 | INFO     | app:check_and_send_reminders:26 - Send text: 💙 Ваше здоров'я важливе!
+
+Час виміряти артеріальний тиск. Не забудьте додати примітки про самопочуття. ✍️
+2026-03-07 15:08:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:09:00 | INFO     | app:check_and_send_reminders:26 - Send text: ⏰ Час перевірити тиск!
+
+Приділіть хвилинку для вимірювання та запису результатів. Регулярність допомагає тримати все під контролем! 🩺
+2026-03-07 15:09:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:10:00 | INFO     | app:check_and_send_reminders:26 - Send text: 💙 Ваше здоров'я важливе!
+
+Час виміряти артеріальний тиск. Не забудьте додати примітки про самопочуття. ✍️
+2026-03-07 15:10:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:10:34 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 0, 0, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:11:00 | INFO     | app:check_and_send_reminders:26 - Send text: ⌚ Час перевірки!
+
+Регулярні вимірювання допомагають зрозуміти закономірності вашого здоров'я. Готові? Поїхали! 🎯
+2026-03-07 15:11:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:12:00 | INFO     | app:check_and_send_reminders:26 - Send text: 🔔 М'яке нагадування: перевірка тиску
+
+Глибоко вдихніть, розслабтеся та виміряйте. Ваше майбутнє "я" скаже дякую! 🙏
+2026-03-07 15:12:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:13:00 | INFO     | app:check_and_send_reminders:26 - Send text: 📊 Продовжимо вашу серію!
+
+Час виміряти тиск за розкладом. Регулярні вимірювання = краще розуміння! 💪
+2026-03-07 15:13:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:14:00 | INFO     | app:check_and_send_reminders:26 - Send text: 🔔 М'яке нагадування: перевірка тиску
+
+Глибоко вдихніть, розслабтеся та виміряйте. Ваше майбутнє "я" скаже дякую! 🙏
+2026-03-07 15:14:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:15:00 | INFO     | app:check_and_send_reminders:26 - Send text: 🔔 М'яке нагадування: перевірка тиску
+
+Глибоко вдихніть, розслабтеся та виміряйте. Ваше майбутнє "я" скаже дякую! 🙏
+2026-03-07 15:15:00 | INFO     | app:check_and_send_reminders:27 - {'theme': 'light', 'target_pressure': {'sys': 120, 'dia': 80}, 'notifications': True, 'pressure_reminders': ['09:00', '21:00'], 'language_code': 'ua', 'timezone': 'Europe/Budapest'}
+2026-03-07 15:19:30 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 14, 19, 11, 926000, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:29:12 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 14, 29, 2, 157000, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:30:25 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 14, 30, 21, 335000, tzinfo=TzInfo(0)) description=None
+2026-03-07 15:30:39 | INFO     | app:create_measurement:13 - PRESSURE IN: sys=100 dia=60 created_at=datetime.datetime(2026, 3, 7, 14, 30, 36, 476000, tzinfo=TzInfo(0)) description=None

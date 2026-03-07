@@ -1,10 +1,30 @@
+import { I18nManager } from "../managers/i18n.js";
+import { AppState } from "../state.js";
+
 export const TimeConvert = {
-    formatGroupDate(dateStr) {
-        const d = new Date(dateStr);
-        const today = new Date().toDateString();
-        if (d.toDateString() === today) return "Today";
+    formatGroupDate(dateString) {
+        const date = new Date(dateString);
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
         
-        return d.toLocaleDateString('en-US', { day: '2-digit', month: 'short' });
+        if (date.toDateString() === today.toDateString()) {
+            return I18nManager.t('history.today');
+        } else if (date.toDateString() === yesterday.toDateString()) {
+            return I18nManager.t('history.yesterday');
+        } else {
+            const day = date.getDate();
+            const month = date.getMonth();
+            const monthKey = [
+                'january', 'february', 'march', 'april', 'may', 'june',
+                'july', 'august', 'september', 'october', 'november', 'december'
+            ][month];
+            
+            const monthName = I18nManager.t(`calendar.months.${monthKey}`);
+            
+            const lang = AppState.user.settings.language_code;
+            return lang === 'en' ? `${monthName} ${day}` : `${day} ${monthName}`;
+        }
     },
     formatTime(dateStr) {
         const d = new Date(dateStr);
@@ -31,6 +51,20 @@ export const TimeConvert = {
     formatMonthDate(dateStr){
         const d = new Date(dateStr);
         return d.toLocaleDateString('en-US', { day: 'numeric', month: 'long'})
+    },
+    formatDate(dateString) {
+        const date = new Date(dateString);
+        const day = date.getDate();
+        const month = date.getMonth();
+        const monthKey = [
+            'january', 'february', 'march', 'april', 'may', 'june',
+            'july', 'august', 'september', 'october', 'november', 'december'
+        ][month];
+        
+        const monthName = I18nManager.t(`calendar.months.${monthKey}`);
+        const lang = AppState.user.settings.language_code;
+        
+        return lang === 'en' ? `${monthName} ${day}` : `${day} ${monthName}`;
     }
 
 }

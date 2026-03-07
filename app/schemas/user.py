@@ -9,6 +9,8 @@ class UserSettings(BaseModel):
     target_pressure: Dict[str, int] = {"sys": 120, "dia": 80}
     notifications: bool = True
     pressure_reminders: List[str] = ['09:00', '21:00']
+    language_code: str = "en"
+    timezone: str = "Europe/Kyiv"
 
 class UserRead(UserBase):
     id: int
@@ -19,6 +21,7 @@ class UserRead(UserBase):
 
 class UserCreate(UserBase):
     id: int
+    settings: Optional[UserSettings] = None
 
 class UserUpdate(BaseModel):
     username: str | None = Field(default=None, min_length=3, max_length=32)

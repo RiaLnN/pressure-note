@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pressure Tracker</title>
+    <title data-i18n="common.app_name">Pressure Tracker</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="/frontend/css/style.css?v=1.1.3">
+    <link rel="stylesheet" href="/frontend/css/style.css?v=1.1.5">
     
 </head>
 <body>
@@ -32,16 +32,16 @@
                         <div class="status__circle status__circle--none" data-status="none">
                             <span class="status__pulse"></span>
                         </div>
-                        <span class="status__label status__label--none" id="status-text">None</span>
+                        <span class="status__label status__label--none" id="status-text" data-i18n="status.none">None</span>
                     </div>
                     <div class="status__details">
                         <div class="status__detail-item">
-                            <span class="status__detail-label">Current Pressure</span>
+                            <span class="status__detail-label" data-i18n="status.current_pressure">Current Pressure</span>
                             <span class="status__detail-value status__detail-value--none" id="current-pressure">--/--</span>
                         </div>
                         <span id="measurement-count" class="status__count-hint"></span>
                         <div class="status__detail-item">
-                            <span class="status__detail-label">Target Pressure</span>
+                            <span class="status__detail-label" data-i18n="status.target_pressure">Target Pressure</span>
                             <button type="button" class="status__detail-btn" data-action="target-pressure" aria-label="Edit target pressure">
                                 <span class="target-pressure-value" id="target-pressure-value">120/80</span>
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -54,23 +54,23 @@
             </section>
             <!-- Quick Add Presets -->
             <section class="card card--actions active" aria-labelledby="quick-add-title" id="quick-btns">
-                <h2 class="card__title" id="quick-add-title">Quick Add</h2>
+                <h2 class="card__title" id="quick-add-title" data-i18n="quick_actions.title">Quick Add</h2>
                 <div class="quick-actions">
                     <button class="quick-actions__btn" data-sys="100" data-dia="60" aria-label="Add pressure 110/70">
                         <span class="quick-actions__value">100/60</span>
-                        <span class="quick-actions__hint">Low</span>
+                        <span class="quick-actions__hint" data-i18n="status.low">Low</span>
                     </button>
                     <button class="quick-actions__btn" data-sys="120" data-dia="80" aria-label="Add pressure 120/80">
                         <span class="quick-actions__value">120/80</span>
-                        <span class="quick-actions__hint">Normal</span>
+                        <span class="quick-actions__hint" data-i18n="status.normal">Normal</span>
                     </button>
                     <button class="quick-actions__btn" data-sys="130" data-dia="85" aria-label="Add pressure 130/85">
                         <span class="quick-actions__value">130/85</span>
-                        <span class="quick-actions__hint">Elevated</span>
+                        <span class="quick-actions__hint" data-i18n="status.elevated">Elevated</span>
                     </button>
                     <button class="quick-actions__btn" data-sys="140" data-dia="90" aria-label="Add pressure 140/90">
                         <span class="quick-actions__value">140/90</span>
-                        <span class="quick-actions__hint">High</span>
+                        <span class="quick-actions__hint" data-i18n="status.high">High</span>
                     </button>
                 </div>
             </section>
@@ -81,15 +81,41 @@
                     <svg class="fab__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
-                    <span class="fab__label">New Measurement</span>
+                    <span class="fab__label" data-i18n="buttons.add_measurement">New Measurement</span>
                 </button>
             </section>
     
             <!-- Calendar Preview -->
             <section class="card card--calendar" aria-labelledby="calendar-title">
-                <h2 class="card__title" id="calendar-title">Calendar</h2>
-                <div class="calendar-placeholder" id="calendar-container">
-                    <p class="calendar-placeholder__text">Calendar view coming soon</p>
+                <div class="calendar-preview">
+                    <!-- Header с week average -->
+                    <div class="calendar-preview__header">
+                        <div class="calendar-preview__title-wrapper">
+                            <h2 class="calendar-preview__title" id="calendar-title">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2"/>
+                                    <path d="M16 2v4M8 2v4M3 10h18"/>
+                                </svg>
+                                <span data-i18n="calendar.title">Calendar</span>
+                            </h2>
+                            <button class="calendar-preview__view-btn" data-page="calendar-screen" aria-label="View full calendar">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 18l6-6-6-6"/>
+                                </svg>
+                            </button>
+                        </div>
+                        
+                        <!-- Week Average Badge -->
+                        <div class="calendar-preview__avg" id="calendar-week-avg">
+                            <span class="calendar-preview__avg-label" data-i18n="calendar.week_avg">Week Avg</span>
+                            <span class="calendar-preview__avg-value">--/--</span>
+                        </div>
+                    </div>
+
+                    <!-- Days Strip -->
+                    <div class="calendar-preview__days" id="dashboard-calendar-strip">
+                        <!-- Generated by JS -->
+                    </div>
                 </div>
             </section>
     
@@ -99,14 +125,14 @@
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
-                    <span>History</span>
+                    <span data-i18n="nav.history">History</span>
                 </button>
                 <button class="secondary-actions__btn" data-action="medications" aria-label="View medications">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M4.5 16.5C3 15 3 12.5 4.5 11L11 4.5C12.5 3 15 3 16.5 4.5L19.5 7.5C21 9 21 11.5 19.5 13L13 19.5C11.5 21 9 21 7.5 19.5L4.5 16.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M9 15L15 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
-                    <span>Medications</span>
+                    <span data-i18n="nav.medications">Medications</span>
                 </button>
             </div>
         </section>
@@ -119,14 +145,14 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">Add Measurement</h1>
+                    <h1 class="screen__title" data-i18n="screens.add_measurement">Add Measurement</h1>
                     <div class="screen__spacer"></div>
                 </header>
 
                 <div class="screen__content">
                     <form class="measurement-form" id="add-measurement-form" data-form="add-measurement">
                         <div class="form-group">
-                            <label class="form-group__label" for="pressure-input">Blood Pressure</label>
+                            <label class="form-group__label" for="pressure-input" data-i18n="forms.blood_pressure">Blood Pressure</label>
                             <input 
                                 class="form-group__input" 
                                 type="tel" 
@@ -138,28 +164,31 @@
                                 required
                                 aria-describedby="pressure-hint"
                             >
-                            <span class="form-group__hint" id="pressure-hint">Format: systolic/diastolic (e.g., 120/80)</span>
+                            <span class="form-group__hint" id="pressure-hint" data-i18n="forms.blood_pressure_hint">Format: systolic/diastolic (e.g., 120/80)</span>
                         </div>
                         <div class="form-group">
-                            <label class="form-group__label" for="note-input">Notes (optional)</label>
+                            <label class="form-group__label" for="note-input" data-i18n="forms.note">Notes (optional)</label>
                             <textarea 
                                 class="form-group__textarea" 
                                 id="note-input" 
                                 name="note" 
                                 rows="3"
                                 placeholder="How do you feel?"
+                                data-i18n-placeholder="forms.note_placeholder"
                                 maxlength="200"
                             ></textarea>
                             <span class="form-group__counter" id="note-counter">0/200</span>
                         </div>
 
                         <div class="form-actions">
-                            <button type="button" class="btn-secondary" data-action="cancel">Cancel</button>
+                            <button type="button" class="btn-secondary" data-action="cancel">
+                                <span data-i18n="buttons.cancel">Cancel</span>
+                            </button>
                             <button type="submit" class="btn-primary" data-action="save">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                                 </svg>
-                                Save
+                                <span data-i18n="buttons.save">Save</span>
                             </button>
                         </div>
                     </form>
@@ -176,7 +205,7 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">Calendar</h1>
+                    <h1 class="screen__title" data-i18n="screens.calendar">Calendar</h1>
                 </header>
 
                 <div class="screen__content">
@@ -198,13 +227,13 @@
                     <!-- Calendar Grid -->
                     <div class="calendar">
                         <div class="calendar__weekdays">
-                            <span class="calendar__weekday">Mon</span>
-                            <span class="calendar__weekday">Tue</span>
-                            <span class="calendar__weekday">Wed</span>
-                            <span class="calendar__weekday">Thu</span>
-                            <span class="calendar__weekday">Fri</span>
-                            <span class="calendar__weekday">Sat</span>
-                            <span class="calendar__weekday">Sun</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.mon">Mon</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.tue">Tue</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.wed">Wed</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.thu">Thu</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.fri">Fri</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.sat">Sat</span>
+                            <span class="calendar__weekday" data-i18n="calendar.days.sun">Sun</span>
                         </div>
                         <div class="calendar__days" id="calendar-days">
                         </div>
@@ -226,7 +255,7 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">Statistics</h1>
+                    <h1 class="screen__title" data-i18n="screens.statistics">Statistics</h1>
                     <button type="button" class="screen__action-btn" data-action="filter" aria-label="Filter statistics">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M3 6H21M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -236,34 +265,41 @@
 
                 <div class="screen__content">
                     <div class="period-selector">
-                        <button class="period-selector__btn period-selector__btn--active" data-period="week">Week</button>
-                        <button class="period-selector__btn" data-period="month">Month</button>
-                        <button class="period-selector__btn" data-period="year">Year</button>
+                        <button class="period-selector__btn period-selector__btn--active" data-period="week">
+                            <span data-i18n="stats.week">Week</span>
+                        </button>
+                        <button class="period-selector__btn" data-period="month">
+                            <span data-i18n="stats.month">Month</span>
+                        </button>
+                        <button class="period-selector__btn" data-period="year">
+                            <span data-i18n="stats.year">Year</span>
+                        </button>
                     </div>
 
                     <div id="stats-content">
                         <div class="stats-grid">
                             <div class="stat-card">
-                                <span class="stat-card__label">Average</span>
+                                <span class="stat-card__label" data-i18n="stats.average_pressure">Average</span>
                                 <span class="stat-card__value" id="avg-pressure">--/--</span>
-                                <span class="stat-card__trend" id="avg-trend"></span> </div>
+                                <span class="stat-card__trend" id="avg-trend"></span>
+                            </div>
 
                             <div class="stat-card">
-                                <span class="stat-card__label">Highest</span>
+                                <span class="stat-card__label" data-i18n="stats.highest">Highest</span>
                                 <span class="stat-card__value" id="max-pressure">--/--</span>
                                 <span class="stat-card__date" id="max-date">--</span>
                             </div>
 
                             <div class="stat-card">
-                                <span class="stat-card__label">Lowest</span>
+                                <span class="stat-card__label" data-i18n="stats.lowest">Lowest</span>
                                 <span class="stat-card__value" id="min-pressure">--/--</span>
                                 <span class="stat-card__date" id="min-date">--</span>
                             </div>
 
                             <div class="stat-card">
-                                <span class="stat-card__label">Measurements</span>
+                                <span class="stat-card__label" data-i18n="stats.measurements">Measurements</span>
                                 <span class="stat-card__value" id="total-measurements">0</span>
-                                <span class="stat-card__subtitle" id="period-subtitle">Last 7 days</span>
+                                <span class="stat-card__subtitle" id="period-subtitle" data-i18n="stats.last_7_days">Last 7 days</span>
                             </div>
                         </div>
 
@@ -274,9 +310,9 @@
                         </div>
 
                         <div class="distribution">
-                            <h3 class="distribution__title">Pressure Distribution</h3>
+                            <h3 class="distribution__title" data-i18n="stats.distribution">Pressure Distribution</h3>
                             <div class="distribution__bars" id="distribution-bars">
-                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -284,8 +320,8 @@
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
                             <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        <h3 class="empty-state__title">No data for this period</h3>
-                        <p class="empty-state__text">Try selecting a different time range</p>
+                        <h3 class="empty-state__title" data-i18n="empty.no_data_period">No data for this period</h3>
+                        <p class="empty-state__text" data-i18n="empty.try_different_range">Try selecting a different time range</p>
                     </div>
                 </div>
             </div>
@@ -300,12 +336,12 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">Settings</h1>
+                    <h1 class="screen__title" data-i18n="screens.settings">Settings</h1>
                 </header>
 
                 <div class="screen__content">
                     <div class="settings-section">
-                        <h2 class="settings-section__title">General</h2>
+                        <h2 class="settings-section__title" data-i18n="settings.general">General</h2>
                         <div class="settings-list">
                             <button class="settings-list__item" data-action="target-pressure">
                                 <div class="settings-list__icon">
@@ -314,18 +350,42 @@
                                         <circle cx="12" cy="12" r="3" fill="currentColor"/>
                                     </svg>
                                 </div>
-                                <span class="settings-list__label">Target Pressure</span>
+                                <span class="settings-list__label" data-i18n="settings.target_pressure">Target Pressure</span>
                                 <span class="settings-list__value" id="target-pressure-settings">--/--</span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
                             </button>
+                            <div class="settings-list__item settings-list__item--static">
+                                <div class="settings-list__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+                                        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                                    </svg>
+                                </div>
+                                <span class="settings-list__label" data-i18n="settings.language">Language</span>
+                                <div class="lang-selector">
+                                    <button class="lang-btn" data-action="set-lang" data-lang="en" aria-label="English">
+                                        <span class="lang-btn__flag">🇺🇸</span>
+                                        <span class="lang-btn__text">EN</span>
+                                    </button>
+                                    <button class="lang-btn" data-action="set-lang" data-lang="ua" aria-label="Ukrainian">
+                                        <span class="lang-btn__flag">🇺🇦</span>
+                                        <span class="lang-btn__text">UA</span>
+                                    </button>
+                                    <button class="lang-btn" data-action="set-lang" data-lang="ru" aria-label="Russian">
+                                        <span class="lang-btn__flag">🇷🇺</span>
+                                        <span class="lang-btn__text">RU</span>
+                                    </button>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
 
                     <!-- Notifications Section -->
                     <div class="settings-section">
-                        <h2 class="settings-section__title">Notifications</h2>
+                        <h2 class="settings-section__title" data-i18n="settings.notifications">Notifications</h2>
                         <div class="settings-list">
                             <label class="settings-list__item settings-list__item--toggle">
                                 <div class="settings-list__icon">
@@ -334,7 +394,7 @@
                                         <path d="M13.73 21C13.5542 21.3031 13.3019 21.5547 12.9982 21.7295C12.6946 21.9044 12.3504 21.9965 12 21.9965C11.6496 21.9965 11.3054 21.9044 11.0018 21.7295C10.6982 21.5547 10.4458 21.3031 10.27 21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
                                 </div>
-                                <span class="settings-list__label">Reminders</span>
+                                <span class="settings-list__label" data-i18n="settings.reminders">Reminders</span>
                                 <input type="checkbox" class="toggle" id="toggle-reminders" data-action="toggle-notifications" checked>
                                 <label for="toggle-reminders" class="toggle__slider"></label>
                             </label>
@@ -346,7 +406,7 @@
                                         <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
                                 </div>
-                                <span class="settings-list__label">Reminder Time</span>
+                                <span class="settings-list__label" data-i18n="settings.reminder_time">Reminder Time</span>
                                 <span class="settings-list__value" id="reminder-time"></span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -357,16 +417,16 @@
 
                     <!-- Data Section -->
                     <div class="settings-section">
-                        <h2 class="settings-section__title">Data</h2>
+                        <h2 class="settings-section__title" data-i18n="settings.data">Data</h2>
                         <div class="settings-list">
                             <button class="settings-list__item" data-action="export">
                                 <div class="settings-list__icon">
                                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                         <path d="M7 10L12 15L17 10M12 15V3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
                                 </div>
-                                <span class="settings-list__label">Export Data</span>
+                                <span class="settings-list__label" data-i18n="settings.export">Export Data</span>
                                 <svg class="settings-list__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
@@ -378,18 +438,18 @@
                                         <path d="M3 6H5H21M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                                     </svg>
                                 </div>
-                                <span class="settings-list__label">Clear All Data</span>
+                                <span class="settings-list__label" data-i18n="settings.clear_data">Clear All Data</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- About Section -->
                     <div class="settings-section">
-                        <h2 class="settings-section__title">About</h2>
+                        <h2 class="settings-section__title" data-i18n="settings.about">About</h2>
                         <div class="settings-list">
                             <div class="settings-list__item settings-list__item--static">
-                                <span class="settings-list__label">Version</span>
-                                <span class="settings-list__value">1.0.7</span>
+                                <span class="settings-list__label" data-i18n="settings.version">Version</span>
+                                <span class="settings-list__value">0.8.9</span>
                             </div>
                         </div>
                     </div>
@@ -406,7 +466,7 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">History</h1>
+                    <h1 class="screen__title" data-i18n="screens.history">History</h1>
                 </header>
 
                 <div class="screen__content">
@@ -419,8 +479,8 @@
                         <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
                             <path d="M12 8V12L15 15M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        <h3 class="empty-state__title">No measurements yet</h3>
-                        <p class="empty-state__text">Start tracking your blood pressure</p>
+                        <h3 class="empty-state__title" data-i18n="empty.no_measurements">No measurements yet</h3>
+                        <p class="empty-state__text" data-i18n="empty.start_tracking">Start tracking your blood pressure</p>
                     </div>
                 </div>
             </div>
@@ -435,7 +495,7 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title">Medications</h1>
+                    <h1 class="screen__title" data-i18n="screens.medications">Medications</h1>
                     <button type="button" class="screen__action-btn" data-action="add-med" aria-label="Add medication">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                             <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -455,8 +515,8 @@
                             <path d="M4.5 16.5C3 15 3 12.5 4.5 11L11 4.5C12.5 3 15 3 16.5 4.5L19.5 7.5C21 9 21 11.5 19.5 13L13 19.5C11.5 21 9 21 7.5 19.5L4.5 16.5Z" stroke="currentColor" stroke-width="2"/>
                             <path d="M9 15L15 9" stroke="currentColor" stroke-width="2"/>
                         </svg>
-                        <h3 class="empty-state__title">No medications added</h3>
-                        <p class="empty-state__text">Track your medications and schedules</p>
+                        <h3 class="empty-state__title" data-i18n="empty.no_medications">No medications added</h3>
+                        <p class="empty-state__text" data-i18n="empty.add_medication">Track your medications and schedules</p>
                     </div>
                 </div>
             </div>
@@ -469,28 +529,31 @@
                             <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         </svg>
                     </button>
-                    <h1 class="screen__title" id="med-add-title">Add Medication</h1>
+                    <h1 class="screen__title" id="med-add-title" data-i18n="screens.add_medication">Add Medication</h1>
                     <div class="screen__spacer"></div>
                 </header>
 
                 <div class="screen__content">
                     <form class="medication-form" id="add-medication-form" data-form="add-medication">
                         <div class="form-group">
-                            <label class="form-group__label" for="medication-input">Medication</label>
+                            <label class="form-group__label" for="medication-input" data-i18n="forms.medication_name">Medication</label>
                             <input 
                                 class="form-group__input" 
                                 type="text" 
                                 id="medication-input" 
                                 name="medication" 
                                 placeholder="Medication"
+                                data-i18n-placeholder="forms.medication_name_placeholder"
                                 required
                             >
                         </div>
                         <div class="form-group">
-                            <label class="form-group__label">Schedule (Multiple times)</label>
+                            <label class="form-group__label" data-i18n="forms.reminder_times">Schedule (Multiple times)</label>
                             <div class="time-selector">
                                 <input type="time" class="form-group__input" id="time-picker">
-                                <button type="button" class="btn-add-time" id="add-time-btn" data-action="add-time">Add</button>
+                                <button type="button" class="btn-add-time" id="add-time-btn" data-action="add-time">
+                                    <span data-i18n="buttons.add">Add</span>
+                                </button>
                             </div>
                             
                             <div class="reminders-list" id="reminders-chips"></div>
@@ -498,12 +561,14 @@
                             <input type="hidden" name="reminders" id="reminders-data">
                         </div>
                         <div class="form-actions">
-                            <button type="button" class="btn-secondary" data-action="cancel-med">Cancel</button>
+                            <button type="button" class="btn-secondary" data-action="cancel-med">
+                                <span data-i18n="buttons.cancel">Cancel</span>
+                            </button>
                             <button type="submit" class="btn-primary" data-action="save-med", id="btn-med">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                                     <path d="M5 13L9 17L19 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                                 </svg>
-                                Save
+                                <span data-i18n="buttons.save">Save</span>
                             </button>
                         </div>
                     </form>
@@ -522,43 +587,47 @@
                         <div class="menu-sheet__icon">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                         </div>
-                        <span>Edit Details</span>
+                        <span data-i18n="medications.edit_details">Edit</span>
                     </button>
                     <button class="menu-sheet__item menu-sheet__item--danger" data-action="delete-med">
                         <div class="menu-sheet__icon">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
                         </div>
-                        <span>Delete Medication</span>
+                        <span data-i18n="medications.delete">Delete</span>
                     </button>
                 </div>
             </div>
         </div>
         <dialog id="modal-target-pressure" class="modal">
             <div class="modal__container">
-                <h2 class="modal__title">Set Target Pressure</h2>
-                <p class="modal__text">This value will be used as your "ideal" baseline on charts.</p>
+                <h2 class="modal__title" data-i18n="modal.target_pressure_title">Set Target Pressure</h2>
+                <p class="modal__text" data-i18n="modal.target_pressure_text">This value will be used as your "ideal" baseline on charts.</p>
                 
                 <div class="modal__inputs">
                     <div class="input-group">
-                        <label>Systolic</label>
-                        <input type="number" id="target-sys" placeholder="120">
+                        <label data-i18n="forms.systolic">Systolic</label>
+                        <input type="number" id="target-sys" placeholder="120" data-i18n-placeholder="forms.target_sys_placeholder">
                     </div>
                     <div class="input-group">
-                        <label>Diastolic</label>
-                        <input type="number" id="target-dia" placeholder="80">
+                        <label data-i18n="forms.diastolic">Diastolic</label>
+                        <input type="number" id="target-dia" placeholder="80" data-i18n-placeholder="forms.target_dia_placeholder">
                     </div>
                 </div>
 
                 <div class="modal__actions">
-                    <button class="btn btn-secondary" data-action="close-modal">Cancel</button>
-                    <button class="btn btn-primary" data-action="save-target">Save</button>
+                    <button class="btn btn-secondary" data-action="close-modal">
+                        <span data-i18n="buttons.cancel">Cancel</span>
+                    </button>
+                    <button class="btn btn-primary" data-action="save-target">
+                        <span data-i18n="buttons.save">Save</span>
+                    </button>
                 </div>
             </div>
         </dialog>
         <dialog id="modal-reminders" class="modal">
             <div class="modal__container">
                 
-                <h3 class="modal__title">Pressure Reminders</h3>
+                <h3 class="modal__title" data-i18n="modal.pressure_reminders_title">Pressure Reminders</h3>
      
                 <div class="modal__inputs">
                     <div id="pressure-reminders-chips" class="chips-container"></div>
@@ -567,8 +636,12 @@
                         <input type="time" id="pressure-time-picker" class="form-group__input">
                     </div>
                     <div class="modal__actions">
-                        <button class="btn btn-secondary" data-action="close-reminder-modal">Cancel</button>
-                        <button class="btn btn-primary" data-action="add-reminder-time">Add</button>
+                        <button class="btn btn-secondary" data-action="close-reminder-modal">
+                            <span data-i18n="buttons.cancel">Cancel</span>
+                        </button>
+                        <button class="btn btn-primary" data-action="add-reminder-time">
+                            <span data-i18n="buttons.add">Add</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -580,44 +653,44 @@
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="nav__label">Home</span>
+                <span class="nav__label" data-i18n="nav.home">Home</span>
             </a>
             <a href="#new" class="nav__item" data-page="add-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 8V16M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="nav__label">New</span>
+                <span class="nav__label" data-i18n="nav.new">New</span>
             </a>
             <a href="#stats" class="nav__item" data-page="stats-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M3 3V21H21M7 16L12 11L16 15L21 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <span class="nav__label">Stats</span>
+                <span class="nav__label" data-i18n="nav.stats">Stats</span>
             </a>
             <a href="#calendar" class="nav__item" data-page="calendar-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
                     <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="nav__label">Calendar</span>
+                <span class="nav__label" data-i18n="nav.calendar">Calendar</span>
             </a>
             <a href="#medications" class="nav__item", data-page="medications-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M4.5 16.5C3 15 3 12.5 4.5 11L11 4.5C12.5 3 15 3 16.5 4.5L19.5 7.5C21 9 21 11.5 19.5 13L13 19.5C11.5 21 9 21 7.5 19.5L4.5 16.5Z" stroke="currentColor" stroke-width="2"/>
                     <path d="M9 15L15 9" stroke="currentColor" stroke-width="2"/>
                 </svg>
-                <span class="nav__label">Medications</span>
+                <span class="nav__label" data-i18n="nav.medications">Medications</span>
             </a>
             <a href="#settings" class="nav__item" data-page="settings-screen">
                 <svg class="nav__icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 </svg>
-                <span class="nav__label">Settings</span>
+                <span class="nav__label" data-i18n="nav.settings">Settings</span>
             </a>
         </nav>
     </footer>
-    <script type="module" src="/frontend/js/app.js?v=1.1.7"></script>
+    <script type="module" src="/frontend/js/app.js?v=1.1.9"></script>
 </body>
 </html>

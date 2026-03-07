@@ -23,6 +23,100 @@
     border-radius: var(--radius-lg);
     overflow: hidden;
 }
+.lang-selector {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin-left: auto;
+}
+
+.lang-btn {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    
+    min-width: 56px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: var(--radius-md);
+    
+    color: var(--tg-text-color);
+    cursor: pointer;
+    
+    transition: all var(--transition-base);
+    
+    /* Улучшенная тень */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Hover эффект */
+.lang-btn:hover {
+    background: var(--card-hover);
+    border-color: rgba(94, 181, 115, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Active state */
+.lang-btn:active {
+    transform: translateY(0) scale(0.97);
+}
+
+/* Selected (active) язык */
+.lang-btn.active {
+    background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-primary-hover) 100%);
+    border-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(94, 181, 115, 0.4), 
+                0 0 0 3px rgba(94, 181, 115, 0.15);
+    transform: translateY(-1px);
+}
+
+.lang-btn.active:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(94, 181, 115, 0.5), 
+                0 0 0 3px rgba(94, 181, 115, 0.2);
+}
+
+/* Флаг */
+.lang-btn__flag {
+    font-size: 24px;
+    line-height: 1;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+    transition: transform var(--transition-fast);
+}
+
+.lang-btn:hover .lang-btn__flag {
+    transform: scale(1.1);
+}
+
+.lang-btn.active .lang-btn__flag {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Текст языка */
+.lang-btn__text {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+
+.lang-btn:hover .lang-btn__text {
+    opacity: 1;
+}
+
+.lang-btn.active .lang-btn__text {
+    opacity: 1;
+    font-weight: var(--font-weight-bold);
+}
 
 .settings-list__item {
     display: flex;
@@ -139,4 +233,57 @@
 
 .toggle:focus + .toggle__slider {
     box-shadow: 0 0 0 4px rgba(94, 181, 115, 0.2);
+}
+
+@media (max-width: 375px) {
+    .lang-selector {
+        gap: 6px;
+    }
+    
+    .lang-btn {
+        min-width: 48px;
+        padding: 6px var(--spacing-sm);
+    }
+    
+    .lang-btn__flag {
+        font-size: 20px;
+    }
+    
+    .lang-btn__text {
+        font-size: 9px;
+    }
+    
+    .lang-btn.active::before {
+        width: 16px;
+        height: 16px;
+        font-size: 10px;
+        top: -5px;
+        right: -5px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media (max-width: 320px) {
+    .lang-selector {
+        gap: 4px;
+    }
+    
+    .lang-btn {
+        min-width: 44px;
+        padding: 4px 6px;
+    }
+    
+    .lang-btn__flag {
+        font-size: 18px;
+    }
+    
+    .lang-btn__text {
+        font-size: 8px;
+    }
+}
+
+/* Accessibility: Focus state */
+.lang-btn:focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 2px;
 }

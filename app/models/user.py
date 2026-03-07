@@ -18,7 +18,8 @@ class User(Base):
         "target_pressure": {"sys": 120, "dia": 80},
         "notifications": True,
         "pressure_reminders": ["09:00", "21:00"],
-        "language_code": "en"
+        "language_code": "en",
+        "timezone": "Europe/Kyiv"
     })
 
     measurements: Mapped[List["PressureMeasurement"]] = relationship(back_populates="user", cascade="all, delete-orphan")

@@ -4,34 +4,26 @@ from app.services import user as user_service
 from app.db.session import async_session
 from app.core.config import settings
 from app.bot.keyboards.inline import get_main_menu_keyboard
+from app.core.i18n import i18n
 
 router = Router()
 
 @router.message(CommandStart())
 async def cmd_start(message: types.Message):
     async with async_session() as db:
-        user = await user_service.get_or_create_user(
+        user, is_new = await user_service.get_or_create_user(
             db, 
             user_id=message.from_user.id, 
-            username=message.from_user.username
+            username=message.from_user.username,
+            language_code=message.from_user.language_code,
         )
-        if not user:
-            await message.answer(
-                f"""Welcome to {settings.PROJECT_NAME}! 🩺
-
-                I’m here to help you keep your blood pressure under control and make sure you never miss your medications.
-
-                With this bot, you can:
-                — ✍️ Log your blood pressure.
-                — 📊 Track your health trends with visual charts.
-                — 💊 Manage your medication schedule.
-                — 🔔 Receive timely reminders for checks and pills.
-
-                Tap the button below to start your journey to a healthier heart!""",
-                reply_markup=get_main_menu_keyboard()
-            )
+        
+        lang = user.settings.get("language_code", "en")
+        
+        if is_new:
+            text = i18n.t(lang, "bot.welcome_new", project_name=settings.PROJECT_NAME)
         else:
-            await message.answer(
-                f"Welcome back, {user.username}!",
-                reply_markup=get_main_menu_keyboard()
-            )
+            text = i18n.t(lang, "bot.welcome_new", project_name=settings.PROJECT_NAME)
+            # text = i18n.t(lang, "bot.welcome_back", username=user.username or "friend")
+
+        await message.answer(text, reply_markup=get_main_menu_keyboard(lang))

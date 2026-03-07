@@ -1,7 +1,7 @@
 from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.user import User
-from app.schemas.user import UserUpdate, UserCreate
+from app.schemas.user import UserUpdate, UserCreate, UserSettings
 from typing import Optional
 
 async def create_user(session: AsyncSession, user_in: UserCreate) -> User:
@@ -12,17 +12,21 @@ async def create_user(session: AsyncSession, user_in: UserCreate) -> User:
     return user
 
 
-async def get_or_create_user(session: AsyncSession, user_id: int, username: Optional[str] = None) -> User | None:
-    result = await session.execute(
-        select(User)
-        .where(User.id == user_id)
-    )
+async def get_or_create_user(session: AsyncSession, user_id: int, username: Optional[str] = None, language_code: Optional[str] = "en") -> tuple[User, bool]:
+    result = await session.execute(select(User).where(User.id == user_id))
     user = result.scalars().first()
+    
     if user:
-        return user
-    else:
-        user_creation = UserCreate(id=user_id, username=username)
-        return await create_user(session, user_creation)
+        return user, False
+    
+    supported_langs = ["en", "ru", "ua"]
+    lang = language_code if language_code in supported_langs else "en"
+    
+    user_settings = UserSettings(language_code=lang)
+    user_creation = UserCreate(id=user_id, username=username, settings=user_settings)
+    
+    new_user = await create_user(session, user_creation)
+    return new_user, True
 
 async def update_user(
         session: AsyncSession,

@@ -8,8 +8,8 @@ import { SettingsManager } from "./managers/settings.js";
 import { MedicationManager } from "./managers/medications.js";
 import { CalendarManager } from "./managers/calendar.js";
 import { AppState } from "./state.js";
-
-
+import { I18nManager } from "./managers/i18n.js";
+import { tg } from "./config.js";
 
 export const UIManager = {
     screens: document.querySelectorAll(".screen"),
@@ -68,44 +68,55 @@ export const UIManager = {
         MeasurementsManager.fetchAndRefresh();
     },
     updateDashboard (data) {
-        const pressureEl = document.getElementById("current-pressure");
-        const countHintEl = document.getElementById("measurement-count");
-        const statusLabel = document.getElementById("status-text");
-        const statusCircle = document.querySelector(".status__circle");
-        const statusDetail = document.querySelector(".status__detail-value");
-        const count = data.measurements.length;
-        const quickBtns = document.getElementById("quick-btns");
-        const mainTitle = document.getElementById("current-date");
-        if (!AppState.quickButtons) quickBtns.classList.remove("active");
-        else quickBtns.classList.add("active");
-        statusLabel.classList.remove('status__label--none', 'status__label--normal', 'status__label--high', 'status__label--low', 'status__label--elevated');
-        statusCircle.classList.remove('status__circle--none', 'status__circle--normal', 'status__circle--high', 'status__circle--low', 'status__circle--elevated');
-        statusDetail.classList.remove('status__detail-value--none','status__detail-value--normal', 'status__detail-value--high', 'status__detail-value--low', 'status__detail-value--elevated');
+        const elements = {
+            pressure: document.getElementById("current-pressure"),
+            countHint: document.getElementById("measurement-count"),
+            mainTitle: document.getElementById("current-date"),
+            quickBtns: document.getElementById("quick-btns")
+        };
 
-        mainTitle.textContent = `${TimeConvert.formatMonthDate(data.date)}`;
+        const statusManagedElements = [
+            { el: document.getElementById("status-text"), prefix: "status__label--" },
+            { el: document.querySelector(".status__circle"), prefix: "status__circle--" },
+            { el: document.querySelector(".status__detail-value"), prefix: "status__detail-value--" }
+        ];
 
+        const allStatuses = ["none", "normal", "elevated", "high", "low"];
+
+        elements.mainTitle.textContent = TimeConvert.formatMonthDate(data.date);
+        elements.quickBtns.classList.toggle("active", !!AppState.quickButtons);
+
+        statusManagedElements.forEach(({ el, prefix }) => {
+            if (!el) return;
+            const classesToRemove = allStatuses.map(s => `${prefix}${s}`);
+            el.classList.remove(...classesToRemove);
+        });
+        
         if (!data.average) {
-            pressureEl.textContent = "--/--";
-            countHintEl.classList.remove("active");
-            statusLabel.classList.add(`status__label--none`);
-            statusCircle.classList.add(`status__circle--none`);
-            statusDetail.classList.add(`status__detail-value--none`);
+            elements.pressure.textContent = "--/--";
+            elements.countHint.classList.remove("active");
+            statusManagedElements.forEach(({ el, prefix }) => el.classList.add(`${prefix}none`));
             return;
         }
-        const {sys, dia} = data.average;
+
+        const { sys, dia } = data.average;
+        const count = data.measurements.length;
         const status = PRESSURE.getPressureStatus(sys, dia);
+        const statusKey = status.name.toLowerCase();
+        statusManagedElements[0].el.dataset.i18n = `status.${statusKey}`;
+        elements.pressure.textContent = `${sys}/${dia}`;
+        document.getElementById("status-text").textContent = I18nManager.t(`status.${statusKey}`);
 
-        pressureEl.textContent = `${sys}/${dia}`;
-        statusLabel.textContent = status.name;
+        statusManagedElements.forEach(({ el, prefix }) => {
+            el.classList.add(`${prefix}${statusKey}`);
+        });
 
-        statusLabel.classList.add(`status__label--${status.name.toLowerCase()}`);
-        statusCircle.classList.add(`status__circle--${status.name.toLowerCase()}`);
-        statusDetail.classList.add(`status__detail-value--${status.name.toLowerCase()}`);
-        if (count > 0) {
-            countHintEl.textContent = `Based on ${count} ${count === 1 ? 'measurement' : 'measurements'} today`;
-            countHintEl.classList.add("active");
-        } else {
-            countHintEl.classList.remove("active");
+        const hasMeasurements = count > 0;
+        elements.countHint.classList.toggle("active", hasMeasurements);
+        if (hasMeasurements) {
+            elements.countHint.textContent = I18nManager.t('status.measurements_count')
+            .replace('{count}', count)
+            .replace('{unit}', count === 1 ? I18nManager.t('common.measurement') : I18nManager.t('common.measurements'));
         }
     },
     renderHistory(groupedData) {
@@ -127,6 +138,7 @@ export const UIManager = {
                     ${group.measurements.map(m => {
                         const status = PRESSURE.getPressureStatus(m.sys, m.dia);
                         const statusClass = status.name.toLowerCase();
+                        const statusLabel = I18nManager.t(`status.${statusClass}`);
                         
                         return `
                         <article class="history-item-section" data-id="${m.id}" data-status="${statusClass}">
@@ -140,6 +152,7 @@ export const UIManager = {
                                         <span class="history-item__value history-item__value--${statusClass}">
                                             ${m.sys}/${m.dia}
                                         </span>
+                                        <span class="history-item__badge">${statusLabel}</span>
                                     </div>
                                 </div>
                             </div>
@@ -157,6 +170,7 @@ export const UIManager = {
 
         listContainer.innerHTML = html;
     },
+
     updatePeriodButtons(activePeriod){
         const btns = document.querySelectorAll(".period-selector__btn");
         btns.forEach(btn => {
@@ -178,19 +192,19 @@ export const UIManager = {
         emptyState.style.display = "none";
         const avgEl = document.getElementById('avg-pressure');
         avgEl.textContent = `${stats.avg.sys}/${stats.avg.dia}`;
-        // avgEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.avg.sys, stats.avg.dia).name.toLowerCase()}`;
+        
         const maxEl = document.getElementById('max-pressure');
         maxEl.textContent = `${stats.max.sys}/${stats.max.dia}`;
-        // maxEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.max.sys, stats.max.dia).name.toLowerCase()}`;
+        
         document.getElementById('max-date').textContent = TimeConvert.formatTime(stats.max.date); 
         
         const minEl = document.getElementById('min-pressure');
         minEl.textContent = `${stats.min.sys}/${stats.min.dia}`;
-        // minEl.className = `stat-card__value stat-card__value--${PRESSURE.getPressureStatus(stats.min.sys, stats.min.dia).name.toLowerCase()}`;
+
         document.getElementById('min-date').textContent = TimeConvert.formatTime(stats.min.date);
 
         document.getElementById('total-measurements').textContent = stats.total;
-        const subtitles = { 'week': 'Last 7 days', 'month': 'Last 30 days', 'year': 'Last 12 months' };
+        const subtitles = { 'week': I18nManager.t("subtitles.week"), 'month': I18nManager.t("subtitles.month"), 'year': I18nManager.t("subtitles.year") };
         document.getElementById('period-subtitle').textContent = subtitles[period] || '';
 
         const distContainer = document.getElementById('distribution-bars');
@@ -198,7 +212,7 @@ export const UIManager = {
             
             return `
             <div class="distribution__bar">
-                <span class="distribution__label" style="text-transform: capitalize;">${item.label}</span>
+                <span class="distribution__label" style="text-transform: capitalize;">${I18nManager.t(`status.${item.label.toLowerCase()}`)}</span>
                 <div class="distribution__progress">
                     <div class="distribution__fill distribution__fill--${item.label}" style="width: ${item.perc}%"></div>
                 </div>
@@ -287,9 +301,9 @@ export const UIManager = {
                             },
                             callback: (val) => {
                                 let label = '';
-                                if (val === 50) label = 'IDEAL';
-                                if (val === 100) label = 'HIGH';
-                                if (val === 0) label = 'LOW';
+                                if (val === 50) label = I18nManager.t("status.normal");
+                                if (val === 100) label = I18nManager.t("status.high");
+                                if (val === 0) label = I18nManager.t("status.low");
                                 return label ? label + (isMobile ? '' : '    ') : '';
                             }
                         }
@@ -386,8 +400,8 @@ export const UIManager = {
                     </svg>
                 </div>
                 <div class="status-banner__info">
-                    <span class="status-banner__label">Next dose:</span>
-                    <span class="status-banner__value"><strong class="status-banner__value-name">${this.globalNextDose.name}</strong> at ${this.globalNextDose.time}</span>
+                    <span class="status-banner__label">${I18nManager.t("medications.next_dose")}:</span>
+                    <span class="status-banner__value"><strong class="status-banner__value-name">${this.globalNextDose.name}</strong> ${I18nManager.t("medications.at")} ${this.globalNextDose.time}</span>
                 </div>
             `;
             statusContainer.style.display = "flex";
@@ -399,8 +413,7 @@ export const UIManager = {
                     </svg>
                 </div>
                 <div class="status-banner__info">
-                    <span class="status-banner__label">Good job!</span>
-                    <strong class="status-banner__value">Today there is no more medication to take</strong>
+                    <span class="status-banner__label">${I18nManager.t("medications.all_done")}</span>
                 </div>
             `;
             statusContainer.style.display = "flex";
@@ -428,7 +441,7 @@ export const UIManager = {
                 <div class="medication-card__content">
                     <div class="medication-card__header">
                         <h3 class="medication-card__text">${medication.item_name}</h3>
-                        <span class="medication-card__status">${takenCount}/${totalCount} today</span>
+                        <span class="medication-card__status">${takenCount}/${totalCount} ${I18nManager.t("common.today")}</span>
                     </div>
                     
                     <div class="medication-card__progress">
@@ -504,8 +517,14 @@ export const UIManager = {
 
     },
     loadCalendar(data){
-        const mainTitle = document.getElementById("calendar-month");
-        mainTitle.textContent = `${TimeConvert.formatMonthFull(data.month)}  ${data.year}`;
+        const monthTitle = document.getElementById('calendar-month');
+        const monthKey = [
+            'january', 'february', 'march', 'april', 'may', 'june',
+            'july', 'august', 'september', 'october', 'november', 'december'
+        ][data.month-1];
+        
+        monthTitle.textContent = `${I18nManager.t(`calendar.months.${monthKey}`)} ${data.year}`;
+
         const listContainer = document.getElementById("calendar-days");
 
         listContainer.innerHTML = data.days.map((day, index) => {
@@ -513,7 +532,7 @@ export const UIManager = {
                 ? PRESSURE.getPressureStatus(day.average.sys, day.average.dia)
                 : null;
             return `
-                <button class="calendar__day" data-action="select-day" data-index="${index}">
+                <button class="calendar__day ${!day.is_current_month ? `calendar__day-not-current-month` : ``}" data-action="select-day" data-index="${index}">
                     <span class="calendar__day-number">${new Date(day.date).getDate()}</span>
                     ${status ? `<span class="calendar__day-indicator calendar__day-indicator--${status.name.toLowerCase()}"></span>` : ''}
                 </button>
@@ -523,27 +542,30 @@ export const UIManager = {
         
     },
     updateDayInfo(dayData){
-        const infoContainer = document.getElementById("calendar-info");
-        console.log(dayData);
-        if (!dayData.average){
-            infoContainer.innerHTML = `<p class="calendar-info__empty">No data for this day</p>`;
+        const container = document.getElementById('calendar-info');
+        
+        if (!dayData || !dayData.measurements || dayData.measurements.length === 0) {
+            container.innerHTML = `<p class="calendar-info__empty">${I18nManager.t('calendar.select_day')}</p>`;
             return;
         }
-        const statusObj = PRESSURE.getPressureStatus(dayData.average.sys, dayData.average.dia);
-        const status = statusObj.name;
-        infoContainer.innerHTML = `
+        
+        const status = PRESSURE.getPressureStatus(dayData.average.sys, dayData.average.dia);
+        const statusClass = status.name.toLowerCase();
+        const statusLabel = I18nManager.t(`status.${statusClass}`);
+        
+        const html = `
             <div class="day-details">
                 <div class="day-details__header">
-                    <span class="day-details__date">${TimeConvert.formatDateFull(dayData.date)}</span>
-                    <span class="day-details__badge day-details__badge--${status}">${status.toUpperCase()}</span>
+                    <span class="day-details__date">${TimeConvert.formatDate(dayData.date)}</span>
+                    <span class="day-details__badge day-details__badge--${statusClass}">${statusLabel}</span>
                 </div>
                 <div class="day-details__main">
                     <div class="day-details__avg">
-                        <span class="day-details__label">Daily Avg</span>
-                        <span class="day-details__value">${Math.round(dayData.average.sys)}/${Math.round(dayData.average.dia)}</span>
+                        <span class="day-details__label">${I18nManager.t('status.average')}</span>
+                        <span class="day-details__value">${dayData.average.sys}/${dayData.average.dia}</span>
                     </div>
                     <div class="day-details__count">
-                        <span class="day-details__label">Measurements</span>
+                        <span class="day-details__label">${I18nManager.t('status.count')}</span>
                         <span class="day-details__value">${dayData.measurements.length}</span>
                     </div>
                 </div>
@@ -553,11 +575,13 @@ export const UIManager = {
                             <span class="day-details__item-time">${TimeConvert.formatTime(m.created_at)}</span>
                             <span class="day-details__item-val">${m.sys}/${m.dia}</span>
                         </li>
-                        
                     `).join('')}
                 </ul>
             </div>
         `;
+        
+        container.innerHTML = html;
+
     },
     loadSettingsScreen(){
         const targetPressureEl = document.getElementById("target-pressure-settings");
@@ -582,14 +606,101 @@ export const UIManager = {
         } else {
             reminderTimeBtn.style.display = 'none';
         }
+        const currentLang = AppState.user.settings.language_code || 'en';
+        document.querySelectorAll('[data-lang]').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === currentLang);
+        });
 
     },
-    
+    renderCalendarPreview(data) {
+        const stripContainer = document.getElementById("dashboard-calendar-strip");
+        const weekAvgContainer = document.getElementById("calendar-week-avg");
+        
+        if (!stripContainer) return;
+        const avgValue = weekAvgContainer.querySelector('.calendar-preview__avg-value');
+        // Обновить week average
+        if (weekAvgContainer && data.week_average) {
+            const avgSys = Math.round(data.week_average.sys);
+            const avgDia = Math.round(data.week_average.dia);
+            
+            avgValue.textContent = `${avgSys}/${avgDia}`;
+            
+            // Добавить класс статуса
+            avgValue.className = 'calendar-preview__avg-value';
+            const avgStatus = PRESSURE.getPressureStatus(avgSys, avgDia);
+            if (avgStatus) {
+                avgValue.classList.add(`calendar-preview__avg-value--${avgStatus.name.toLowerCase()}`);
+            }
+        } else {
+            avgValue.textContent = "";
+        }
+
+        // Очистить контейнер дней
+        stripContainer.innerHTML = '';
+
+        const today = new Date();
+        const todayStr = today.toISOString().split('T')[0];
+        const selectedDateStr = MeasurementsManager.currentDate 
+            ? MeasurementsManager.currentDate.toISOString().split('T')[0]
+            : todayStr;
+
+        const html = data.days.map((day, index) => {
+            const dateObj = new Date(day.date);
+            const dayDateStr = day.date.split('T')[0];
+            
+            const isSelected = dayDateStr === selectedDateStr;
+            const isToday = dayDateStr === todayStr;
+            
+            const status = day.average 
+                ? PRESSURE.getPressureStatus(day.average.sys, day.average.dia) 
+                : null;
+
+            const weekDay = dateObj.toLocaleDateString(I18nManager.currentLang || 'en', { 
+                weekday: 'short' 
+            });
+
+            const measurementCount = day.measurements ? day.measurements.length : 0;
+
+            const selectedClass = isSelected ? 'calendar-day--selected' : '';
+            const todayClass = isToday ? 'calendar-day--today' : '';
+            const statusClass = status ? `calendar-day__status-fill--${status.name.toLowerCase()}` : '';
+
+            return `
+                <button 
+                    class="calendar-day ${selectedClass} ${todayClass}" 
+                    data-action="select-preview-day" 
+                    data-date="${day.date}"
+                >
+
+                    
+                    <span class="calendar-day__name">${weekDay}</span>
+                    <span class="calendar-day__number">${dateObj.getDate()}</span>
+                    
+                    <div class="calendar-day__status">
+                        ${status ? `<div class="calendar-day__status-fill ${statusClass}"></div>` : ''}
+                    </div>
+                </button>
+            `;
+        }).join('');
+
+        stripContainer.innerHTML = html;
+        
+        requestAnimationFrame(() => {
+            const selectedDay = stripContainer.querySelector('.calendar-day--selected');
+            if (selectedDay) {
+                selectedDay.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest', 
+                    inline: 'center' 
+                });
+            }
+        });
+    }
 }
 
 export const ActionHandler = {
     pageInitializers: {
-        "main-screen": () => MeasurementsManager.fetchAndRefresh(),
+        "main-screen": async () => { await MeasurementsManager.fetchAndRefresh();  await CalendarManager.initPreview(); },
         "stats-screen": () => StatisticsManager.loadStats(),
         "medications-screen": () => MedicationManager.fetchAndRefresh(),
         "history-screen": () => HistoryManager.loadHistory(),
@@ -598,8 +709,19 @@ export const ActionHandler = {
     },
     btnAction: {
         "manual-add": () => { UIManager.switchView("add-screen") },
-        "prev-day": () => { AppState.quickButtons = true; MeasurementsManager.prevDay(); },
-        "next-day": () => { AppState.quickButtons = true; MeasurementsManager.nextDay(); },
+        "prev-day": (event) => { 
+            AppState.quickButtons = true; 
+            MeasurementsManager.prevDay(); 
+            
+            CalendarManager.currentDate = MeasurementsManager.currentDate;
+            CalendarManager.initPreview(); 
+        },
+        "next-day": (event) => { 
+            AppState.quickButtons = true; 
+            MeasurementsManager.nextDay(); 
+            CalendarManager.currentDate = MeasurementsManager.currentDate;
+            CalendarManager.initPreview(); 
+        },
         "history": () => { 
             HistoryManager.loadHistory();
             UIManager.switchView("history-screen"); 
@@ -610,6 +732,7 @@ export const ActionHandler = {
         },
         "save": async () => { 
             const success = await MeasurementsManager.inputAdd(); 
+            
             if (success) UIManager.switchView("main-screen"); 
         },
         "cancel": () => { UIManager.switchView("main-screen"); },
@@ -691,6 +814,17 @@ export const ActionHandler = {
         "clear-data": (event) => { SettingsManager.clearData(); },
         "export": (event) => { tg.showAlert("Export feature coming soon!"); },
         "toggle-notifications": (event) => { SettingsManager.updateNotification(event.target.checked); },
+        "set-lang": (event) => {
+            const lang = event.target.closest('[data-lang]').dataset.lang;
+            SettingsManager.changeLanguage(lang);
+        },
+        "select-preview-day": (event) => {
+            const dateStr = event.target.closest('.calendar-day').dataset.date;
+            CalendarManager.currentDate = new Date(dateStr);
+            CalendarManager.initPreview();
+            MeasurementsManager.currentDate = new Date(dateStr);
+            MeasurementsManager.fetchAndRefresh();
+        }
     },
     init() {
         document.addEventListener("click", (event) => {
