@@ -1,0 +1,150 @@
+{
+  "common": {
+    "app_name": "Pressure Tracker",
+    "bpm": "bpm",
+    "measurement": "measurement",
+    "measurements": "measurements",
+    "today": "today"
+  },
+  "header": {
+    "dashboard": "Dashboard"
+  },
+  "nav": {
+    "home": "Home",
+    "new": "New",
+    "stats": "Stats",
+    "calendar": "Calendar",
+    "medications": "Meds",
+    "settings": "Settings",
+    "history": "History"
+  },
+  "status": {
+    "none": "No Data",
+    "low": "Low",
+    "normal": "Normal",
+    "elevated": "Elevated",
+    "high": "High",
+    "last_measurement": "Last Measurement",
+    "current_pressure": "Current Pressure",
+    "target_pressure": "Target Pressure",
+    "measurements_count": "Based on {count} {unit} today",
+    "average": "Average",
+    "count": "Count"
+  },
+  "quick_actions": {
+    "today": "Today",
+    "this_week": "This Week"
+  },
+  "buttons": {
+    "add_measurement": "Add Measurement",
+    "cancel": "Cancel",
+    "save": "Save",
+    "add": "Add",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "screens": {
+    "add_measurement": "Add Measurement",
+    "calendar": "Calendar",
+    "statistics": "Statistics",
+    "settings": "Settings",
+    "history": "History",
+    "medications": "Medications",
+    "add_medication": "Add Medication"
+  },
+  "forms": {
+    "systolic": "Systolic (Upper)",
+    "systolic_placeholder": "e.g. 120",
+    "systolic_hint": "Normal: 90-120 mmHg",
+    "diastolic": "Diastolic (Lower)",
+    "diastolic_placeholder": "e.g. 80",
+    "diastolic_hint": "Normal: 60-80 mmHg",
+    "blood_pressure": "Blood Pressure",
+    "blood_pressure_hint": "Format: systolic/diastolic (e.g., 120/80)",
+    "note": "Note (optional)",
+    "note_placeholder": "Any observations...",
+    "medication_name": "Medication Name",
+    "medication_name_placeholder": "e.g. Lisinopril",
+    "reminder_times": "Reminder Times",
+    "target_sys_placeholder": "120",
+    "target_dia_placeholder": "80"
+  },
+  "calendar": {
+    "title": "Calendar",
+    "view_full": "View full calendar →",
+    "select_day": "Select a day to view details",
+    "days": {
+      "mon": "Mon",
+      "tue": "Tue",
+      "wed": "Wed",
+      "thu": "Thu",
+      "fri": "Fri",
+      "sat": "Sat",
+      "sun": "Sun"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June",
+      "july": "July",
+      "august": "August",
+      "september": "September",
+      "october": "October",
+      "november": "November",
+      "december": "December"
+    }
+  },
+  "stats": {
+    "week": "Week",
+    "month": "Month",
+    "year": "Year",
+    "distribution": "Pressure Distribution",
+    "average_pressure": "Average",
+    "measurements": "Measurements",
+    "highest": "Highest",
+    "lowest": "Lowest"
+  },
+  "subtitles": {
+    "week": "Last 7 days",
+    "month": "Last 30 days",
+    "year": "Last 12 months"
+  },
+  "settings": {
+    "general": "General",
+    "notifications": "Notifications",
+    "language": "Language",
+    "about": "About",
+    "target_pressure": "Target Pressure",
+    "reminders": "Reminders",
+    "reminder_time": "Reminder Time",
+    "export": "Export Data",
+    "clear_data": "Clear All Data",
+    "version": "Version"
+  },
+  "empty": {
+    "no_measurements": "No measurements yet",
+    "start_tracking": "Start tracking your blood pressure",
+    "no_medications": "No medications added",
+    "add_medication": "Add your first medication"
+  },
+  "modal": {
+    "target_pressure_title": "Set Target Pressure",
+    "target_pressure_text": "Set your ideal blood pressure range"
+  },
+  "history": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "note_prefix": "Note:"
+  },
+  "medications": {
+    "all_done": "All Done!",
+    "completed": "Completed",
+    "next_dose": "Next dose",
+    "at": "at",
+    "edit_details": "Edit",
+    "delete": "Delete"
+  }
+}

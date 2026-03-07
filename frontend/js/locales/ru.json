@@ -1,0 +1,150 @@
+{
+  "common": {
+    "app_name": "Контроль Давления",
+    "bpm": "уд/мин",
+    "measurement": "измерении",
+    "measurements": "измерений",
+    "today": "сегодня"
+  },
+  "header": {
+    "dashboard": "Главная"
+  },
+  "nav": {
+    "home": "Главная",
+    "new": "Новое",
+    "stats": "Статистика",
+    "calendar": "Календарь",
+    "medications": "Лекарства",
+    "settings": "Настройки",
+    "history": "История"
+  },
+  "status": {
+    "none": "Нет данных",
+    "low": "Низкое",
+    "normal": "Нормальное",
+    "elevated": "Повышенное",
+    "high": "Высокое",
+    "last_measurement": "Последнее измерение",
+    "current_pressure": "Текущее давление",
+    "target_pressure": "Целевое давление",
+    "measurements_count": "Основываясь на {count} {unit} сегодня",
+    "average": "Среднее",
+    "count": "Количество"
+  },
+  "quick_actions": {
+    "today": "Сегодня",
+    "this_week": "За неделю"
+  },
+  "buttons": {
+    "add_measurement": "Добавить измерение",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "add": "Добавить",
+    "delete": "Удалить",
+    "edit": "Изменить"
+  },
+  "screens": {
+    "add_measurement": "Новое измерение",
+    "calendar": "Календарь",
+    "statistics": "Статистика",
+    "settings": "Настройки",
+    "history": "История",
+    "medications": "Лекарства",
+    "add_medication": "Добавить лекарство"
+  },
+  "forms": {
+    "systolic": "Систолическое (верхнее)",
+    "systolic_placeholder": "например, 120",
+    "systolic_hint": "Норма: 90-120 мм рт. ст.",
+    "diastolic": "Диастолическое (нижнее)",
+    "diastolic_placeholder": "например, 80",
+    "diastolic_hint": "Норма: 60-80 мм рт. ст.",
+    "blood_pressure": "Кровяное давление",
+    "blood_pressure_hint": "Формат: систолическое/диастолическое (например, 120/80)",
+    "note": "Заметка (необязательно)",
+    "note_placeholder": "Любые наблюдения...",
+    "medication_name": "Название лекарства",
+    "medication_name_placeholder": "например, Лизиноприл",
+    "reminder_times": "Время напоминаний",
+    "target_sys_placeholder": "120",
+    "target_dia_placeholder": "80"
+  },
+  "calendar": {
+    "title": "Календарь",
+    "view_full": "Посмотреть полный календарь →",
+    "select_day": "Выберите день для просмотра",
+    "days": {
+      "mon": "Пн",
+      "tue": "Вт",
+      "wed": "Ср",
+      "thu": "Чт",
+      "fri": "Пт",
+      "sat": "Сб",
+      "sun": "Вс"
+    },
+    "months": {
+      "january": "Январь",
+      "february": "Февраль",
+      "march": "Март",
+      "april": "Апрель",
+      "may": "Май",
+      "june": "Июнь",
+      "july": "Июль",
+      "august": "Август",
+      "september": "Сентябрь",
+      "october": "Октябрь",
+      "november": "Ноябрь",
+      "december": "Декабрь"
+    }
+  },
+  "stats": {
+    "week": "Неделя",
+    "month": "Месяц",
+    "year": "Год",
+    "distribution": "Распределение давления",
+    "average_pressure": "Среднее",
+    "measurements": "Измерений",
+    "highest": "Максимум",
+    "lowest": "Минимум"
+  },
+  "subtitles": {
+    "week": "Последние 7 дней",
+    "month": "Последние 30 днейs",
+    "year": "Последние 12 месяцев"
+  },
+  "settings": {
+    "general": "Основные",
+    "notifications": "Уведомления",
+    "language": "Язык",
+    "about": "О приложении",
+    "target_pressure": "Целевое давление",
+    "reminders": "Напоминание",
+    "reminder_time": "Время напоминаний",
+    "export": "Экспорт данных",
+    "clear_data": "Удалить все данные",
+    "version": "Версия"
+  },
+  "empty": {
+    "no_measurements": "Пока нет измерений",
+    "start_tracking": "Начните отслеживать давление",
+    "no_medications": "Нет добавленных лекарств",
+    "add_medication": "Добавьте первое лекарство"
+  },
+  "modal": {
+    "target_pressure_title": "Установить целевое давление",
+    "target_pressure_text": "Установите ваш идеальный диапазон давления"
+  },
+  "history": {
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "note_prefix": "Заметка:"
+  },
+  "medications": {
+    "all_done": "Всё выполнено!",
+    "completed": "Выполнено",
+    "next_dose": "Следующий приём",
+    "at": "в",
+    "edit_details": "Редактировать",
+    "delete": "Удалить"
+  }
+}

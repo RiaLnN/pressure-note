@@ -1,0 +1,150 @@
+{
+  "common": {
+    "app_name": "Контроль Тиску",
+    "bpm": "уд/хв",
+    "measurement": "вимірюванні",
+    "measurements": "вимірюваннях",
+    "today": "сьогодні"
+  },
+  "header": {
+    "dashboard": "Головна"
+  },
+  "nav": {
+    "home": "Головна",
+    "new": "Нове",
+    "stats": "Статистика",
+    "calendar": "Календар",
+    "medications": "Ліки",
+    "settings": "Налаштування",
+    "history": "Історія"
+  },
+  "status": {
+    "none": "Немає даних",
+    "low": "Низький",
+    "normal": "Нормальний",
+    "elevated": "Підвищений",
+    "high": "Високий",
+    "last_measurement": "Останній вимір",
+    "current_pressure": "Поточний тиск",
+    "target_pressure": "Цільовий тиск",
+    "measurements_count": "Грунтуючись на {count} {unit} сьогодні",
+    "average": "Середнє",
+    "count": "Кількість"
+  },
+  "quick_actions": {
+    "today": "Сьогодні",
+    "this_week": "За тиждень"
+  },
+  "buttons": {
+    "add_measurement": "Додати вимір",
+    "cancel": "Скасувати",
+    "save": "Зберегти",
+    "add": "Додати",
+    "delete": "Видалити",
+    "edit": "Змінити"
+  },
+  "screens": {
+    "add_measurement": "Новий вимір",
+    "calendar": "Календар",
+    "statistics": "Статистика",
+    "settings": "Налаштування",
+    "history": "Історія",
+    "medications": "Ліки",
+    "add_medication": "Додати ліки"
+  },
+  "forms": {
+    "systolic": "Систолічний (верхній)",
+    "systolic_placeholder": "наприклад, 120",
+    "systolic_hint": "Норма: 90-120 мм рт. ст.",
+    "diastolic": "Діастолічний (нижній)",
+    "diastolic_placeholder": "наприклад, 80",
+    "diastolic_hint": "Норма: 60-80 мм рт. ст.",
+    "blood_pressure": "Кров’яний тиск",
+    "blood_pressure_hint": "Формат: систолічний/діастолічний (наприклад, 120/80)",
+    "note": "Примітка (необов'язково)",
+    "note_placeholder": "Будь-які спостереження...",
+    "medication_name": "Назва ліків",
+    "medication_name_placeholder": "наприклад, Лізиноприл",
+    "reminder_times": "Час нагадувань",
+    "target_sys_placeholder": "120",
+    "target_dia_placeholder": "80"
+  },
+  "calendar": {
+    "title": "Календар",
+    "view_full": "Переглянути повний календар →",
+    "select_day": "Виберіть день для перегляду",
+    "days": {
+      "mon": "Пн",
+      "tue": "Вт",
+      "wed": "Ср",
+      "thu": "Чт",
+      "fri": "Пт",
+      "sat": "Сб",
+      "sun": "Нд"
+    },
+    "months": {
+      "january": "Січень",
+      "february": "Лютий",
+      "march": "Березень",
+      "april": "Квітень",
+      "may": "Травень",
+      "june": "Червень",
+      "july": "Липень",
+      "august": "Серпень",
+      "september": "Вересень",
+      "october": "Жовтень",
+      "november": "Листопад",
+      "december": "Грудень"
+    }
+  },
+  "stats": {
+    "week": "Тиждень",
+    "month": "Місяць",
+    "year": "Рік",
+    "distribution": "Розподіл тиску",
+    "average_pressure": "Середнє",
+    "measurements": "Вимірювань",
+    "highest": "Максимум",
+    "lowest": "Мінімум"
+  },
+  "subtitles": {
+    "week": "Останні 7 днів",
+    "month": "Останні 30 днів",
+    "year": "Останні 12 місяців"
+  },
+  "settings": {
+    "general": "Основні",
+    "notifications": "Сповіщення",
+    "language": "Мова",
+    "about": "Про додаток",
+    "target_pressure": "Цільовий тиск",
+    "reminders": "Нагадування",
+    "reminder_time": "Час нагадування",
+    "export": "Експорт даних",
+    "clear_data": "Видалити всі дані",
+    "version": "Версія"
+  },
+  "empty": {
+    "no_measurements": "Поки немає вимірів",
+    "start_tracking": "Почніть відстежувати тиск",
+    "no_medications": "Немає доданих ліків",
+    "add_medication": "Додайте перші ліки"
+  },
+  "modal": {
+    "target_pressure_title": "Встановити цільовий тиск",
+    "target_pressure_text": "Встановіть ваш ідеальний діапазон тиску"
+  },
+  "history": {
+    "today": "Сьогодні",
+    "yesterday": "Вчора",
+    "note_prefix": "Примітка:"
+  },
+  "medications": {
+    "all_done": "Все виконано!",
+    "completed": "Виконано",
+    "next_dose": "Наступний прийом",
+    "at": "о",
+    "edit_details": "Редагувати",
+    "delete": "Видалити"
+  }
+}
