@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, ForeignKey, func, String, JSON
+from sqlalchemy import Integer, ForeignKey, func, String, JSON, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.ext.mutable import MutableList
 from app.db.base_class import Base
@@ -13,7 +13,10 @@ class Medication(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     item_name: Mapped[str] = mapped_column(String)
-    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), 
+        server_default=func.now()
+    )
     reminders: Mapped[Optional[List[str]]] = mapped_column(MutableList.as_mutable(JSON), nullable=True, default=list)
 
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"))
