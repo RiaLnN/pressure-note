@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 
 app = FastAPI(title=settings.PROJECT_NAME)
@@ -13,6 +16,14 @@ app = FastAPI(title=settings.PROJECT_NAME)
 app.add_exception_handler(ServiceExceptions, service_exception_handler)
 
 app.include_router(api_router, prefix='/api/v1')
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 frontend_path = os.path.join(os.getcwd(), "frontend")
 app.mount("/frontend", StaticFiles(directory=frontend_path), name="frontend")
