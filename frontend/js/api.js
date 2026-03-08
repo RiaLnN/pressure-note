@@ -13,7 +13,8 @@ async function request(endpoint, options = {}, initial = false) {
 
     const response = await fetch(`${CONFIG.baseUrl}${endpoint}`, httpRequest);
     if (response.status === 401) {
-        AppState.token = null;
+        if (!initial) request(endpoint, options, initial);
+        else AppState.token = null;
         // window.location.reload();
     }
     if (!response.ok) {

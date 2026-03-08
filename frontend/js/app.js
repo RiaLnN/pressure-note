@@ -11,10 +11,7 @@ async function init() {
     tg.ready();
     try {
         const user = tg.initDataUnsafe.user;
-        let responseData;
-        while (!responseData.ok){
-            responseData = await UserData.create(user.id.toString());
-        }
+        const responseData = await UserData.create(user.id.toString());
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         SettingsManager.saveSettings({ timezone: userTimezone });
         AppState.token = responseData.access_token;
