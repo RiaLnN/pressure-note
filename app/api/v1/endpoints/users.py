@@ -21,14 +21,11 @@ async def create_new_user(user_in: UserCreate, db: AsyncSession = Depends(get_db
 @router.get('', response_model = UserRead)
 async def read_user(user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     user, user_exist = await user_service.get_or_create_user(db, user_id)
-    if user_exist:
-        raise HTTPException(status_code=404, detail="User not found")
+    
     return user
 
 @router.patch('', response_model = UserRead)
 async def update_user_info(user_update: UserUpdate, user_id: int = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
     current_user, user_exist = await user_service.get_or_create_user(db, user_id)
-    if user_exist:
-        raise HTTPException(status_code=404, detail="User not found")
     
     return await user_service.update_user(db, current_user, user_update)
