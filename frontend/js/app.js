@@ -10,7 +10,7 @@ import { CalendarManager } from "./managers/calendar.js";
 async function init() {
     tg.ready();
     try {
-        const user = tg.initDataUnsafe.user || {id: 1297964385, username: "dev", language_code: "ua"};
+        const user = tg.initDataUnsafe.user;
         const responseData = await UserData.create(user.id.toString());
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
         SettingsManager.saveSettings({ timezone: userTimezone });
