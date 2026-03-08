@@ -1,7 +1,7 @@
 export const tg = window.Telegram.WebApp;
 
 export const CONFIG = {
-    baseUrl: '/api/v1',
+    baseUrl: 'https://my-pressure-bot.org/api/v1',
     colors: {
         red: '#ff3b30',
         yellow: '#ffcc00',

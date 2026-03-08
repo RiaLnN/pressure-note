@@ -35,5 +35,13 @@ services:
     depends_on:
       - db
     command: python -m app.bot.main
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=eyJhIjoiYmU1N2Y2MGZkMTc3MjFmMzYxMDRlMzhkZWJhYmEzYmIiLCJ0IjoiNWUyNmUwMDktOGVjMC00NzZiLTlkOTAtODBmZDUxZjQxZDBkIiwicyI6Ik1HVTFOVFJrTTJVdE9EUmlaaTAwWVRRNUxUazNPREF0TnpNeE5HWXlZalJpTkdRMiJ9
+    depends_on:
+      - api
 volumes:
   postgres_data:
