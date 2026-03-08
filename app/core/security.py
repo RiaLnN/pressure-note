@@ -14,9 +14,9 @@ def create_access_token(data: dict):
 async def get_current_user(token: str = Depends(OAuth2PasswordBearer(tokenUrl="token"))):
     try:
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-        user_id: int = payload.get("sub")
-        if user_id is None:
+        user_id_raw = payload.get("sub")
+        if user_id_raw is None:
             raise HTTPException(status_code=401)
-        return user_id
+        return int(user_id_raw)
     except JWTError:
         raise HTTPException(status_code=401)
