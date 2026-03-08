@@ -2,13 +2,14 @@ import { CONFIG } from "./config.js";
 import { AppState } from "./state.js";
 
 async function request(endpoint, options = {}, initial = false) {
+    console.log(`Request to ${endpoint}. Token present: ${!!AppState.token}`);
     const httpRequest = {
         headers: { 
             "Content-type": "application/json",
         },
         ...options
     }
-    if (!initial && AppState.token) httpRequest.headers["Authorization"] = "Bearer " + AppState.token;
+    if (!initial && AppState.token) httpRequest.headers["Authorization"] = `Bearer ${AppState.token}`;
 
     const response = await fetch(`${CONFIG.baseUrl}${endpoint}`, httpRequest);
     if (response.status === 401) {
