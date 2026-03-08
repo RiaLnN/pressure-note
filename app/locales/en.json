@@ -1,10 +1,10 @@
 {
   "bot": {
-    "welcome_new": "Welcome to Pressure Tracker! 🩺\n\nI'm your personal health assistant, here to help you:\n\n✅ Track your blood pressure daily\n📊 Visualize pressure measurements\n💊 Manage your medication schedule\n🔔 Never miss important reminders\n📈 Monitor your progress over time\nFor more details type command /help\n\nYour heart health matters! Let's start this journey together.\n\nTap \"Open App\" below to begin! 👇",
+    "welcome_new": "Welcome to My Pressure! 🩺\n\nI'm your personal health assistant, here to help you:\n\n✅ Track your blood pressure daily\n📊 Visualize pressure measurements\n💊 Manage your medication schedule\n🔔 Never miss important reminders\n📈 Monitor your progress over time\nFor more details type command /help\n\nYour heart health matters! Let's start this journey together.\n\nTap \"Open App\" below to begin! 👇",
     
     "welcome_back": "Welcome back, {username}! 👋\n\nReady to check in on your health today?",
     
-    "help": "🩺 Pressure Tracker - Your Health Companion\n\nWhat I can do:\n\n📝 Track Blood Pressure\nLog your measurements anytime with detailed notes. Quick presets make it super fast!\n\n📊 Visual Analytics\nSee your health trends with beautiful charts. Weekly, monthly, and yearly views available.\n\n📅 Calendar View\nReview your measurement history day by day with color-coded status indicators.\n\n💊 Medication Manager\nSet up your pill schedule with multiple daily reminders. Never forget a dose!\n\n🔔 Smart Reminders\nGet timely notifications for both pressure checks and medications.\n\n🎯 Target Goals\nSet your ideal blood pressure range and track your progress.\n\n📤 Export Data\nDownload your health records anytime for sharing with your doctor.\n\nCommands:\n/start - Open the app\n/help - Show this help message\n\nNeed Support?\nIf you have questions or suggestions, feel free to reach out @rialnns!\n\n💚 Stay healthy!",
+    "help": "🩺 My Pressure - Your Health Companion\n\nWhat I can do:\n\n📝 Track Blood Pressure\nLog your measurements anytime with detailed notes. Quick presets make it super fast!\n\n📊 Visual Analytics\nSee your health trends with beautiful charts. Weekly, monthly, and yearly views available.\n\n📅 Calendar View\nReview your measurement history day by day with color-coded status indicators.\n\n💊 Medication Manager\nSet up your pill schedule with multiple daily reminders. Never forget a dose!\n\n🔔 Smart Reminders\nGet timely notifications for both pressure checks and medications.\n\n🎯 Target Goals\nSet your ideal blood pressure range and track your progress.\n\n📤 Export Data\nDownload your health records anytime for sharing with your doctor.\n\nCommands:\n/start - Open the app\n/help - Show this help message\n\nNeed Support?\nIf you have questions or suggestions, feel free to reach out @rialnns!\n\n💚 Stay healthy!",
     
     "open_app": "Open app",
 
@@ -37,7 +37,7 @@
     ],
     
     "commands": {
-      "start": "🚀 Opening Pressure Tracker...\n\nLet's check your health dashboard!",
+      "start": "🚀 Opening My Pressure...\n\nLet's check your health dashboard!",
       "unknown": "🤔 I didn't understand that command.\n\nTry /help to see what I can do!"
     },
     
