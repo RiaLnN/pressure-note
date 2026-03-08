@@ -17,9 +17,16 @@ async function init() {
         AppState.token = responseData.access_token;
         AppState.user.settings.language_code = user.language_code;
         AppState.user.username = user.username;
+
+
+        await I18nManager.init();
+        await CalendarManager.initPreview();
+        MeasurementsManager.init();
+        ActionHandler.init();
+        await MeasurementsManager.fetchAndRefresh();
+        await SettingsManager.fetchAndRefresh();
     } catch (e) {console.error(e.message)};
-    await I18nManager.init();
-    await CalendarManager.initPreview();
+
     tg.expand();
     tg.enableClosingConfirmation();
     
@@ -39,10 +46,7 @@ async function init() {
             root.style.setProperty(`--tg-theme-${key.replace(/_/g, '-')}`, value);
         });
     }
-    MeasurementsManager.init();
-    ActionHandler.init();
-    MeasurementsManager.fetchAndRefresh();
-    SettingsManager.fetchAndRefresh();
+
     document.body.style.overscrollBehavior = 'none';
 }
 init();
