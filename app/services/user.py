@@ -13,7 +13,7 @@ async def create_user(session: AsyncSession, user_in: UserCreate) -> User:
 
 
 async def get_or_create_user(session: AsyncSession, user_id: int, username: Optional[str] = None, language_code: Optional[str] = "en") -> tuple[User, bool]:
-    result = await session.execute(select(User).where(User.id == user_id))
+    result = await session.execute(select(User).where(User.id == int(user_id)))
     user = result.scalars().first()
     
     if user:
