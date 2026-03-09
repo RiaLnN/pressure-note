@@ -6,13 +6,13 @@ import { I18nManager } from "./i18n.js";
 import { measurementsApi } from "../api.js";
 
 export const SettingsManager = {
-    async fetchAndRefresh(settings=true) {
+    async fetchAndRefresh() {
         try {
             const user =  await UserData.getUser();
             const userSettings = user.settings;
             AppState.user.settings = { ...AppState.user.settings, ...userSettings };
-            if (!settings) UIManager.loadSettings(userSettings);
-            else UIManager.loadSettingsScreen();
+            UIManager.loadSettings(userSettings);
+            UIManager.loadSettingsScreen();
 
         } catch(error) {
             console.error(error);
@@ -36,13 +36,13 @@ export const SettingsManager = {
         const sys = document.getElementById("target-sys").value;
         const dia = document.getElementById("target-dia").value;
         const success =  await this.saveSettings({target_pressure: {sys, dia} });
-        if (success) this.fetchAndRefresh(false);
+        if (success) this.fetchAndRefresh();
         else console.error("Load failed");
     },
     async updateNotification(isChecked) {
         const success = await this.saveSettings({ notifications: isChecked });
         if (success) {
-            await this.fetchAndRefresh(true);
+            await this.fetchAndRefresh();
         }
     },
     async addPressureReminder(time) {
