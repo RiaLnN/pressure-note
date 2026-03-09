@@ -17,19 +17,13 @@ async function init() {
         AppState.user.username = user.username;
 
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        console.log("LANGUAGE_CODE BEFORE SettingsManager.saveSettings({ timezone: userTimezone });     ", AppState.user.settings.language_code)
         await SettingsManager.saveSettings({ timezone: userTimezone });
-        console.log("LANGUAGE_CODE AFTER SettingsManager.saveSettings({ timezone: userTimezone }); AND BEFORE SettingsManager.fetchAndRefresh();    ", AppState.user.settings.language_code)
         await SettingsManager.fetchAndRefresh(); 
-        console.log("LANGUAGE_CODE AFTER SettingsManager.fetchAndRefresh();    ", AppState.user.settings.language_code)
         await I18nManager.init();
-        console.log("LANGUAGE_CODE AFTER I18nManager.init();    ", AppState.user.settings.language_code)
         await CalendarManager.initPreview();
-        console.log("LANGUAGE_CODE AFTER CalendarManager.initPreview();    ", AppState.user.settings.language_code)
         MeasurementsManager.init();
         ActionHandler.init();
         await MeasurementsManager.fetchAndRefresh();
-        console.log("LANGUAGE_CODE AFTER MeasurementsManager.fetchAndRefresh()    ", AppState.user.settings.language_code)
         
     } catch (e) {
         console.error("Initialization error:", e);
