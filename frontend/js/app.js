@@ -12,18 +12,25 @@ async function init() {
     try {
         const user = tg.initDataUnsafe.user;
         const responseData = await UserData.create(user.id.toString());
-        const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        await SettingsManager.saveSettings({ timezone: userTimezone });
-        await SettingsManager.fetchAndRefresh();
+        
         AppState.token = responseData.access_token;
         AppState.user.username = user.username;
+
+        const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        await SettingsManager.saveSettings({ timezone: userTimezone });
         
+        await SettingsManager.fetchAndRefresh(); 
+
         await I18nManager.init();
+        
         await CalendarManager.initPreview();
         MeasurementsManager.init();
         ActionHandler.init();
         await MeasurementsManager.fetchAndRefresh();
-    } catch (e) {console.error(e.message)};
+        
+    } catch (e) {
+        console.error("Initialization error:", e);
+    };
 
     tg.expand();
     tg.enableClosingConfirmation();
