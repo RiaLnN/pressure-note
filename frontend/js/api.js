@@ -1,7 +1,7 @@
 import { CONFIG } from "./config.js";
 import { AppState } from "./state.js";
 
-async function request(endpoint, options = {}, initial = false) {
+async function request(endpoint, options = {}, initial = false, attempts = 0) {
     console.log(`Request to ${endpoint}. Token present: ${!!AppState.token}`);
     const httpRequest = {
         headers: { 
@@ -13,12 +13,20 @@ async function request(endpoint, options = {}, initial = false) {
 
     const response = await fetch(`${CONFIG.baseUrl}${endpoint}`, httpRequest);
     if (response.status === 401) {
-        if (!initial) return request(endpoint, options, initial);
-        else AppState.token = null;
-        // window.location.reload();
+        if (attempts == 5) {
+            AppState.token = null;
+        }
+        else {
+            return request(endpoint, options, initial, attempts+1)
+        }
     }
     if (!response.ok) {
-        throw new Error (`API error ${response.status}`);
+        if (attempts == 5){
+            throw new Error (`API error ${response.status}`);
+        }
+        else{
+            return request(endpoint, options, initial, attempts+1);
+        }
     }
     if (response.status === 204) return null;
     return response.json();
