@@ -13,12 +13,12 @@ async function init() {
         const user = tg.initDataUnsafe.user;
         const responseData = await UserData.create(user.id.toString());
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        await SettingsManager.saveSettings({ timezone: userTimezone });
         await SettingsManager.fetchAndRefresh();
         AppState.token = responseData.access_token;
         AppState.user.username = user.username;
         
         await I18nManager.init();
-        await SettingsManager.saveSettings({ timezone: userTimezone });
         await CalendarManager.initPreview();
         MeasurementsManager.init();
         ActionHandler.init();

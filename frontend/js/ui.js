@@ -618,14 +618,11 @@ export const UIManager = {
         
         if (!stripContainer) return;
         const avgValue = weekAvgContainer.querySelector('.calendar-preview__avg-value');
-        // Обновить week average
         if (weekAvgContainer && data.week_average) {
             const avgSys = Math.round(data.week_average.sys);
             const avgDia = Math.round(data.week_average.dia);
             
             avgValue.textContent = `${avgSys}/${avgDia}`;
-            
-            // Добавить класс статуса
             avgValue.className = 'calendar-preview__avg-value';
             const avgStatus = PRESSURE.getPressureStatus(avgSys, avgDia);
             if (avgStatus) {
@@ -635,7 +632,6 @@ export const UIManager = {
             avgValue.textContent = "";
         }
 
-        // Очистить контейнер дней
         stripContainer.innerHTML = '';
 
         const today = new Date();
@@ -655,11 +651,9 @@ export const UIManager = {
                 ? PRESSURE.getPressureStatus(day.average.sys, day.average.dia) 
                 : null;
 
-            const weekDay = dateObj.toLocaleDateString(I18nManager.currentLang || 'en', { 
+            const weekDay = dateObj.toLocaleDateString(AppState.user.settings.language_code || 'en', { 
                 weekday: 'short' 
             });
-
-            const measurementCount = day.measurements ? day.measurements.length : 0;
 
             const selectedClass = isSelected ? 'calendar-day--selected' : '';
             const todayClass = isToday ? 'calendar-day--today' : '';
