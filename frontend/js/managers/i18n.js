@@ -1,4 +1,3 @@
-import { tg } from "../config.js"
 import { AppState } from "../state.js";
 
 export const I18nManager = {

@@ -78,7 +78,6 @@ export const SettingsManager = {
         }
     },
     async clearData() {
-        await measurementsApi.deleteAll(); 
         tg.showConfirm("Are you sure you want to delete ALL your measurements? This cannot be undone.", async (confirmed) => {
             if (confirmed) {
                 try {
