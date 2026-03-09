@@ -13,9 +13,9 @@ async function init() {
         const user = tg.initDataUnsafe.user;
         const responseData = await UserData.create(user.id.toString());
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        SettingsManager.fetchAndRefresh();
         SettingsManager.saveSettings({ timezone: userTimezone });
         AppState.token = responseData.access_token;
-        AppState.user.settings.language_code = user.language_code;
         AppState.user.username = user.username;
 
 

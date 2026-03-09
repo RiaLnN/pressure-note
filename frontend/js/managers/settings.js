@@ -10,6 +10,7 @@ export const SettingsManager = {
         try {
             const user =  await UserData.getUser();
             const userSettings = user.settings;
+            AppState.user.settings = { ...AppState.user.settings, ...userSettings };
             if (!settings) UIManager.loadSettings(userSettings);
             else UIManager.loadSettingsScreen();
 
