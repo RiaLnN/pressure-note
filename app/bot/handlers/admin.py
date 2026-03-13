@@ -2,7 +2,7 @@ from aiogram import Router, types, F
 from aiogram.filters import Command
 from app.services import admin as admin_service
 from app.db.session import async_session
-from core.config import settings
+from app.core.config import settings
 from app.bot.filters.admin import IsAdmin
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
