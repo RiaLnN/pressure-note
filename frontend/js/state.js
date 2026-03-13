@@ -24,6 +24,7 @@ export const AppState = {
         }
     },
     set settings(newSettings) {
+        
         this.user.settings = {...(this.user.settings || {}), ...newSettings};
     },
     get targetPressure(){

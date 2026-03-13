@@ -1,7 +1,7 @@
 import asyncio
 import logging
 from app.bot.loader import bot, dp
-from app.bot.handlers import start, help, echo
+from app.bot.handlers import start, help, echo, admin
 from aiogram.types import MenuButtonWebApp, WebAppInfo
 from app.core.config import settings
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -13,6 +13,7 @@ async def start_bot():
     dp.include_router(start.router)
     dp.include_router(help.router)
     dp.include_router(echo.router)
+    dp.include_router(admin.router)
     await bot.set_chat_menu_button(
         menu_button=MenuButtonWebApp(
             text="Open App",

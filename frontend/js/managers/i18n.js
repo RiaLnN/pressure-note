@@ -5,6 +5,7 @@ export const I18nManager = {
 
     async init() {
         try {
+            
             const response = await fetch(`frontend/js/locales/${AppState.user.settings.language_code}.json`);
             if (!response.ok) throw new Error("Locale not found");
             this.locale = await response.json();

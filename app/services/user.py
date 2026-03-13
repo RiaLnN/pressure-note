@@ -2,7 +2,7 @@ from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.user import User
 from app.schemas.user import UserUpdate, UserCreate, UserSettings
-from typing import Optional
+from typing import Optional, List
 
 async def create_user(session: AsyncSession, user_in: UserCreate) -> User:
     user = User(**user_in.model_dump())
