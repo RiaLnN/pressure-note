@@ -12,8 +12,12 @@ async def start_bot():
     logging.basicConfig(level=logging.INFO)
     dp.include_router(start.router)
     dp.include_router(help.router)
-    dp.include_router(echo.router)
     dp.include_router(admin.router)
+
+
+    # Always last
+    dp.include_router(echo.router)
+
     await bot.set_chat_menu_button(
         menu_button=MenuButtonWebApp(
             text="Open App",
