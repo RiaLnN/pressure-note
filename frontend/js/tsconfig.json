@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",         // Версия JS, в которую компилируем
+        "module": "ESNext",         // Формат модулей
+        "strict": true,             // ВКЛЮЧАЕТ ВСЕ СТРОГИЕ ПРОВЕРКИ СРАЗУ
+        
+        /* Дополнительные гайки, если "strict: true" мало: */
+        "noImplicitAny": true,      // Запрещает неявный any (если забыл указать тип)
+        "strictNullChecks": true,   // Не дает смешивать null/undefined с другими типами
+        "noUnusedLocals": true,     // Ошибка, если переменная объявлена, но не юзается
+        "noUnusedParameters": true, // То же самое для аргументов функций
+        "noImplicitReturns": true,  // Ошибка, если функция возвращает что-то не во всех ветках кода
+        
+        "esModuleInterop": true,    // Для нормального импорта CommonJS модулей
+        "skipLibCheck": true,       // Чтобы не проверять типы внутри node_modules (ускоряет билд)
+        "forceConsistentCasingInFileNames": true
+    }
+}
