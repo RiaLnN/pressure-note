@@ -1,4 +1,16 @@
-export const AppState = {
+import { User } from "./types/types";
+import { Settings } from "./types/types";
+
+interface IAppState {
+    _token: string | null;
+    quickButtons: boolean;
+    user: User;
+    token: string | null;
+    settings: Settings;
+    readonly targetPressure: { sys: number; dia: number };
+}
+
+export const AppState: IAppState = {
     _token: localStorage.getItem('token') || null,
     quickButtons: true,
     user: {
@@ -12,10 +24,10 @@ export const AppState = {
             timezone: "Europe/Kyiv"
         }
     },
-    get token() {
+    get token(): string | null {
         return this._token;
     },
-    set token(token) {
+    set token(token: string | null) {
         this._token = token;
         if (token) {
             localStorage.setItem('token', token);
@@ -23,9 +35,8 @@ export const AppState = {
             localStorage.removeItem('token');
         }
     },
-    set settings(newSettings) {
-        
-        this.user.settings = {...(this.user.settings || {}), ...newSettings};
+    set settings(newSettings: Settings) {
+        this.user.settings = {...(this.user.settings), ...newSettings};
     },
     get targetPressure(){
         return { sys: this.user.settings.target_pressure.sys, dia: this.user.settings.target_pressure.dia }; 

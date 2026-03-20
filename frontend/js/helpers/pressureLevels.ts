@@ -1,51 +1,54 @@
+import { Measurement } from "../types/types.js";
 import { AppState } from "../state.js";
 
+enum LevelName {
+    High = 'High',
+    Elevated = 'Elevated',
+    Normal = 'Normal',
+    Low = 'Low'
+}
+
 interface Level {
-    name: string;
-    class: string;
+    name: LevelName;
     minSys: number;
     minDia: number;
-} 
-type LevelsList = Array<Level>
+}
+
+
 export const PRESSURE = {
-    getDynamicLevels(targetSys: number, targetDia: number): LevelsList {
+    getDynamicLevels(targetSys: number, targetDia: number): Level[] {
         return [
             {
-                name: 'High',
-                class: 'status--high',
+                name: LevelName.High,
                 minSys: targetSys + 20,
                 minDia: targetDia + 15,
             },
             {
-                name: 'Elevated',
-                class: 'status--elevated',
+                name: LevelName.Elevated,
                 minSys: targetSys + 10,
                 minDia: targetDia + 7
             },
             {
-                name: 'Normal',
-                class: 'status--normal',
+                name: LevelName.Normal,
                 minSys: targetSys - 10,
                 minDia: targetDia - 10
             },
             {
-                name: 'Low',
-                class: 'status--low',
+                name: LevelName.Low,
                 minSys: 0,
                 minDia: 0
             }
-        ]
+        ] 
     },
-    getPressureStatus(sys, dia) {
+    getPressureStatus(sys: number, dia: number): Level {
         const {sys: targetSys, dia: targetDia}  = AppState.targetPressure;
         const levels = this.getDynamicLevels(targetSys, targetDia);
-        if (sys >= levels[0].minSys || dia >= levels[0].minDia) return levels[0]; // High
-        if (sys >= levels[1].minSys || dia >= levels[1].minDia) return levels[1]; // Elevated
-        if (sys >= levels[2].minSys && dia >= levels[2].minDia) return levels[2]; // Normal
 
-        return levels[3]; // Low
+        const status = levels.find(l => sys >= l.minSys || dia >= l.minDia);
+        return status || levels[levels.length - 1]
     },
-    getAveragePressure(measurements){
+    getAveragePressure(measurements: Measurement[]): Measurement {
+        if (measurements.length === 0) return {sys: 0, dia: 0};
         let sumSys = 0;
         let sumDia = 0;
 
@@ -55,14 +58,14 @@ export const PRESSURE = {
         });
         return {sys: Math.round(sumSys / measurements.length), dia: Math.round(sumDia / measurements.length)}
     },
-    calculateHealthScore(sys, dia) {
+    calculateHealthScore(sys: number, dia: number): number {
         const {sys: idealSys,  dia: idealDia} = AppState.targetPressure;
         const sysDiff = (sys - idealSys); 
         const diaDiff = (dia - idealDia);
         let score = 50 + (sysDiff + diaDiff) / 2;
         return Math.max(0, Math.min(100, Math.round(score)));
     },
-    getIndicatorClass(score) {
+    getIndicatorClass(score: number | null): string {
         if (score === null) return '';
         if (score >= 80) return 'calendar__day-indicator--high';
         if (score >= 60) return 'calendar__day-indicator--elevated';

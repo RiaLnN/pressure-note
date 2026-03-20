@@ -1,3 +1,4 @@
+
 export const tg = window.Telegram.WebApp;
 
 export const CONFIG = {
@@ -12,4 +13,4 @@ export const CONFIG = {
         gray: '#8e8e93',
         gridLines: 'rgba(85, 219, 114, 0.08)'
     }
-}
+} as const;

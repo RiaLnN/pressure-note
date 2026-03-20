@@ -13,6 +13,11 @@
         
         "esModuleInterop": true,    // Для нормального импорта CommonJS модулей
         "skipLibCheck": true,       // Чтобы не проверять типы внутри node_modules (ускоряет билд)
-        "forceConsistentCasingInFileNames": true
-    }
+        "forceConsistentCasingInFileNames": true,
+        "baseUrl": ".",
+        "paths": {
+            "*": ["node_modules/*", "src/types/*"]
+        },
+    },
+    "include": ["**/*", "types/global.d.ts"],
 }
