@@ -29,4 +29,4 @@ async def get_all_users_ids(session: AsyncSession):
     result = await session.execute(
         select(User.id)
     )
-    return result.scalars.all()
+    return result.scalars().all()
