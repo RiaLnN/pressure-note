@@ -53,25 +53,44 @@ async def cmd_broadcast(message: types.Message, state: FSMContext):
         reply_markup=kb
     )
 
+@router.message(IsAdmin(settings.ADMIN_ID), Form.broadcast, F.text == "❌ Отмена")
+async def cancel_broadcast(message: types.Message, state: FSMContext):
+    await state.clear()
+    await message.answer(
+        "Рассылка отменена.", 
+        reply_markup=ReplyKeyboardRemove()
+    )
+
 @router.message(IsAdmin(settings.ADMIN_ID), Form.broadcast)
 async def process_broadcast(message: types.Message, state: FSMContext):
+    if message.text == "❌ Отмена":
+        return 
+
     await state.clear()
     
     async with async_session() as db:
         uids = await admin_service.get_all_users_ids(db)
     
+    if not uids:
+        await message.answer("Пользователей не найдено.")
+        return
+
     count = 0
     blocked = 0
     
-    await message.answer(f"🚀 Рассылка запущена на {len(uids)} пользователей...")
+    status_msg = await message.answer(f"🚀 Рассылка запущена (0/{len(uids)})...", reply_markup=ReplyKeyboardRemove())
 
     for uid in uids:
         try:
             await message.copy_to(chat_id=uid)
             count += 1
-            
             await asyncio.sleep(0.05) 
             
+            if count % 50 == 0:
+                try:
+                    await status_msg.edit_text(f"🚀 Рассылка в процессе: {count}/{len(uids)}...")
+                except: pass
+
         except TelegramForbiddenError:
             blocked += 1
         except TelegramRetryAfter as e:
@@ -79,18 +98,10 @@ async def process_broadcast(message: types.Message, state: FSMContext):
             await message.copy_to(chat_id=uid)
             count += 1
         except Exception as e:
-            print(f"Ошибка при отправке {uid}: {e}")
+            continue 
 
     await message.answer(
         f"✅ Рассылка завершена!\n\n"
         f"👤 Получили: {count}\n"
         f"🚫 Заблокировали бота: {blocked}"
-    )
-
-@router.message(IsAdmin(settings.ADMIN_ID), Form.broadcast, F.text == "❌ Отмена")
-async def cancel_broadcast(message: types.Message, state: FSMContext):
-    await state.clear()
-    await message.answer(
-        "Рассылка отменена.", 
-        reply_markup=ReplyKeyboardRemove()
     )
