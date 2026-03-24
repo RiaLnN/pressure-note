@@ -1,24 +1,29 @@
-import React, {useEffect, useState} from "react";
-import { useUserStore } from "./store/useUserStore";
+import React from 'react';
+import { useAppInit } from './hooks/useAppInit';
+import { MainScreen } from './features/main-screen/mainScreen';
 
 export const App: React.FC = () => {
-    const [isReady, setIsReady] = useState(false);
-    
-    const updateSettings = useUserStore((s) => s.updateSettings);
-    const updateUsername = useUserStore((s) => s.updateUsername);
-    const setToken = useUserStore((s) => s.setToken);
+    const { isLoading, error } = useAppInit();
 
-    useEffect(() => {
-        async function init() {
-            try {
-                const tg = Telegram.WebApp;
-                if (tg) {
-                    tg.ready();
-                    const initDataUnsafe = tg.initDataUnsafe;
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    })
-}
+    if (isLoading) {
+    return (
+        <div className="h-screen flex items-center justify-center">
+            <span>Загрузка...</span>
+        </div>
+    );
+    }
+
+    if (error) {
+    return (
+        <div className="h-screen flex items-center justify-center">
+            <span>Ошибка инициализации: {error.message}</span>
+        </div>
+    );
+    }
+
+    return (
+    <div className="min-h-screen bg-background text-foreground">
+        <MainScreen />
+    </div>
+    );
+};
