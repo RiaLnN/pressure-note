@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+    /* === ФОНЫ === */
+    /* Основной фон приложения (как весь экран) */
+    --color-bg-app: #0F1724;      /* очень тёмный синий, близко к slate-950 */
+
+    /* Контейнер/карточка (основной блок, как карточки в макете) */
+    --color-bg-surface: #1A2535;  /* тёмно-синий, как фон внутри экрана */
+
+    /* Активные/выделенные элементы, например hover/pressed */
+    --color-bg-surface-muted: #1E293B;
+
+    /* Блок «Записати новий вимір» (яркая зелено‑бирюзовая кнопка) */
+    --color-bg-cta: #2DD4BF;      /* бирюзовый акцент */
+
+    /* Бейджи статусов (фон) */
+    --color-bg-status-normal:   #064E3B; /* тёмный зелёный фон */
+    --color-bg-status-elevated: #451A03; /* тёмный оранжево‑коричневый */
+    --color-bg-status-high:     #7F1D1D; /* тёмный красный (на будущее) */
+    --color-bg-status-low:      #0F172A; /* можно оставить как синий/нейтральный */
+
+    /* Кнопки/иконки в кружке (как маленький круг справа в хедере) */
+    --color-bg-avatar: #020617;
+    --color-border-avatar: #22D3EE; /* светло‑бирюзовая обводка */
+
+    /* Линия графика и акцентные элементы (Chart, подчеркивания и т.п.) */
+    --color-bg-chart-track: #0B1120; /* фон области графика */
+
+
+    /* === ТЕКСТ === */
+    --color-text-primary:   #F9FAFB; /* основной текст (имя, цифры) */
+    --color-text-secondary: #E5E7EB; /* чуть мягче, для второстепенных значений */
+    --color-text-muted:     #9CA3AF; /* подписи, подсказки, мм рт.ст., подписи под графиком */
+    --color-text-soft:      #6B7280; /* ещё слабее, для «вчера», «сьогодні» и т.п. */
+
+    /* Текст внутри CTA кнопок/блоков */
+    --color-text-on-cta:    #020617;
+
+    /* Цвет текста внутри бейджей статуса */
+    --color-text-status-normal:   #6EE7B7; /* светло‑зелёный */
+    --color-text-status-elevated: #FDBA74; /* светло‑оранжевый */
+    --color-text-status-high:     #FCA5A5; /* светло‑красный */
+    --color-text-status-low:      #93C5FD; /* светло‑голубой */
+
+    --color-border-status-normal:   #6EE7B7; /* светло‑зелёный */
+    --color-border-status-elevated: #FDBA74; /* светло‑оранжевый */
+    --color-border-status-high:     #FCA5A5; /* светло‑красный */
+    --color-border-status-low:      #93C5FD; /* светло‑голубой */
+
+    /* === АКЦЕНТЫ / ИКОНКИ / ЛИНИИ === */
+    --color-accent:        #2DD4BF; /* главный акцент (кнопка, график, иконки) */
+    --color-accent-soft:   color-mix(in srgb, #2DD4BF 20%, transparent);
+    --color-accent-strong: #22C1AC; /* чуть темнее для hover */
+
+    --color-chart-line:    #22D3EE; /* линия на графике */
+    --color-chart-point:   #2DD4BF;
+    --color-chart-grid:    #1E293B;
+
+    /* === БОРДЕРЫ === */
+    --color-border-subtle:  #3a4b66;
+    --color-border-strong:  #111827;
+
+    /* === СИСТЕМНЫЕ СОСТОЯНИЯ (на будущее) === */
+    --color-success: #22C55E;
+    --color-warning: #EAB308;
+    --color-danger:  #EF4444;
+}
