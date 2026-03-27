@@ -8,7 +8,7 @@ import type { User } from '../api/apiTypes';
 export function useAppInit() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-
+  api.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
   const updateSettings = useUserStore((s) => s.updateSettings);
   const updateUsername = useUserStore((s) => s.updateUsername);
 
@@ -16,10 +16,10 @@ export function useAppInit() {
     async function init() {
       try {
         const tg = Telegram.WebApp;
+
         if (tg) {
           tg.ready();
 
-          // Передаём initData во все запросы к API через заголовок
           if (tg.initData) {
             api.defaults.headers.common['X-Telegram-Init-Data'] = tg.initData;
           }
@@ -30,15 +30,13 @@ export function useAppInit() {
           updateUsername(tgUser.username ?? tgUser.first_name);
         }
 
-        // Получаем пользователя и его настройки с бэка
         const user: User = await UserService.get();
         updateSettings(user.settings);
 
-        // Настройка внешнего вида WebApp
         if (tg) {
           tg.expand();
           tg.enableClosingConfirmation();
-          tg.setHeaderColor('#1a3829');
+          tg.setHeaderColor('#1a2738');
           tg.setBackgroundColor('#1a1b23');
 
           document.body.classList.add('tg-viewport');

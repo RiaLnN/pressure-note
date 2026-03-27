@@ -13,7 +13,7 @@ export const MainScreen = () => {
     const handleAddClick = () => {};
 
     return (
-        <main className="min-h-screen bg-bg-app text-text-primary">
+        <main className="min-h-screen bg-bg-app text-text-primary bg-background text-foreground">
             <div className="max-w-md mx-auto px-4 py-6 flex flex-col gap-4">
                 <LastMeasurementCard data={testData} />
 

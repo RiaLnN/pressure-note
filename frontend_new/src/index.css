@@ -66,3 +66,18 @@
     --color-warning: #EAB308;
     --color-danger:  #EF4444;
 }
+
+:root {
+    background-color: var(--color-bg-app);
+    color: var(--color-text-primary);
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--color-bg-app);
+    color: var(--color-text-primary);
+}
+
+#root {
+    min-height: 100vh;
+}
