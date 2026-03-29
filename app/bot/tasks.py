@@ -5,7 +5,6 @@ from datetime import datetime
 from app.db.session import async_session
 from app.models.user import User
 from app.models.medication import Medication
-from app.core.logging import logger
 from app.core.i18n import i18n
 
 async def check_and_send_reminders(bot: Bot):
@@ -39,4 +38,4 @@ async def check_and_send_reminders(bot: Bot):
                         text=text
                     )
         except Exception as e:
-            logger.error("Error when checking", e)
+            pass

@@ -17,12 +17,26 @@ class I18n:
 
     def t(self, lang, key, **kwargs):
         keys = key.split('.')
-        data = self.translations.get(lang, self.translations['en'])
+        data = self.translations.get(lang, self.translations.get('en', {}))
+        
         for k in keys:
-            data = data.get(k, {})
-            
+            if isinstance(data, dict):
+                data = data.get(k)
+            else:
+                data = None
+                break
+        
+        if data is None:
+            return key 
+
         if isinstance(data, list):
-            return random.choice(data).format(**kwargs)
-        return data.format(**kwargs)
+            data = random.choice(data)
+            
+        try:
+            return data.format(**kwargs)
+        except KeyError as e:
+            return f"Error: Missing placeholder {e} in template"
+        except AttributeError:
+            return str(data)
 
 i18n = I18n()

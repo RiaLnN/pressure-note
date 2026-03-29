@@ -17,14 +17,20 @@ async def create_measurement(session: AsyncSession, pressure_in: PressureCreate,
     await session.refresh(pressure)
     return pressure
 
-async def get_measurements(session: AsyncSession, user_id: int) -> List[PressureMeasurement]:
-    result = await session.execute(
-        select(PressureMeasurement).where(PressureMeasurement.user_id == user_id).order_by(PressureMeasurement.created_at.desc())
+async def get_measurements(session: AsyncSession, user_id: int, limit: int | None = None) -> List[PressureMeasurement]:
+    query = (
+        select(PressureMeasurement)
+        .where(PressureMeasurement.user_id == user_id)
+        .order_by(PressureMeasurement.created_at.desc())
     )
+    if limit is not None:
+        query = query.limit(limit)
+
+    result = await session.execute(query)
     return result.scalars().all()
 
-async def get_history(session: AsyncSession, user_id: int) -> List[PressureMeasurement]:
-    measurements = await get_measurements(session, user_id)
+async def get_history(session: AsyncSession, user_id: int, limit: int | None = None) -> List[PressureMeasurement]:
+    measurements = await get_measurements(session, user_id, limit=limit)
     grouped = []
     for day, items in groupby(measurements, key=lambda x: x.created_at.date()):
         grouped.append({

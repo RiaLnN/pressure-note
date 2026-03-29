@@ -2,40 +2,47 @@ import type { Measurement } from "../../../types/measurements";
 import { Card } from "../../../components/ui/Card";
 import { StatusBadge } from "./StatusBadge";
 import { useUserStore } from "../../../store/useUserStore";
+import { MAIN_SCREEN_TEXT } from "../constants";
+import { MAIN_SCREEN_CONFIG } from "../config";
+import { formatTimeHHmm } from "../../../utils/date";
 
 interface Props {
-    data: Measurement
+    data: Measurement | null
 }
 
 export const LastMeasurementCard = ({ data }: Props) => {
     const target_pressure = useUserStore((state) => state.settings.target_pressure)
     const target_str = `${target_pressure.sys}/${target_pressure.dia}`;
+
+    const timeLabel = data?.created_at ? formatTimeHHmm(data.created_at) : '';
     return (
         <Card className="text-text-primary p-6 md:p-7">
             <section className="flex justify-between items-start mb-4">
                 <p className="text-xs font-semibold tracking-[0.18em] uppercase text-text-soft">
-                    Last measurement
+                    {MAIN_SCREEN_TEXT.lastMeasurement.title}
                 </p>
-                <StatusBadge status={data.status} />
+                {data ? <StatusBadge status={data.status} /> : null}
             </section>
 
             <section className="flex items-baseline gap-2">
                 <div className="flex gap-2 items-baseline">
                     <h2 className="text-7xl font-bold leading-none">
-                        {data.sys}
+                        {data?.sys ?? '—'}
                     </h2>
                     <span className="text-5xl font-bold text-text-muted leading-none">
-                        / {data.dia}
+                        / {data?.dia ?? '—'}
                     </span>
                 </div>
                 <span className="ml-2 text-sm text-text-muted">
-                    мм рт. ст.
+                    {MAIN_SCREEN_CONFIG.units.pressure}
                 </span>
             </section>
 
             <section className="mt-5 pt-4 border-t border-border-subtle/60 text-xs text-text-soft flex justify-between">
-                <span>Target {target_str}</span>
-                <span>{data.created_at}</span>
+                <span>
+                    {MAIN_SCREEN_TEXT.lastMeasurement.targetPrefix} {target_str}
+                </span>
+                <span>{timeLabel}</span>
             </section>
         </Card>
     );

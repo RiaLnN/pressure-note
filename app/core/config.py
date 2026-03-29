@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Pressure tracker"
-    DATABASE_URL: str = "sqlite+aiosqlite:///./app.db"
+    DATABASE_URL: str
     WEB_APP_URL: str = "https://dori-nonrefillable-subgerminally.ngrok-free.dev"
     BOT_TOKEN: str
     SECRET_KEY: str

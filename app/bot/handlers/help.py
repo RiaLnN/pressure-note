@@ -10,7 +10,7 @@ router = Router()
 @router.message(Command('help'))
 async def cmd_start(message: types.Message):
     async with async_session() as db:
-        user, is_new = await user_service.get_or_create_user(
+        user, _ = await user_service.get_or_create_user(
             db, 
             user_id=message.from_user.id, 
             username=message.from_user.username,
@@ -19,9 +19,6 @@ async def cmd_start(message: types.Message):
         
         lang = user.settings.get("language_code", "en")
         
-        if is_new:
-            text = i18n.t(lang, "bot.help")
-        else:
-            text = i18n.t(lang, "bot.help")
+        text = i18n.t(lang, "bot.help")
 
         await message.answer(text, reply_markup=get_main_menu_keyboard(lang))

@@ -1,35 +1,43 @@
-import { Button } from "../../components/ui/Button";
-import { LastMeasurementCard } from "./components/LastMeasurementCard";
-import type { Measurement } from "../../types/measurements";
-import { Card } from "../../components/ui/Card";
-const testData: Measurement = {
-    id: 1,
-    sys: 120,
-    dia: 80,
-    status: 'Normal',
-    created_at: '12:00'
-}
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/ui/Button';
+import { LastMeasurementCard } from './components/LastMeasurementCard';
+import { MainHeader } from './components/MainHeader';
+import { WeekChartCard } from './components/WeekChartCard';
+import { RecentRecordsCard } from './components/RecentRecordsCard';
+import { useMainScreenData } from './hooks/useMainScreenData';
+import { MAIN_SCREEN_TEXT } from './constants';
+
 export const MainScreen = () => {
-    const handleAddClick = () => {};
+    const navigate = useNavigate();
+    const { data, isLoading, error } = useMainScreenData();
+
+    const handleAddClick = () => {
+        // TODO: will be wired to AddMeasurement screen
+    };
 
     return (
-        <main className="min-h-screen bg-bg-app text-text-primary bg-background text-foreground">
-            <div className="max-w-md mx-auto px-4 py-6 flex flex-col gap-4">
-                <LastMeasurementCard data={testData} />
+        <div className="flex flex-col gap-5">
+            <MainHeader />
 
-                <Button
-                    label="Add measurement"
-                    icon = 'add'
-                    onClick={handleAddClick}
-                    variant="primary"
-                />
-                <Card className="mt-2">
-                    <p className="text-sm text-text-muted mb-2">Last 7 days</p>
-                    <p className="text-xs text-text-soft">
-                        Здесь позже будет график
-                    </p>
-                </Card>
-            </div>
-        </main>
+            {error ? (
+                <div className="rounded-2xl border border-danger/30 bg-danger/10 p-4 text-sm text-text-secondary">
+                    {error.message}
+                </div>
+            ) : null}
+
+            <LastMeasurementCard data={data.lastMeasurement} />
+
+            <Button
+                label={MAIN_SCREEN_TEXT.cta.addMeasurement}
+                icon="add"
+                onClick={handleAddClick}
+                variant="primary"
+                isLoading={isLoading}
+            />
+
+            <WeekChartCard week={data.week} onDetails={() => navigate('/stats')} />
+
+            <RecentRecordsCard items={data.recent} onAll={() => navigate('/stats')} />
+        </div>
     );
 };
