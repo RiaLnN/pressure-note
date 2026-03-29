@@ -9,7 +9,6 @@ from app.bot.tasks import check_and_send_reminders
 
 
 async def start_bot():
-    logging.basicConfig(level=logging.INFO)
     dp.include_router(start.router)
     dp.include_router(help.router)
     dp.include_router(admin.router)
