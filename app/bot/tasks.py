@@ -39,4 +39,4 @@ async def check_and_send_reminders(bot: Bot):
                         text=text
                     )
         except Exception as e:
-            logger.error("Error when checking", e)
+            pass

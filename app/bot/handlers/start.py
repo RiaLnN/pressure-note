@@ -23,7 +23,6 @@ async def cmd_start(message: types.Message):
         if is_new:
             text = i18n.t(lang, "bot.welcome_new", project_name=settings.PROJECT_NAME)
         else:
-            text = i18n.t(lang, "bot.welcome_new", project_name=settings.PROJECT_NAME)
-            # text = i18n.t(lang, "bot.welcome_back", username=user.username or "friend")
+            text = i18n.t(lang, "bot.welcome_back", username=user.username or "friend")
 
         await message.answer(text, reply_markup=get_main_menu_keyboard(lang))
