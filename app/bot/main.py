@@ -1,5 +1,4 @@
 import asyncio
-import logging
 from app.bot.loader import bot, dp
 from app.bot.handlers import start, help, echo, admin
 from aiogram.types import MenuButtonWebApp, WebAppInfo
@@ -27,10 +26,10 @@ async def start_bot():
     scheduler = AsyncIOScheduler()
     scheduler.add_job(
         check_and_send_reminders, 
-        trigger='cron', 
-        minute='*', 
-        kwargs={'bot': bot}
-    )
+            trigger='interval', 
+            minutes=15,
+            kwargs={'bot': bot, 'interval_minutes': 15} 
+        )
     scheduler.start()
     await dp.start_polling(bot)
 
