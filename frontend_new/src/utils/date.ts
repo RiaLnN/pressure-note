@@ -18,6 +18,11 @@ export function formatWeekdayShort(isoString: string, locale = 'uk-UA'): string 
   return new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(d);
 }
 
+export function formatMonthShort(isoString: string, locale = 'uk-UA'): string {
+  const d = new Date(isoString);
+  return new Intl.DateTimeFormat(locale, { month: 'short' }).format(d);
+}
+
 export function formatRelativeDayLabel(isoString: string, locale = 'uk-UA'): string {
   const d = new Date(isoString);
   const now = new Date();

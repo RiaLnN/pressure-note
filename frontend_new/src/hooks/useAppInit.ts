@@ -8,7 +8,6 @@ import type { User } from '../api/apiTypes';
 export function useAppInit() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
-  api.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
   const updateSettings = useUserStore((s) => s.updateSettings);
   const updateUsername = useUserStore((s) => s.updateUsername);
 

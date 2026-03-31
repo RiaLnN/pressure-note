@@ -33,7 +33,7 @@ export const LastMeasurementCard = ({ data }: Props) => {
                         / {data?.dia ?? '—'}
                     </span>
                 </div>
-                <span className="ml-2 text-sm text-text-muted">
+                <span className="ml-2 text-xs text-text-muted">
                     {MAIN_SCREEN_CONFIG.units.pressure}
                 </span>
             </section>

@@ -12,6 +12,14 @@ export const MAIN_SCREEN_TEXT = {
   cta: {
     addMeasurement: 'Записати новий вимір',
   },
+  addMeasurementModal: {
+    title: 'Новий вимір',
+    pressureLabel: 'Артеріальний тиск',
+    handLabel: 'Рука',
+    stateLabel: 'Стан',
+    commentLabel: 'Коментар',
+    commentPlaceholder: 'Введіть коментар',
+  },
   week: {
     title: 'Тиск за 7 днів',
     details: 'Детальніше',

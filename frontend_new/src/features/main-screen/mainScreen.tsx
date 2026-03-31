@@ -6,16 +6,29 @@ import { WeekChartCard } from './components/WeekChartCard';
 import { RecentRecordsCard } from './components/RecentRecordsCard';
 import { useMainScreenData } from './hooks/useMainScreenData';
 import { MAIN_SCREEN_TEXT } from './constants';
+import { AddModal } from './components/AddModal';
+import { useState } from 'react';
 
 export const MainScreen = () => {
     const navigate = useNavigate();
-    const { data, isLoading, error } = useMainScreenData();
+    const [refreshKey, setRefreshKey] = useState(0);
+    const { data, isLoading, error } = useMainScreenData(refreshKey);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     const handleAddClick = () => {
-        // TODO: will be wired to AddMeasurement screen
+        setIsAddModalOpen(true);
+    };
+
+    const handleAddClose = () => {
+        setIsAddModalOpen(false);
+    };
+
+    const handleAddSaved = () => {
+        setRefreshKey((k) => k + 1);
     };
 
     return (
+        <>
         <div className="flex flex-col gap-5">
             <MainHeader />
 
@@ -39,5 +52,8 @@ export const MainScreen = () => {
 
             <RecentRecordsCard items={data.recent} onAll={() => navigate('/stats')} />
         </div>
+
+        <AddModal isOpen={isAddModalOpen} onClose={handleAddClose} onSaved={handleAddSaved} />
+        </>
     );
 };

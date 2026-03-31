@@ -13,18 +13,17 @@ export interface MainScreenData {
   recent: Array<Measurement & { description?: string | null }>;
 }
 
-function mapPressureToMeasurement(p: PressureRead, target: { sys: number; dia: number }): Measurement & { description?: string | null } {
+function mapPressureToMeasurement(p: PressureRead, target: { sys: number; dia: number }): Measurement {
   return {
     id: p.id,
     sys: p.sys,
     dia: p.dia,
     created_at: p.created_at,
     status: getPressureStatus({ sys: p.sys, dia: p.dia, target }),
-    description: p.description ?? null,
   };
 }
 
-export function useMainScreenData() {
+export function useMainScreenData(refreshKey = 0) {
   const target = useUserStore((s) => s.settings.target_pressure);
 
   const [data, setData] = useState<MainScreenData>({
@@ -69,8 +68,7 @@ export function useMainScreenData() {
         if (!isMounted) return;
         setError(e instanceof Error ? e : new Error('Unknown error'));
       } finally {
-        if (!isMounted) return;
-        setIsLoading(false);
+        if (isMounted) setIsLoading(false);
       }
     }
 
@@ -79,7 +77,7 @@ export function useMainScreenData() {
     return () => {
       isMounted = false;
     };
-  }, [target, today]);
+  }, [target, today, refreshKey]);
 
   return { data, isLoading, error };
 }

@@ -4,11 +4,15 @@ import type { Measurement } from '../../../types/measurements';
 import { StatusBadge } from './StatusBadge';
 import { MAIN_SCREEN_TEXT } from '../constants';
 import { formatRelativeDayLabel, formatTimeHHmm } from '../../../utils/date';
-
+import { Droplet } from 'lucide-react';
+import { getPressureStatus } from '../../../utils/pressure';
+import { useUserStore } from '../../../store/useUserStore';
+import { PRESSURE_STATUS_STYLES } from '../../../utils/pressureStatus';
 export const RecentRecordsCard: React.FC<{
   items: Array<Measurement & { description?: string | null }>;
   onAll?: () => void;
 }> = ({ items, onAll }) => {
+  const targetPressure = useUserStore((state) => state.settings.target_pressure);
   return (
     <section className="space-y-3">
       <header className="flex items-center justify-between">
@@ -31,18 +35,13 @@ export const RecentRecordsCard: React.FC<{
           {items.map((m) => {
             const day = formatRelativeDayLabel(m.created_at);
             const time = formatTimeHHmm(m.created_at);
+            const status = getPressureStatus({ sys: m.sys, dia: m.dia, target: targetPressure });
+            const statusStyles = PRESSURE_STATUS_STYLES[status];
             return (
               <Card key={m.id} className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="size-10 rounded-2xl bg-bg-avatar border border-border-subtle/60 flex items-center justify-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                      className="size-5 text-accent"
-                    >
-                      <path d="M12 21a1 1 0 0 1-1-1V8.414L8.707 10.707a1 1 0 1 1-1.414-1.414l4-4a1 1 0 0 1 1.414 0l4 4a1 1 0 1 1-1.414 1.414L13 8.414V20a1 1 0 0 1-1 1Z" />
-                    </svg>
+                  <div className={`size-10 rounded-2xl border border-border-subtle/60 flex items-center justify-center ${statusStyles.bg}`}>
+                    <Droplet className="size-6 text-accent" />
                   </div>
 
                   <div className="flex-1 min-w-0">

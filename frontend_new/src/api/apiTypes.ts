@@ -2,11 +2,13 @@ import type { Measurement } from '../types/measurements';
 import type { UserSettings } from '../types/user';
 import type { Medication } from '../types/medications';
 
-export interface PressureRead {
-    id: number;
+export type PressureRead = Measurement;
+export type MedicationRead = Medication;
+
+export interface PressureCreate {
     sys: number;
     dia: number;
-    created_at: string;
+    created_at: string; // ISO 8601
     description?: string | null;
 }
 
@@ -44,4 +46,9 @@ export interface User {
 export interface UpdateUser{
     username?: string | null;
     settings?: UserSettings;
+}
+
+export interface MedicationCreate {
+    item_name: string;
+    reminders: string[];
 }
