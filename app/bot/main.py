@@ -23,14 +23,15 @@ async def start_bot():
             web_app=WebAppInfo(url=settings.WEB_APP_URL)
         )
     )
-    scheduler = AsyncIOScheduler()
-    scheduler.add_job(
-        check_and_send_reminders, 
-            trigger='interval', 
-            minutes=15,
-            kwargs={'bot': bot, 'interval_minutes': 15} 
-        )
-    scheduler.start()
+    # disabled for now
+    # scheduler = AsyncIOScheduler()
+    # scheduler.add_job(
+    #     check_and_send_reminders, 
+    #         trigger='interval', 
+    #         minutes=15,
+    #         kwargs={'bot': bot, 'interval_minutes': 15} 
+    #     )
+    # scheduler.start()
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
